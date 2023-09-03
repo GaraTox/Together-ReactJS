@@ -27,7 +27,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
 	key: "CookieTogether",
-	secret: "subscribe",
+	secret: "Together",
 	resave: false,
 	saveUninitialized: false,
 	cookie:{
@@ -111,10 +111,17 @@ app.post('/', (req, res) => {
 // })
 
 // DECONNEXION A LA SESSION
-app.get('/'), (req, res) => {
-	res.clearCookie('CookieTogether');
-	return res.redirect('/')
-}
+app.post('/', (req, res) => {
+	req.session.destroy(err => {
+	  if (err) {
+		console.error('Erreur lors de la déconnexion :', err);
+		res.status(500).send('Erreur lors de la déconnexion');
+	  } else {
+		res.clearCookie('votre_cookie_name');
+		res.sendStatus(200);
+	  }
+	});
+  });
 
 // ECOUTE LE PORT 3001
 app.listen(3001, () => {

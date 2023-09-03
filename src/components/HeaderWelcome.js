@@ -22,12 +22,18 @@ function HeaderWelcome() {
         setmenuClick(!menuClick);
     }
 
-    const handleDelete = () => {
-        axios.get('http://localhost:3001/')
-        .then(res => {
-            window.location.reload(true);
-        }).catch(err => console.log(err))
-    }
+    const handleLogout = () => {
+        axios.post('/')
+          .then(response => {
+            // Réponse du serveur
+            if (response.status === 200) {
+              window.location.href = '/';
+            }
+          })
+          .catch(error => {
+            console.error('Erreur lors de la déconnexion :', error);
+          });
+      };
 
   return (
     <section>
@@ -46,7 +52,7 @@ function HeaderWelcome() {
                 </form>
                 </div>
                 <div className='btnDisconnect'>
-                    <Link><p onClick={handleDelete} className="text-danger pt-1"><strong>DECONNEXION</strong></p></Link>
+                    <Link><p onClick={handleLogout} className="text-danger pt-1"><strong>DECONNEXION</strong></p></Link>
                 </div>
                 <div className='burger'>
                     <div className='burger-menu' onClick={displayMenu}>
@@ -64,7 +70,7 @@ function HeaderWelcome() {
                     </button>
                 </form>
                 <div className='btn_disconnect_burger'>
-                    <p onClick={handleDelete} className="text-danger mt-1 pb-1"><strong>DECONNEXION</strong></p>
+                    <p onClick={handleLogout} className="text-danger mt-1 pb-1"><strong>DECONNEXION</strong></p>
                 </div>
             </div>
         </div>

@@ -21,12 +21,19 @@ function HeaderAdmin() {
         setmenuClick(!menuClick);
     }
 
-    const handleDelete = () => {
-        axios.get('http://localhost:3001/')
-        .then(res => {
-            window.location.reload(true);
-        }).catch(err => console.log(err))
-    }
+    const handleLogout = () => {
+        axios.post('/') // Envoyer une requête POST au serveur Node.js pour déconnecter
+          .then(response => {
+            // Réponse du serveur
+            if (response.status === 200) {
+              // Redirigez l'utilisateur vers la page de connexion ou effectuez d'autres actions nécessaires
+              window.location.href = '/';
+            }
+          })
+          .catch(error => {
+            console.error('Erreur lors de la déconnexion :', error);
+          });
+      };
 
   return (
     <section>
@@ -45,7 +52,7 @@ function HeaderAdmin() {
                 </ul>
                 </div>
                 <div className='btnDisconnect'>
-                    <p onClick={handleDelete} className="text-danger mt-1 mb-1"><strong>DECONNEXION</strong></p>
+                    <p onClick={handleLogout} className="text-danger mt-1 mb-1"><strong>DECONNEXION</strong></p>
                 </div>
                 <div className='burger'>
                     <div className='burger-menu' onClick={displayMenu}>
@@ -61,7 +68,7 @@ function HeaderAdmin() {
                     <Link className="burgerListCrud" to="/connect-admin/home/choiceUpdate"><li>MODIFIER</li></Link>
                     <Link className="burgerListCrud" to="/connect-admin/home/delete"><li>SUPPRIMER</li></Link>
                     <Link className="burgerListCrud" to="/connect-admin/home/read"><li>AFFICHER</li></Link>
-                    <li onClick={handleDelete} className="text-danger burgerListCrud">DECONNEXION</li>
+                    <li onClick={handleLogout} className="text-danger burgerListCrud">DECONNEXION</li>
                 </ul>
             </div>
         </div>
