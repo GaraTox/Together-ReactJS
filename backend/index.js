@@ -117,7 +117,7 @@ app.post('/', (req, res) => {
 		console.error('Erreur lors de la déconnexion :', err);
 		res.status(500).send('Erreur lors de la déconnexion');
 	  } else {
-		res.clearCookie('votre_cookie_name');
+		res.clearCookie('Cookie-Together');
 		res.sendStatus(200);
 	  }
 	});
