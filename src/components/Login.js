@@ -1,5 +1,5 @@
 import React, { useState, useEffect }  from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Btnmd from './btn/Btnmd';
 import axios from 'axios';
 
@@ -8,29 +8,38 @@ function Connect() {
   const [mailUser, setMailUser] = useState('');
   const [passwordUser, setPasswordUser] = useState('');
 
+  const history = useNavigate;
+
 axios.defaults.withCredentials = true;
 
 // ACTION DU CLIQUE SUR LE BOUTON VALIDER INSCRIPTION
-const login = (event) => {
+const handleSubmit = (event) => {
   event.preventDefault();
-  axios.post('http://localhost:3001/', 
-  {mailUser: mailUser, passwordUser: passwordUser})
-  .then(() => window.location = '/myprofile')
-  .catch(err => console.log(err));
-}
+  axios.post('http://localhost:3001/', { mailUser, passwordUser })
+    .then((res) => {
+      // Si la connexion est réussie (vous devez définir une logique pour cela côté serveur)
+      if (res.data.success) {
+        // Redirigez l'utilisateur vers la page de profil
+        history.push('/myprofile'); // Assurez-vous que '/profil' est la bonne route pour la page de profil
+      } else {
+        console.log("Probleme de connexion")
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
 
 // useEffect(() => {
 //   axios.get('http://localhost:3001/')
-//   .then(res => {
-//     window.location = '/';
-//   });
+//   .then(res => console.log(res));
 // }, []);
 
     return (
         <section className="loginPage">
         <h1 className="titrePresentation mt-3">Bienvenue sur Together, <br/> le nouveau réseau social gratuit.</h1>
         <div className="blocForm">
-        <form className="formConnect rounded" method="POST" action="#">
+        <form onChange={handleSubmit} className="formConnect rounded" method="POST" action="#">
             <p className="dejaInscrit">Déjà inscrit ?</p>
             <div className="m-4">
               <label htmlFor="exampleInput" className="form-label">Adresse Mail</label>
@@ -41,7 +50,7 @@ const login = (event) => {
               <input onChange={(e) => {setPasswordUser(e.target.value);}} type="password" className="form-control" id="passw" name="passwordUser" autoComplete="off"/>
             </div>
             <p className="text-danger m-4">Mot de passe oublié ?</p>
-            <Btnmd onClick={login} type="submit" className="btn" caracteristique="md" text="Se connecter"/>
+            <Btnmd  type="submit" className="btn" caracteristique="md" text="Se connecter"/>
           </form>
         </div>
           <div className="noAccount">

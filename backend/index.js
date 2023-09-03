@@ -1,6 +1,7 @@
 // EXPRESS PERMET DE SIMPLIFIE ET ACCELERE LE PROCESSUS DE DEVELOPPEMENT D'APPLI ET API
 const express = require("express");
 const mysql = require("mysql");
+const dotenv = require("dotenv");
 // CORS PERMET DE GERER LES PROBLEMES DE SECURITE
 const cors = require("cors");
 // CREER UNE SESSION
@@ -11,6 +12,9 @@ const session = require("express-session");
 const bcrypt = require("bcrypt");
 // LE SEL PERMET D'AMELIORER LA SECURITE DU HACHAGE. ICI ON DONNE LA VALEUR 10 AU MOT DE PASSE AVANT LE HACHAGE.
 const saltRounds = 10;
+
+// CONFIGURER LE .ENV
+dotenv.config({path: './.env'})
 
 const app = express();
 app.use(express.json());
@@ -86,23 +90,25 @@ app.post('/', (req, res) => {
 					if(response){
 						req.session.user = data;
 						console.log(req.session.user)
-						return res.redirect('/myprofile')
+						res.redirect('/myprofile')
 					}
 					if(err) return res.json({Error: "Probleme de mot de passe"});
 				});
-			}	
+			}else {
+				return res.json({ Error: "Utilisateur non trouvé" });
+			}
 		}
 	);
 });
 
-app.get('/', (req, res) => {
-	if(req.session.user){
-		res.send({loggedIn: true, user: req.session.user})
-		return res.redirect('/myprofile')
-	}else{
-		res.send({loggedIn: false})
-	}
-})
+// app.get('/', (req, res) => {
+// 	if(req.session.user){
+// 		res.send({loggedIn: true, user: req.session.user})
+// 		return res.redirect('/myprofile')
+// 	}else{
+// 		res.send({loggedIn: false})
+// 	}
+// })
 
 // DECONNEXION A LA SESSION
 app.get('/'), (req, res) => {
