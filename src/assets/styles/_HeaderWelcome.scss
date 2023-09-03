@@ -1,0 +1,304 @@
+/* COMPUTER */
+@media screen and (min-width: 781px) {
+    nav{
+        background-color: rgb(0, 0, 0);
+        height: 4em;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        padding: 1em;
+    }
+
+    .logo{
+        display: inline-flex;
+        width: 25%;
+        align-items: center;
+        padding-left: 15px;
+    }
+
+    .logoTogether{
+        width: 60px;
+        height: 60px;
+    }
+    .formSearcher{
+        width: 50%;
+        display: inline-flex;
+        .formSearch{
+            width: 300px;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+    }
+
+    .inputSearch{
+        background-color: #ffff;
+        width: 80%;
+        height: 39px;
+        border-radius: 20px 0px 0px 20px;
+        border: none;
+        padding-left: 10px;
+    }
+
+    .btnSearch{
+        background-color: #ffff;
+        width: 20%;
+        height: 37px;
+        border-radius: 0px 20px 20px 0px;
+    }
+
+    .btnDisconnect{
+        display: flex;
+        width: 25%;
+        align-items: center;
+        flex-direction: row-reverse;
+        padding-right: 15px;
+    }
+    
+    .burger-menu{
+        display: hidden;
+    }
+    
+    .menu{
+        display: none;
+    }
+    
+    .hidden{
+        display: none;
+    }
+    
+}
+
+/*TABLETTE*/
+@media screen and (min-width: 568px) and (max-width: 780px) {
+    nav{
+        background-color: rgb(0, 0, 0);
+        height: 4em;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        padding: 1em;
+    }
+
+    .logo{
+        display: flex;
+        width: 25%;
+        align-items: center;
+        padding-left: 15px;
+    }
+
+    .logoTogether{
+        width: 60px;
+        height: 60px;
+    }
+
+    .formSearcher{
+        display: none;
+    }
+
+    .inputSearch{
+        background-color: #ffff;
+        width: 80%;
+        height: 33px;
+        border-radius: 20px 0px 0px 20px;
+        border: none;
+        padding-left: 10px;
+    }
+
+    .btnSearch{
+        background-color: #ffff;
+        width: 20%;
+        height: 37px;
+        border-radius: 0px 20px 20px 0px;
+    }
+
+    .btnDisconnect{
+        display: none;
+    }
+    
+    .burger{
+        width: 75%;
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        padding-right: 15px;
+    }
+
+    .burger-menu{
+        width: 2em;
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-around;
+        cursor: pointer;
+    }
+    
+    .burger-bar{
+        width: 2em;
+        height: 5px;
+        background-color: white;
+        border-radius: 20px 20px 20px 20px;
+    }
+    
+    .menu{
+        width: 100%;
+        height: max-content;
+    }
+
+    .formBurger{
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+
+    .btn_disconnect_burger{
+        text-align: center;
+    }
+    
+    .hidden{
+        display: none;
+    }
+    
+    .visible{
+        display: inherit;
+    }
+    
+    .burger-bar.clicked:nth-child(1){
+        transform: rotate(45deg) translate(0.4em, 0.60em);
+        transition: ease-out 0.5s;
+    }
+    
+    .burger-bar.clicked:nth-child(2){
+        transform: scale(0.1);
+        transition: ease-out 0.5s;
+    }
+    
+    .burger-bar.clicked:nth-child(3){
+        transform: rotate(133deg) translate(-0.6em, 0.75em);
+        transition: ease-out 0.5s;
+    }
+    
+    .burger-bar.unclicked{
+        transform: rotate(0) translate(0);
+        transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
+    }
+}
+
+/* SMARTPHONE */
+@media screen and (max-width: 567px) { 
+    nav{
+        background-color: rgb(0, 0, 0);
+        height: 4em;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        padding: 1em;
+    }
+
+    .logo{
+        display: flex;
+        width: 25%;
+        align-items: center;
+        padding-left: 15px;
+    }
+
+    .logoTogether{
+        width: 60px;
+        height: 60px;
+    }
+
+    .formSearcher{
+        display: none;
+    }
+
+    .formBurger{
+        width: 70%;
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+
+    .inputSearch{
+        background-color: #ffff;
+        width: 70%;
+        height: 33px;
+        border-radius: 20px 0px 0px 20px;
+        border: none;
+        padding-left: 5px;
+    }
+
+    .btnSearch{
+        background-color: #ffff;
+        width: 25%;
+        height: 37px;
+        border-radius: 20px 20px 20px 20px;
+    }
+
+    .btnDisconnect{
+        display: none;
+    }
+    
+    .burger{
+        width: 75%;
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        padding-right: 15px;
+    }
+
+    .burger-menu{
+        width: 2em;
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-around;
+        cursor: pointer;
+    }
+    
+    .burger-bar{
+        width: 2em;
+        height: 5px;
+        background-color: white;
+        border-radius: 20px 20px 20px 20px;
+    }
+    
+    .menu{
+        width: 100%;
+        height: max-content;
+        position: absolute;
+    }
+
+    .btn_disconnect_burger{
+        text-align: center;
+    }
+    
+    .hidden{
+        display: none;
+    }
+    
+    .visible{
+        display: inherit;
+    }
+    
+    .burger-bar.clicked:nth-child(1){
+        transform: rotate(45deg) translate(0.4em, 0.60em);
+        transition: ease-out 0.5s;
+    }
+    
+    .burger-bar.clicked:nth-child(2){
+        transform: scale(0.1);
+        transition: ease-out 0.5s;
+    }
+    
+    .burger-bar.clicked:nth-child(3){
+        transform: rotate(133deg) translate(-0.6em, 0.75em);
+        transition: ease-out 0.5s;
+    }
+    
+    .burger-bar.unclicked{
+        transform: rotate(0) translate(0);
+        transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
+    }
+}

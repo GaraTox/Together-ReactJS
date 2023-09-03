@@ -1,0 +1,12 @@
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;   
+    .admin{
+        border-top: solid 1px rgb(33, 37, 41);
+        .adminLink{
+            text-decoration: none;
+            list-style-type: none;
+        }
+    }
+}

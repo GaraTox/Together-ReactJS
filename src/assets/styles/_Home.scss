@@ -1,0 +1,503 @@
+/* COMPUTER */
+@media screen and (min-width: 781px) {
+.bg-user{
+    background-color: rgb(248, 249, 250);
+.blocPublication{
+    overflow-y: scroll;
+    width: 80%;
+    height: 100vh;
+    padding-bottom: 150px;
+    .blocInputComm{
+        width: 50%;
+        height: max-content;
+        margin-left: 25%;
+        margin-right: 25%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(248, 249, 250);
+        color: rgb(33, 37, 41);
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        border: solid 0.5px rgb(221, 221, 221);
+        box-shadow: 2px 2px 2px rgb(185, 185, 185);
+        vertical-align: middle;
+        .imgProfil{
+            display: flex;
+            float: left;
+            background-color: rgb(248, 249, 250);
+            width: 25px;
+            height: 25px;
+            border: solid 1px rgb(33, 37, 41);
+            border-radius: 50%;
+            margin-right: 5px;
+            margin-top: 7px;
+        }
+        .formPubli{
+            display: flex;
+            width: 90%;
+            height: 40px;
+            border-radius: 10px;
+            border: none;
+            margin-left: 10px;
+            input{
+                background-color: #ffffff;
+                border: solid 1px rgb(145, 145, 145);
+                border-radius: 10px;
+                width: 100%;
+                outline: none;
+                padding-left: 5px;
+            }
+            button{
+                background-color: transparent;
+            }
+        }
+        .blocConversation{
+            width: 100%;
+            display: inline-flex;
+            vertical-align: middle;
+            justify-content: center;
+            margin-top: 10px;
+            .messageConv{
+                width: 25px;
+                margin-right: 5px;
+            }
+        }
+    }
+
+    .blocPubli{
+        width: 50%;
+        margin-top: 10px;
+        margin-left: 25%;
+        margin-right: 25%;
+        padding: 10px;
+        border-radius: 10px;
+        border: solid 0.5px rgb(221, 221, 221);
+        box-shadow: 2px 2px 2px rgb(185, 185, 185);
+        .nomPubli{
+            display: inline-flex;
+            width: 100%;
+            .imgProfil{
+                display: flex;
+                background-color: rgb(248, 249, 250);
+                width: 25px;
+                height: 25px;
+                border: solid 1px rgb(33, 37, 41);
+                border-radius: 50%;
+            }
+            .nameFirstname{
+                width: 70%;
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+            .modifierSupprimer{
+                display: inline-flex;
+                width: 30%;
+                align-items: center;
+                justify-content: flex-end;
+                .imgModifier{
+                    width: 20px;
+                    height: 20px;
+                }
+                .imgSupprimer{
+                    width: 20px;
+                    height: 20px;
+                    margin-left: 5px;
+                }
+            }
+        }
+        .blocCommentaire{
+            width: 100%;
+            background-color: rgb(248, 249, 250);
+            border: solid 1px rgb(197, 197, 197);
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .blocAimer{
+            display: flex;
+            justify-content: space-around;
+            padding-top: 8px;
+            .btnAime{
+                display: inline-flex;
+                width: 25px;
+                height: 25px;
+                padding: 0;
+                margin: 0;
+                background-color: transparent;
+            }
+            .imgAime{
+                display: flex;
+                width: 25px;
+                height: 25px;
+            }
+            .btnComm{
+                display: inline-flex;
+                width: 25px;
+                height: 25px;
+                padding: 0;
+                margin: 0;
+                background-color: transparent;
+            }
+            .imgComm{
+                display: flex;
+                width: 25px;
+                height: 25px;
+            }
+            .btnSignaler{
+                display: inline-flex;
+                width: 25px;
+                height: 25px;
+                padding: 0;
+                margin: 0;
+                background-color: transparent;
+            }
+            .imgSignaler{
+                display: flex;
+                width: 25px;
+                height: 25px;
+            }
+        }
+    }
+}
+.blocPublication::-webkit-scrollbar{
+    background-color: rgb(248, 249, 250);
+    width: 10px;
+}
+.blocPublication::-webkit-scrollbar-thumb{
+    background-color: rgb(33, 37, 41);
+    border-radius: 50px;
+}
+}
+
+}
+
+/*TABLETTE*/
+@media screen and (min-width: 568px) and (max-width: 780px) {
+    .bg-user{
+        background-color: rgb(248, 249, 250);
+    .blocPublication{
+        width: 80%;
+        height: 100vh;
+        overflow-y: scroll;
+        padding-bottom: 150px;
+        .blocInputComm{
+            width: 80%;
+            height: max-content;
+            margin-left: 10%;
+            margin-right: 10%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(248, 249, 250);
+            color: rgb(33, 37, 41);
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            border: solid 0.5px rgb(221, 221, 221);
+            box-shadow: 2px 2px 2px rgb(185, 185, 185);
+            vertical-align: middle;
+            .imgProfil{
+                display: flex;
+                float: left;
+                background-color: rgb(248, 249, 250);
+                width: 25px;
+                height: 25px;
+                border: solid 1px rgb(33, 37, 41);
+                border-radius: 50%;
+                margin-right: 5px;
+                margin-top: 7px;
+            }
+            .formPubli{
+                display: flex;
+                width: 90%;
+                height: 40px;
+                border-radius: 10px;
+                border: none;
+                margin-left: 10px;
+                input{
+                    background-color: #ffff;
+                    border: solid 1px rgb(145, 145, 145);
+                    border-radius: 10px;
+                    width: 100%;
+                    outline: none;
+                    padding-left: 5px;
+                }
+                button{
+                    background-color: transparent;
+                }
+            }
+            .blocConversation{
+                width: 100%;
+                display: inline-flex;
+                vertical-align: middle;
+                justify-content: center;
+                margin-top: 10px;
+                .messageConv{
+                    width: 25px;
+                    margin-right: 5px;
+                }
+            }
+        }
+    
+        .blocPubli{
+            width: 80%;
+            margin-top: 10px;
+            margin-left: 10%;
+            margin-right: 10%;
+            padding: 10px;
+            border-radius: 10px;
+            border: solid 0.5px rgb(221, 221, 221);
+            box-shadow: 2px 2px 2px rgb(185, 185, 185);
+            .nomPubli{
+                display: inline-flex;
+                width: 100%;
+                .imgProfil{
+                    display: flex;
+                    background-color: rgb(248, 249, 250);
+                    width: 25px;
+                    height: 25px;
+                    border: solid 1px rgb(33, 37, 41);
+                    border-radius: 50%;
+                }
+                .nameFirstname{
+                    width: 70%;
+                    margin-left: 10px;
+                    margin-right: 10px;
+                }
+                .modifierSupprimer{
+                    display: inline-flex;
+                    width: 30%;
+                    align-items: center;
+                    justify-content: flex-end;
+                    .imgModifier{
+                        width: 20px;
+                        height: 20px;
+                    }
+                    .imgSupprimer{
+                        width: 20px;
+                        height: 20px;
+                        margin-left: 5px;
+                    }
+                }
+            }
+            .blocCommentaire{
+                width: 100%;
+                background-color: rgb(248, 249, 250);
+                border: solid 1px rgb(197, 197, 197);
+                border-radius: 10px;
+                padding: 10px;
+            }
+            .blocAimer{
+                display: flex;
+                justify-content: space-around;
+                padding-top: 8px;
+                .btnAime{
+                    display: inline-flex;
+                    width: 25px;
+                    height: 25px;
+                    padding: 0;
+                    margin: 0;
+                    background-color: transparent;
+                }
+                .imgAime{
+                    display: flex;
+                    width: 25px;
+                    height: 25px;
+                }
+                .btnComm{
+                    display: inline-flex;
+                    width: 25px;
+                    height: 25px;
+                    padding: 0;
+                    margin: 0;
+                    background-color: transparent;
+                }
+                .imgComm{
+                    display: flex;
+                    width: 25px;
+                    height: 25px;
+                }
+                .btnSignaler{
+                    display: inline-flex;
+                    width: 25px;
+                    height: 25px;
+                    padding: 0;
+                    margin: 0;
+                    background-color: transparent;
+                }
+                .imgSignaler{
+                    display: flex;
+                    width: 25px;
+                    height: 25px;
+                }
+            }
+        }
+    }
+}
+}
+
+/* SMARTPHONE */
+@media screen and (max-width: 567px) {
+    .bg-user{
+        background-color: rgb(248, 249, 250);
+    .blocPublication{
+        width: 100%;
+        height: 100vh;
+        overflow-y: scroll;
+        position: absolute;
+        padding-bottom: 240px;
+        .blocInputComm{
+            width: 80%;
+            height: max-content;
+            margin-left: 10%;
+            margin-right: 10%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(248, 249, 250);
+            color: rgb(33, 37, 41);
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            border: solid 0.5px rgb(221, 221, 221);
+            box-shadow: 2px 2px 2px rgb(185, 185, 185);
+            vertical-align: middle;
+            .imgProfil{
+                display: flex;
+                float: left;
+                background-color: rgb(248, 249, 250);
+                width: 25px;
+                height: 25px;
+                border: solid 1px rgb(33, 37, 41);
+                border-radius: 50%;
+                margin-right: 5px;
+                margin-top: 7px;
+            }
+            .formPubli{
+                display: flex;
+                height: 40px;
+                border-radius: 10px;
+                border: none;
+                margin-left: 10px;
+                input{
+                    background-color: #ffff;
+                    border: solid 1px rgb(145, 145, 145);
+                    border-radius: 10px;
+                    width: 100%;
+                    outline: none;
+                    padding-left: 5px;
+                }
+                button{
+                    background-color: transparent;
+                }
+            }
+            .blocConversation{
+                width: 100%;
+                display: inline-flex;
+                vertical-align: middle;
+                justify-content: center;
+                margin-top: 10px;
+                .messageConv{
+                    width: 25px;
+                    margin-right: 5px;
+                }
+            }
+        }
+    
+        .blocPubli{
+            width: 80%;
+            margin-top: 10px;
+            margin-left: 10%;
+            margin-right: 10%;
+            padding: 10px;
+            border-radius: 10px;
+            border: solid 0.5px rgb(221, 221, 221);
+            box-shadow: 2px 2px 2px rgb(185, 185, 185);
+            .nomPubli{
+                display: inline-flex;
+                width: 100%;
+                .imgProfil{
+                    display: flex;
+                    background-color: rgb(248, 249, 250);
+                    width: 25px;
+                    height: 25px;
+                    border: solid 1px rgb(33, 37, 41);
+                    border-radius: 50%;
+                }
+                .nameFirstname{
+                    width: 70%;
+                    margin-left: 10px;
+                    margin-right: 10px;
+                }
+                .modifierSupprimer{
+                    display: inline-flex;
+                    width: 30%;
+                    align-items: center;
+                    justify-content: flex-end;
+                    .imgModifier{
+                        width: 20px;
+                        height: 20px;
+                    }
+                    .imgSupprimer{
+                        width: 20px;
+                        height: 20px;
+                        margin-left: 5px;
+                    }
+                }
+            }
+            .blocCommentaire{
+                width: 100%;
+                background-color: rgb(248, 249, 250);
+                border: solid 1px rgb(197, 197, 197);
+                border-radius: 10px;
+                padding: 10px;
+            }
+            .blocAimer{
+                display: flex;
+                justify-content: space-around;
+                padding-top: 8px;
+                .btnAime{
+                    display: inline-flex;
+                    width: 25px;
+                    height: 25px;
+                    padding: 0;
+                    margin: 0;
+                    background-color: transparent;
+                }
+                .imgAime{
+                    display: flex;
+                    width: 25px;
+                    height: 25px;
+                }
+                .btnComm{
+                    display: inline-flex;
+                    width: 25px;
+                    height: 25px;
+                    padding: 0;
+                    margin: 0;
+                    background-color: transparent;
+                }
+                .imgComm{
+                    display: flex;
+                    width: 25px;
+                    height: 25px;
+                }
+                .btnSignaler{
+                    display: inline-flex;
+                    width: 25px;
+                    height: 25px;
+                    padding: 0;
+                    margin: 0;
+                    background-color: transparent;
+                }
+                .imgSignaler{
+                    display: flex;
+                    width: 25px;
+                    height: 25px;
+                }
+            }
+        }
+    }
+}
+}

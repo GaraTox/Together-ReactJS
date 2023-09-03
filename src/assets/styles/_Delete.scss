@@ -1,0 +1,101 @@
+@media screen and (min-width: 781px) {
+    .bg-admin{
+        background-color: #b4c6d6;
+        height: 100vh;
+    .search{
+        width: 100%;
+        display: inline-flex;
+        justify-content: center;
+        .searchAvatar{
+            width: 15%;
+            .avatar{
+                width: 3em;
+            }
+        }
+        .searchFirstname{
+            width: 20%;
+            margin-top: 10px;
+        }
+        
+        .searchName{
+            width: 20%;
+            margin-top: 10px;
+        }
+        .searchButton{
+            width: max-content;
+            height: fit-content;
+            margin-top: 5px;
+        }
+    }
+    }
+}
+    
+    @media screen and (min-width: 568px) and (max-width: 780px) {  
+        .bg-admin{
+            background-color: #b4c6d6;
+            height: 100vh;
+        .search{
+            width: 100%;
+            display: inline-flex;
+            justify-content: center;
+            .searchAvatar{
+                width: 20%;
+                .avatar{
+                    width: 3em;
+                }
+            }
+            .searchFirstname{
+                width: 20%;
+                margin-top: 10px;
+            }
+            
+            .searchName{
+                width: 20%;
+                margin-top: 10px;
+            }
+            .searchButton{
+                width: max-content;
+                height: fit-content;
+                margin-top: 5px;
+                .ajouter{
+                    font-size: small;
+                }
+            }
+        }
+    }
+}
+    
+    @media screen and (max-width: 567px) {
+        .bg-admin{
+            background-color: #b4c6d6;
+            height: 100vh;
+        .search{
+            width: 100%;
+            display: inline-flex;
+            justify-content: center;
+            .searchAvatar{
+                width: 20%;
+                .avatar{
+                    width: 3em;
+                }
+            }
+            .searchFirstname{
+                width: 20%;
+                margin-top: 10px;
+            }
+            
+            .searchName{
+                width: 20%;
+                margin-top: 10px;
+            }
+            .searchButton{
+                width: max-content;
+                height: fit-content;
+                margin-top: 5px;
+                .ajouter{
+                    font-size: smaller;
+                }
+            }
+        }
+        }
+    }

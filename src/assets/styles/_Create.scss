@@ -1,0 +1,55 @@
+@media screen and (min-width: 781px) {
+.bg-admin{
+    background-color: #b4c6d6;
+    height: 100vh;
+.blocCreate{
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    .formCreate{
+        width: 300px;
+        .accepterConditions{
+            font-size: small;
+        }
+    }
+}
+}
+}
+
+/*TABLETTE*/
+@media screen and (min-width: 568px) and (max-width: 780px) {
+    .bg-admin{
+        background-color: #b4c6d6;
+        height: 100vh;
+    .blocCreate{
+        display: flex;
+        margin: 0 auto;
+        justify-content: center;
+        .formCreate{
+            width: 300px;
+            .accepterConditions{
+                font-size: small;
+            }
+        }
+    }
+}
+}
+
+/* SMARTPHONE */
+@media screen and (max-width: 567px) {
+    .bg-admin{
+        background-color: #b4c6d6;
+        height: 100vh;
+    .blocCreate{
+        display: flex;
+        margin: 0 auto;
+        justify-content: center;
+        .formCreate{
+            width: 300px;
+            .accepterConditions{
+                font-size: small;
+            }
+        }
+    }
+}
+}

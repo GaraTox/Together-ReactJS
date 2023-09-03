@@ -1,0 +1,157 @@
+$global-bgcolor-nav: rgb(33, 37, 41);
+$global-color-text: rgb(248, 249, 250);
+
+body{
+    overflow-y: hidden;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: $global-color-text;
+    nav{
+        padding: 0;
+        margin: 0;
+        background-color: $global-bgcolor-nav;
+        height: 80px;
+        .together{
+            text-decoration: none;
+            color: $global-color-text;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .Together{
+            text-decoration: none;
+            color: $global-color-text;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+    h1{
+        text-align: center;
+    }
+    form{
+        background-color: $global-color-text;
+        height: max-content;
+        text-align: center;
+        border: solid 1px black;
+        border-radius: 20px;
+    }
+    input{
+        outline: none;
+        background-color: $global-color-text;
+    }
+    input::placeholder{
+        opacity: 0.6;
+    }
+    .form-control{
+        border: solid 1px rgb(211, 211, 211);
+    }
+    .form-control:focus {
+        border-color: grey;
+        box-shadow: 0 0 5px rgb(255, 255, 255) !important;
+    }
+    .form-check-input{
+        border: solid 1px rgb(190, 190, 190);
+    }
+    .form-check-input:focus {
+        border-color: grey;
+        box-shadow: 0 0 5px rgb(255, 255, 255) !important;
+    }
+    p{
+        margin: 0;
+        padding: 0;
+    }
+    hr{
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+    ul{
+        list-style-type: none;
+    }
+
+    button{
+        cursor: pointer;
+        display: inline-block;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: none;
+        border-radius: 10px;
+    }
+    
+    button.lg{
+        background: linear-gradient(#ffffff, #c7c7c7);
+        width: 180px;
+        height: 40px;
+        gap: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        color: $global-bgcolor-nav;
+        font-size: 15px;
+        margin-bottom: 5px;
+        border: solid 1px #CFCFCF;
+        box-shadow: 2px 2px 2px rgb(184, 184, 184) !important;
+    }
+
+    button.lg:hover{
+        background: #ececec;
+        color: $global-bgcolor-nav;
+    }
+    
+    button.md{
+        background: linear-gradient(#ffffff, #c7c7c7);
+        width: 130px;
+        height: 41px;
+        padding: 10px;
+        color: $global-bgcolor-nav;
+        font-size: 15px;
+        border: solid 1px #CFCFCF;
+        margin-bottom: 5px;
+        box-shadow: 2px 2px 2px rgb(184, 184, 184) !important;
+    }
+
+    button.md:hover{
+        background: #ececec;
+        color: $global-bgcolor-nav;
+    }
+    
+    button.sm{
+        background: linear-gradient(#ffffff, #c7c7c7);
+        width: 111px;
+        height: 41px;
+        gap: 10px;
+        padding: 10px;
+        color: $global-bgcolor-nav;
+        font-size: 15px;
+        border: solid 1px #CFCFCF;
+        box-shadow: 2px 2px 2px rgb(184, 184, 184) !important;
+    }
+
+    button.sm:hover{
+        background: #ececec;
+        color: $global-bgcolor-nav;
+    }
+
+    a{
+        text-decoration: none;
+        color: $global-bgcolor-nav;
+    }
+    
+    footer{
+        text-align: center;
+    }
+    .menu{
+    background-color: $global-bgcolor-nav;
+    color: $global-color-text;
+    }
+    Link{
+        cursor: pointer;
+    }
+    #light body {
+        background-color: $global-color-text;
+    }
+    #dark body{
+        background-color: $global-bgcolor-nav;
+    }
+}
+
+

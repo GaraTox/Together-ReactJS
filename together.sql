@@ -1,0 +1,72 @@
+CREATE DATABASE IF NOT EXISTS `together`;
+USE `together`;
+
+DROP TABLE IF EXISTS  `user`;
+CREATE TABLE `user` (
+    `idUser` INT(255) NOT NULL AUTO_INCREMENT,
+    `avatarUser` VARCHAR(255),
+    `pseudoUser` VARCHAR(33) NOT NULL,
+    `mailUser` VARCHAR(33) NOT NULL,
+    `passwordUser` VARCHAR(255) NOT NULL,
+    `birthdayUser` DATE NOT NULL,
+    `roleUser` VARCHAR(33) NOT NULL,
+
+    PRIMARY KEY (`idUser`)
+)
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `feed`;
+CREATE TABLE `feed` (
+    `idFeed` INT(255) NOT NULL AUTO_INCREMENT,
+    `idUser` INT(255) NOT NULL,
+    `contentFeed` VARCHAR(255) NOT NULL,
+    `timeFeed` DATETIME NOT NULL,
+
+    PRIMARY KEY (`idFeed`),
+    FOREIGN KEY(`idUser`) REFERENCES user(`idUser`) ON DELETE CASCADE
+)
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `feedCommentary`;
+CREATE TABLE `feedCommentary` (
+    `idFeedCommentary` INT(255) NOT NULL AUTO_INCREMENT,
+    `idFeed` INT(255) NOT NULL,
+    `idUser` INT(255) NOT NULL,
+    `commentary` VARCHAR(255) NOT NULL,
+    `timeCommentary` DATETIME NOT NULL,
+
+    PRIMARY KEY (`idFeedCommentary`),
+    FOREIGN KEY(`idFeed`) REFERENCES feed(`idFeed`) ON DELETE CASCADE,
+    FOREIGN KEY (`idUser`) REFERENCES user(`idUser`) ON DELETE CASCADE
+)
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message` (
+    `idMessage` INT(255) NOT NULL AUTO_INCREMENT,
+    `idUser` INT(255) NOT NULL,
+    `contentMessage` VARCHAR(255) NOT NULL,
+    `timeMessage` DATETIME NOT NULL,
+
+    PRIMARY KEY (`idMessage`),
+    FOREIGN KEY(`idUser`) REFERENCES user(`idUser`) ON DELETE CASCADE
+)
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `report`;
+CREATE TABLE `report` (
+    `idReport` INT(255) NOT NULL AUTO_INCREMENT,
+    `idUser` INT(255) NOT NULL,
+    `idFeed` INT(255) NOT NULL,
+    `idFeedCommentary` INT(255) NOT NULL,
+    `idMessage` INT(255) NOT NULL,
+    `contentReport` VARCHAR(255) NOT NULL,
+    `timeReport` DATETIME NOT NULL,
+
+    PRIMARY KEY (`idReport`),
+    FOREIGN KEY(`idUser`) REFERENCES user(`idUser`) ON DELETE CASCADE,
+    FOREIGN KEY (`idFeed`) REFERENCES feed(`idFeed`) ON DELETE CASCADE,
+    FOREIGN KEY (`idFeedCommentary`) REFERENCES feedCommentary(`idFeedCommentary`) ON DELETE CASCADE,
+    FOREIGN KEY (`idMessage`) REFERENCES message(`idMessage`) ON DELETE CASCADE
+)
+ENGINE = InnoDB;

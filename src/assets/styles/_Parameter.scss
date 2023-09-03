@@ -1,0 +1,103 @@
+/* COMPUTER */
+@media screen and (min-width: 781px) {
+.bg-user{
+    background-color: rgb(248, 249, 250);
+.blocParametre{
+    width: 50%;
+   margin-left: 25%;
+   margin-right: 25%;
+   margin-top: 10%;
+   height: 100%;
+   font-size: larger;
+   font-weight: bold;
+   .blocInfo{
+        margin-left: 20%;
+        margin-right: 20%;
+        display: inline-flex;
+        width: 60%;
+        .blocProfil{
+            width: 200px;
+            .imgPhoto{
+                width: 85%;
+            }
+            .imgPlus{
+                width: 15%;
+                margin-top: 100%;
+            }
+        }
+        .infoPerso{
+            width: 300px;
+            margin-top: 5%;
+        }
+   }
+}
+}
+}
+/*TABLETTE*/
+@media screen and (min-width: 568px) and (max-width: 780px) {
+    .bg-user{
+        background-color: rgb(248, 249, 250);
+    .blocParametre{
+        width: 100%;
+        margin-top: 10%;
+        height: 100%;
+        font-size: larger;
+        font-weight: bold;
+        .blocInfo{
+            margin-left: 20%;
+            margin-right: 20%;
+            display: inline-flex;
+            width: 60%;
+             .blocProfil{
+                 width: 200px;
+                 .imgPhoto{
+                     width: 85%;
+                 }
+                 .imgPlus{
+                     width: 15%;
+                     margin-top: 100%;
+                 }
+             }
+             .infoPerso{
+                 width: 300px;
+                 margin-top: 3%;
+             }
+        }
+     }
+}
+}
+/* SMARTPHONE */
+@media screen and (max-width: 567px) {
+    .bg-user{
+        background-color: rgb(248, 249, 250);
+    .blocParametre{
+        width: 80%;
+        margin-left: 10%;
+        margin-right: 10%;
+        margin-top: 7%;
+        height: 100%;
+        font-size: medium;
+        font-weight: bold;
+        .blocInfo{
+             width: 100%;
+             .blocProfil{
+                 width: 60%;
+                 margin-left: 20%;
+                 margin-right: 20%;
+                 display: flex;
+                 .imgPhoto{
+                     width: 85%;
+                 }
+                 .imgPlus{
+                     width: 15%;
+                     margin-top: 100%;
+                 }
+             }
+            .infoPerso{
+                 margin-top: 5%;
+                 font-size: larger;
+            }
+        }
+     }
+}
+}

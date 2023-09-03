@@ -1,0 +1,27 @@
+@media screen and (min-width: 781px) {
+.footerParameter{
+    width: 100%;
+    height: max-content;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-around;
+}
+}
+
+@media screen and (min-width: 568px) and (max-width: 780px) {
+    .footerParameter{
+        width: 100%;
+        height: max-content;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+}
+
+@media screen and (max-width: 567px) {
+    .footerParameter{
+        width: 100%;
+        height: max-content;
+        display: block;
+    }
+}
