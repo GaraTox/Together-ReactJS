@@ -12,20 +12,6 @@ import commentaire from '../assets/icons/commentaire.png';
 import signaler from '../assets/icons/signaler.png';
 
 function Home() {
-    const [pseud, setPseudo] = useState('')
-    const navigate = useNavigate()
-    axios.defaults.withCredentials = true;
-    useEffect(() => {
-        axios.get('http://localhost:3001')
-        .then( res => {
-            if(res.data.valid){
-                setPseudo(res.data.pseudoUser);
-            }else{
-                navigate('/')
-            }
-        })
-        .catch(err => console.log(err))
-    }, [])
     return (
     <section>
     <div className="contenuPrincipal">
@@ -56,7 +42,7 @@ function Home() {
             <div className="blocPubli">
                 <div className="nomPubli">
                     <img className="imgProfil" src={profil} alt="photo de profil"/>
-                    <p className="nameFirstname">{pseud}</p>
+                    <p className="nameFirstname">Pseudo</p>
                     <div className="modifierSupprimer">
                         <img className="imgModifier" src={modifier} alt="modifier le commentaire"/>
                         <img className="imgSupprimer" src={supprimer} alt="supprimer le commentaire"/>

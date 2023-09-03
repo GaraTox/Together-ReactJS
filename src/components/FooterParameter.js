@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 function FooterParameter() {
-    const [roleUser, setRoleUser] = useState("");
+    // const [roleUser, setRoleUser] = useState("");
 
     // axios.defaults.withCredentials = true;
 
@@ -19,19 +19,19 @@ function FooterParameter() {
 
     return (
         <footer>
-            {roleUser == 'user' && 
-            <div className="footerParameter bg bg-dark">
+            {/* {roleUser == 'user' &&  */}
+            {/* <div className="footerParameter bg bg-dark">
                 <p><Link to="/myprofile/parameter/mentions" className="text-secondary">Mentions légales</Link></p>
                 <p><Link to="/conditions" className="text-secondary">Conditions d'utilisation</Link></p>
-            </div>
-            }
-            {roleUser == 'admin' &&
+            </div> */}
+            {/* } */}
+            {/* {roleUser == 'admin' && */}
             <div className="footerParameter bg bg-dark">
                 <p><Link to="/myprofile/parameter/mentions" className="text-secondary">Mentions légales</Link></p>
                 <p><Link to="/conditions" className="text-secondary">Conditions d'utilisation</Link></p>
                 <p><Link to="/connect-admin/home" className="text-danger">Admin</Link></p>
             </div>
-            }
+            {/* } */}
         </footer>
     );
   }
