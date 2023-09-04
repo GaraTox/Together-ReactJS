@@ -37,10 +37,10 @@ app.use(session({
 
 // CONNEXION A LA BASE DE DONNEES
 const db = mysql.createConnection({
-	user: 'root',
-	host : 'localhost',
-	password: '',
-	database : 'together'
+	user: process.env.DATABASE_USER,
+	host : process.env.DATABASE_HOST,
+	password: process.env.DATABASE_PASSWORD,
+	database : process.env.DATABASE
 });
 
 // CREER UN COMPTE POUR UTILISATEUR ET ADMIN
