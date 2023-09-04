@@ -31,7 +31,7 @@ app.use(session({
 	resave: false,
 	saveUninitialized: false,
 	cookie:{
-		expires: 60 * 60 * 24	// EXPIRE AU BOUT D'UNE JOURNEE
+		expires: 3600000 //millisecondes 	// EXPIRE AU BOUT D'UNE HEURE
 	},
 }));
 
@@ -50,7 +50,7 @@ app.post('/register', (req, res) => {
 	const passwordUser = req.body.passwordUser;
 	const birthdayUser = req.body.birthdayUser;
 	const roleUser = req.body.roleUser;
-	// HACHER LE MOT DE PASSE
+	// HASH LE MOT DE PASSE
 	bcrypt.hash(passwordUser, saltRounds, (err, hash) => {
 		if(err){
 			return res.json({Error: "Erreur de hash"});

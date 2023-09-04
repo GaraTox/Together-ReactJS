@@ -1,5 +1,5 @@
 import React from "react";
-import Btnlg from '../components/btn/Btnlg';
+import Btnlg from './btn/Btnlg';
 
 function Mode() {
     return (
