@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from "react";
+import React, { useState }  from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Btnmd from './btn/Btnmd';
 import axios from 'axios';
@@ -17,10 +17,8 @@ const handleSubmit = (event) => {
   event.preventDefault();
   axios.post('http://localhost:3001/', { mailUser, passwordUser })
     .then((res) => {
-      // Si la connexion est réussie (vous devez définir une logique pour cela côté serveur)
       if (res.data.success) {
-        // Redirigez l'utilisateur vers la page de profil
-        history.push('/myprofile'); // Assurez-vous que '/profil' est la bonne route pour la page de profil
+        history.push('/myprofile');
       } else {
         console.log("Probleme de connexion")
       }
@@ -29,11 +27,6 @@ const handleSubmit = (event) => {
       console.error(err);
     });
 };
-
-// useEffect(() => {
-//   axios.get('http://localhost:3001/')
-//   .then(res => console.log(res));
-// }, []);
 
     return (
         <section className="loginPage">
