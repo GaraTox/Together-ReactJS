@@ -15,6 +15,18 @@ CREATE TABLE `user` (
 )
 ENGINE = InnoDB;
 
+DROP TABLE IF EXISTS `friend`;
+CREATE TABLE `friend` (
+    `id` INT(255) NOT NULL AUTO_INCREMENT,
+    `id_User` INT(255) NOT NULL,
+    `id_Friend` INT(255) NOT NULL,
+
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`id_User`) REFERENCES user(`idUser`) ON DELETE CASCADE,
+    FOREIGN KEY (`id_Friend`) REFERENCES user(`idUser`) ON DELETE CASCADE
+)
+ENGINE = InnoDB;
+
 DROP TABLE IF EXISTS `feed`;
 CREATE TABLE `feed` (
     `idFeed` INT(255) NOT NULL AUTO_INCREMENT,
