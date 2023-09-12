@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import logo from '../assets/icons/logo.png';
-import axios from "axios";
 
 function HeaderAdmin() {
     // CHANGE BURGER CLASS
@@ -21,18 +20,24 @@ function HeaderAdmin() {
         setmenuClick(!menuClick);
     }
 
-    const handleLogout = () => {
-        axios.post('/') // Envoyer une requête POST au serveur Node.js pour déconnecter
-          .then(response => {
-            // Réponse du serveur
-            if (response.status === 200) {
-              // Redirigez l'utilisateur vers la page de connexion ou effectuez d'autres actions nécessaires
-              window.location.href = '/';
-            }
-          })
-          .catch(error => {
-            console.error('Erreur lors de la déconnexion :', error);
+    const handleLogout = async () => {
+        try {
+          // Effectuez une requête GET vers la route de déconnexion côté serveur
+          const response = await fetch('/logout', {
+            method: 'GET',
+            credentials: 'include', // Inclut les cookies dans la requête
           });
+    
+          if (response.status === 200) {
+            // La déconnexion a réussi, vous pouvez rediriger l'utilisateur ou effectuer d'autres actions nécessaires
+            window.location.href = '/'; // Redirection vers la page de connexion
+          } else {
+            // Gérez les erreurs de déconnexion
+            console.error('Erreur lors de la déconnexion');
+          }
+        } catch (error) {
+          console.error('Erreur lors de la déconnexion :', error);
+        }
       };
 
   return (
