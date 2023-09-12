@@ -110,6 +110,18 @@ app.post('/', (req, res) => {
 // 	}
 // })
 
+// RECUPERATION DES DONNEES DE PROFIL
+app.get('/myprofile/parameter/:idUser', (req, res) => {
+    const idUser = req.params.idUser;
+    const sql = `SELECT * FROM user WHERE idUser = ${idUser}`;
+
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.json(result[0]);
+    });
+});
+
+
 // DECONNEXION A LA SESSION
 app.post('/', (req, res) => {
 	req.session.destroy(err => {
@@ -117,7 +129,7 @@ app.post('/', (req, res) => {
 		console.error('Erreur lors de la déconnexion :', err);
 		res.status(500).send('Erreur lors de la déconnexion');
 	  } else {
-		res.clearCookie('Cookie-Together');
+		res.clearCookie('CookieTogether');
 		res.sendStatus(200);
 	  }
 	});
