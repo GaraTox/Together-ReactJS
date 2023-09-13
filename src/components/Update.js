@@ -3,7 +3,7 @@ import React from "react";
 function Update() {
     return (
         <section>
-        <h4 className="text-center mt-5">Modifier les données de l'utilisateur</h4>
+        <h4 className="text-center mt-5 ">Modifier les données de l'utilisateur</h4>
         <div className="blocUpdate">
         <form method="POST" className="formUpdate text-center p-3">
           <div className="mb-3">

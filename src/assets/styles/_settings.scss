@@ -142,6 +142,7 @@ body{
     .menu{
     background-color: $global-bgcolor-nav;
     color: $global-color-text;
+    z-index: 1;
     }
     Link{
         cursor: pointer;

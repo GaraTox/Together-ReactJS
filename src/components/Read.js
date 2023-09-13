@@ -9,8 +9,8 @@ function Read() {
             <div className="searchAvatar">
                 <img src={profil} className="avatar" alt="avatar"/>
             </div>
-            <p className="searchFirstname">Pseudo</p>
-            <p className="searchName">Mail</p>
+                <p className="searchFirstname">Pseudo</p>
+                <p className="searchName">Mail</p>
             <div className="searchButton">
                 <p><Btnsm type="submit" className="btn" caracteristique="sm" text="UTILISATEUR"/></p>
             </div> 

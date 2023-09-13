@@ -9,19 +9,19 @@ function Create() {
         <form method="POST" className="formCreate text-center p-3">
           <div className="mb-2">
             <label htmlFor="exampleInput" className="form-label">Pseudo</label>
-            <input type="text" className="form-control" id="pseudo" name="Pseudo" autocomplete="off" required/>
+            <input type="text" className="form-control" id="pseudo" name="Pseudo" autoComplete="off" required/>
           </div>
           <div className="mb-2">
             <label htmlFor="exampleInput" className="form-label">Adresse mail</label>
-            <input type="email" className="form-control" id="mail" name="Mail" autocomplete="off" required/>
+            <input type="email" className="form-control" id="mail" name="Mail" autoComplete="off" required/>
           </div>
           <div className="mb-2">
             <label htmlFor="exampleInput" className="form-label">Date de naissance</label>
-            <input type="date" className="form-control" id="birthday" name="Birthday" autocomplete="off" required/>
+            <input type="date" className="form-control" id="birthday" name="Birthday" autoComplete="off" required/>
           </div>
           <div className="mb-2">
             <label htmlFor="exampleInput" className="form-label">Mot de passe</label>
-            <input type="password" className="form-control" id="passw" name="Passwords" autocomplete="off" required/>
+            <input type="password" className="form-control" id="passw" name="Passwords" autoComplete="off" required/>
           </div>
           <div className="mb-2">
             <div className="form-check">

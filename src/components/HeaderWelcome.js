@@ -71,7 +71,7 @@ function HeaderWelcome() {
             <div className={menuClass}>
                 <form className='formBurger' method='GET' action='#'>
                     <input className='inputSearch border-light' type='search' placeholder='Rechercher un ami ...' autoComplete='off'/>
-                    <button className="btn btn-outline-light bg bg-light btn_search" type="submit">
+                    <button className="btn btn_search" type="submit">
                     <img className="mb-1" src={search} alt="loupe"/>
                     </button>
                 </form>
