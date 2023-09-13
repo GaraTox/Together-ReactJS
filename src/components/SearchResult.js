@@ -5,7 +5,9 @@ import Btnsm from '../components/btn/Btnsm';
 function SearchResult() {
     return (
     <section>
-        <div className="text-center bg bg-light mt-2 search">
+        <div className="grid-admin">
+
+        <div className="text-center bg bg-light search">
             <div className="searchAvatar">
                 <img src={profil} className="avatar" alt="avatar"/>
             </div>
@@ -13,7 +15,9 @@ function SearchResult() {
             <p className="searchName">Adresse mail</p>
             <div className="searchButton">
                 <Btnsm type="submit" className="btn" caracteristique="sm" text="Ajouter"/>
-            </div> 
+            </div>
+        </div>
+ 
         </div>
         <hr/>
     </section>

@@ -5,7 +5,8 @@ import Btnsm from '../components/btn/Btnsm';
 function Read() {
     return (
     <section className="bg-admin">
-        <div className="text-center mt-2 search">
+        <div className="grid-admin"> 
+        <div className="text-center search">
             <div className="searchAvatar">
                 <img src={profil} className="avatar" alt="avatar"/>
             </div>
@@ -14,6 +15,7 @@ function Read() {
             <div className="searchButton">
                 <p><Btnsm type="submit" className="btn" caracteristique="sm" text="UTILISATEUR"/></p>
             </div> 
+        </div>
         </div>
         <hr/>
     </section>
