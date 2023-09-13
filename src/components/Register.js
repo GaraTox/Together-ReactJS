@@ -10,13 +10,14 @@ function Inscrire() {
     const [birthdayReg, setBirthdayReg] = useState('');
     const [passwordReg, setPasswordReg] = useState('');
 
+  // EVENEMENT DE CLIQUE
     const register = (event) => {
       event.preventDefault();
       axios.post('http://localhost:3001/register', 
       {pseudoUser: pseudoReg, mailUser: mailReg, birthdayUser: birthdayReg, passwordUser: passwordReg})
       .then(res => {return res.redirect('/')})
       .then(err => console.log(err))
-  }
+    }
 
     return (
         <section className="registerPage">
@@ -51,7 +52,7 @@ function Inscrire() {
         </div>
         <div className="accountExist">
             <p>Déjà un compte ? <Link to="/" className="connectVous">Se connecter !</Link></p>
-          </div>
+        </div>
         </section>
     );
   }
