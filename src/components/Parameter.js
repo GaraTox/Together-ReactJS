@@ -8,6 +8,11 @@ function Parameter() {
     const pseudo = useSelector((state) => state.PseudoUser);
     const mail = useSelector((state) => state.mailUser);
 
+    // NETTOYER REACT DEVTOOL
+    // useEffect(() => {
+    //     localStorage.clear();
+    // })
+
     return (
         <section>
             <div className="blocParametre">

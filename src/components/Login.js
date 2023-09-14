@@ -12,7 +12,7 @@ function Connect() {
 
 axios.defaults.withCredentials = true;
 
-// ACTION DU CLIQUE SUR LE BOUTON VALIDER INSCRIPTION
+// ACTION DU CLIQUE SUR LE BOUTON SE CONNECTER
 const handleSubmit = (event) => {
   event.preventDefault();
   axios.post('http://localhost:3001/', { mailUser, passwordUser })

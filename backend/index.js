@@ -90,6 +90,7 @@ app.post('/', (req, res) => {
 					if(response){
 						req.session.user = data;
 						console.log(req.session.user)
+						
 						res.redirect('/myprofile')
 					}
 					if(err) return res.json({Error: "Probleme de mot de passe"});
