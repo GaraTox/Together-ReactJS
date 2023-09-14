@@ -18,7 +18,8 @@ const handleSubmit = (event) => {
   axios.post('http://localhost:3001/', { mailUser, passwordUser })
     .then((res) => {
       if (res.data.success) {
-        history.push('/myprofile');
+
+        history.push('/myprofile'); 
       } else {
         console.log("Probleme de connexion")
       }

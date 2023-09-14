@@ -6,7 +6,8 @@ function Mode() {
         <section>
             <div className="mode">
                 <div className="btnDelete">
-                    <Btnlg type="submit" className="btn" caracteristique="lg" text="Supprimer ce compte"/>
+                    <Btnlg type="submit" className="btn" caracteristique="lg" text="Modifier votre profil"/>
+                    <Btnlg type="submit" className="btn" caracteristique="lg mt-3" text="Supprimer ce compte"/>
                 </div>
             </div>
         </section>

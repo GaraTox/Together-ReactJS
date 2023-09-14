@@ -6,21 +6,13 @@ import storage from 'redux-persist/lib/storage';
 
 // Store
 const initStore = {
-  connected: false,
-  idUser: 0, // Par défaut, 0 si aucune valeur n'est trouvée
+  idUser: 0,
   avatarUser: '',
   pseudoUser: '',
   mailUser: '',
-  birthdayUser: '',
-  roleUser: ''
 };
 
 // Actions creators
-const setConnected = (value) => ({
-  type: "setConnected",
-  payload: value,
-});
-
 const setIdUser = (value) => ({
   type: "setIdUser",
   payload: value,
@@ -41,24 +33,9 @@ const setMailUser = (value) => ({
   payload: value,
 });
 
-const setBirthdayUser = (value) => ({
-    type: "setBirthdayUser",
-    payload: value,
-  });
-
-const setRoleUser = (value) => ({
-  type: "setRoleUser",
-  payload: value,
-});
-
 // Reducer
 const rootReducers = (state = initStore, action) => {
   switch (action.type) {
-    case "setConnected":
-      return {
-        ...state,
-        connected: action.payload,
-      };
     case "setIdUser":
       return {
         ...state,
@@ -79,16 +56,6 @@ const rootReducers = (state = initStore, action) => {
         ...state,
         mailUser: action.payload,
       };
-    case "setBirthdayUser":
-      return {
-        ...state,
-        birthdayUser: action.payload,
-      };
-    case "setRoleUser":
-        return {
-        ...state,
-        roleUser: action.payload,
-    };
     default:
       return state;
   }
@@ -104,4 +71,4 @@ const persistedReducer = persistReducer(persistConfig, rootReducers);
 const store = legacy_createStore(persistedReducer, composeWithDevTools());
 const persistor = persistStore(store);
 
-export { store, persistor, setConnected, setIdUser, setAvatarUser, setPseudoUser, setMailUser, setBirthdayUser, setRoleUser };
+export { store, persistor, setIdUser, setAvatarUser, setPseudoUser, setMailUser };

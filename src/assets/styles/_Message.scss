@@ -32,6 +32,8 @@
         height: 100vh;
         button{
             pointer-events: none;
+            width: 100%;
+            padding: 0;
         }
         .titreAmis{
             border-top: solid 1px rgb(236, 236, 236);
@@ -94,6 +96,8 @@
             border-right: solid 1px rgb(236, 236, 236);
             button{
                 pointer-events: none;
+                width: 100%;
+                padding: 0;
             }
             .titreAmis{
                 border-left: solid 1px rgb(236, 236, 236);
