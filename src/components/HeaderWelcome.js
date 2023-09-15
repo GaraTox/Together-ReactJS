@@ -46,7 +46,7 @@ function HeaderWelcome() {
         <div className='header'>
             <nav>
                 <div className='logo'>
-                    <img className='logoTogether' src={logo} alt='logo together'/>
+                    <Link to="/myprofile"><img className='logoTogether' src={logo} alt='logo together'/></Link>
                     <p className="together">Together</p>
                 </div>
                 <div className='formSearcher'>

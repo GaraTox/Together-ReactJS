@@ -44,10 +44,10 @@ function HeaderAdmin() {
     <section>
         <div className='header'>
             <nav>
-                <div className='logo'>
-                    <img className='logoTogether' src={logo} alt='logo together'/>
+                  <div className='logo'>
+                    <Link to="/myprofile"><img className='logoTogether' src={logo} alt='logo together'/></Link>
                     <p className="together">Together</p>
-                </div>
+                  </div>
                 <div className='listCrud'>
                 <ul>
                     <Link to="/connect-admin/home/user" className="burgerListCrud"><li>UTILISATEURS</li></Link>

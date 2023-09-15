@@ -43,7 +43,7 @@ const db = mysql.createConnection({
 	database : process.env.DATABASE
 });
 
-// CREER UN COMPTE POUR UTILISATEUR ET ADMIN
+// CREER UN COMPTE POUR UTILISATEUR
 app.post('/register', (req, res) => {
 	const pseudoUser = req.body.pseudoUser;
 	const mailUser = req.body.mailUser;
@@ -74,6 +74,13 @@ app.post('/register', (req, res) => {
 // SUPPRIMER UN COMPTE UTILISATEUR POUR ADMIN
 
 // LIRE LES COMPTES UTILISATEUR POUR ADMIN
+app.get('/connect-admin/home/user/read', (req, res) => {
+	const sql = "SELECT * FROM user";
+	db.query(sql,(err , result)=>{
+		if(err) return res.json({Message: "Erreur"});
+		return res.json(result);
+	})
+})
 
 // SE CONNECTER EN TANT UTILISATEUR
 app.post('/', (req, res) => {
@@ -101,15 +108,6 @@ app.post('/', (req, res) => {
 		}
 	);
 });
-
-// app.get('/', (req, res) => {
-// 	if(req.session.user){
-// 		res.send({loggedIn: true, user: req.session.user})
-// 		return res.redirect('/myprofile')
-// 	}else{
-// 		res.send({loggedIn: false})
-// 	}
-// })
 
 // RECUPERATION DES DONNEES DE PROFIL
 app.get('/myprofile/parameter/:idUser', (req, res) => {
