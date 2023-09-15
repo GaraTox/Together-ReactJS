@@ -35,7 +35,7 @@ function LaRoute() {
         <Route path="/connect-admin/home/user/create" Component={create}/>
         <Route path="/connect-admin/home/user/choiceUpdate" Component={choiceUpdate}/>
         <Route path="/connect-admin/home/user/update/:idUser" Component={update}/>
-        <Route path="/connect-admin/home/user/delete/:idUser" Component={deleted}/>
+        <Route path="/connect-admin/home/user/delete" Component={deleted}/>
         <Route path="/connect-admin/home/user/read" Component={read}/>
         <Route path="/connect-admin/moderation" Component={moderation}/>
         <Route path="/myprofile/parameter/mentions" Component={mentions}/>

@@ -101,12 +101,13 @@ app.get('/connect-admin/home/user/choiceUpdate', (req, res) => {
 	})
 })
 // CLIQUE SUR LE BOUTON MODIFIER
-app.put('/connect-admin/home/user/update/:idUser', (res, res) => {
+app.put('/connect-admin/home/user/update/:idUser', (req, res) => {
 	const pseudoUser = req.body.pseudoUser;
 	const mailUser = req.body.mailUser;
-	const sql = 'UPDATE user SET `pseudoUser` = ?, `mailUser` = ? WHERE idUser = ?';
+	const passwordUser = req.body.passwordUser;
+	const sql = 'UPDATE user SET `pseudoUser` = ?, `mailUser` = ?, `passwordUser` = ? WHERE idUser = ?';
 	const idUser = req.params.idUser;
-	db.query(sql, [pseudoUser, mailUser, idUser], (err, result) => {
+	db.query(sql, [pseudoUser, mailUser, passwordUser, idUser], (err, result) => {
 		if(err) return res.json({Message: "Erreur"});
 		return res.json(result);
 	})
