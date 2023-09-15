@@ -50,10 +50,8 @@ function HeaderAdmin() {
                 </div>
                 <div className='listCrud'>
                 <ul>
-                    <Link to="/connect-admin/home/create"><li>CREER</li></Link>
-                    <Link to="/connect-admin/home/choiceUpdate"><li>MODIFIER</li></Link>
-                    <Link to="/connect-admin/home/delete"><li>SUPPRIMER</li></Link>
-                    <Link to="/connect-admin/home/read"><li>AFFICHER</li></Link>
+                    <Link to="/connect-admin/home/user" className="burgerListCrud"><li>UTILISATEURS</li></Link>
+                    <Link to="/connect-admin/home/post" className="burgerListCrud"><li>PUBLICATIONS</li></Link>
                 </ul>
                 </div>
                 <div className='btnDisconnect'>
@@ -69,10 +67,8 @@ function HeaderAdmin() {
             </nav>
             <div className={menuClass}>
                 <ul>
-                    <Link className="burgerListCrud" to="/connect-admin/home/create"><li>CREER</li></Link>
-                    <Link className="burgerListCrud" to="/connect-admin/home/choiceUpdate"><li>MODIFIER</li></Link>
-                    <Link className="burgerListCrud" to="/connect-admin/home/delete"><li>SUPPRIMER</li></Link>
-                    <Link className="burgerListCrud" to="/connect-admin/home/read"><li>AFFICHER</li></Link>
+                    <Link to="/connect-admin/home/user" className="burgerListCrud"><li>UTILISATEURS</li></Link>
+                    <Link to="/connect-admin/home/post" className="burgerListCrud"><li>PUBLICATIONS</li></Link>
                     <li onClick={handleLogout} className="text-danger burgerListCrud">DECONNEXION</li>
                 </ul>
             </div>

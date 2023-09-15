@@ -80,7 +80,7 @@ body{
     
     button.lg{
         background: linear-gradient(#ffffff, #c7c7c7);
-        width: 180px;
+        width: 210px;
         height: 40px;
         gap: 10px;
         padding-left: 10px;
@@ -152,6 +152,12 @@ body{
     }
     #dark body{
         background-color: $global-bgcolor-nav;
+    }
+    .crudBouton{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 180px;
     }
 }
 

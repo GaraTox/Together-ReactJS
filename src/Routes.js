@@ -6,6 +6,8 @@ import home from './components/main/home';
 import message from './components/main/message';
 import searchs from './components/main/search';
 import parameter from './components/main/parameter';
+import cruduser from './components/main/cruduser';
+import crudpost from './components/main/crudpost';
 import crud from './components/main/adminHome';
 import create from './components/main/create';
 import choiceUpdate from './components/main/choiceUpdate';
@@ -28,11 +30,15 @@ function LaRoute() {
         <Route path="/myprofile/message" Component={message}/>
         <Route path="/myprofile/parameter" Component={parameter}/>
         <Route path="/connect-admin/home" Component={crud}/>
-        <Route path="/connect-admin/home/create" Component={create}/>
-        <Route path="/connect-admin/home/choiceUpdate" Component={choiceUpdate}/>
-        <Route path="/connect-admin/home/update-id" Component={update}/>
-        <Route path="/connect-admin/home/delete" Component={deleted}/>
-        <Route path="/connect-admin/home/read" Component={read}/>
+
+        <Route path="/connect-admin/home/user" Component={cruduser}/>
+        <Route path="/connect-admin/home/post" Component={crudpost}/>
+
+        <Route path="/connect-admin/home/user/create" Component={create}/>
+        <Route path="/connect-admin/home/user/choiceUpdate" Component={choiceUpdate}/>
+        <Route path="/connect-admin/home/user/update-id" Component={update}/>
+        <Route path="/connect-admin/home/user/delete" Component={deleted}/>
+        <Route path="/connect-admin/home/user/read" Component={read}/>
         <Route path="/connect-admin/moderation" Component={moderation}/>
         <Route path="/myprofile/parameter/mentions" Component={mentions}/>
         <Route path="/conditions" Component={conditions}/>
