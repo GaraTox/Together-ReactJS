@@ -67,11 +67,60 @@ app.post('/register', (req, res) => {
 	});
 });
 
-
+// CREER UN COMPTE POUR ADMIN
+app.post('/connect-admin/home/user/create', (req, res) => {
+	const pseudoUser = req.body.pseudoUser;
+	const mailUser = req.body.mailUser;
+	const passwordUser = req.body.passwordUser;
+	const birthdayUser = req.body.birthdayUser;
+	const roleUser = req.body.roleUser;
+	// HASH LE MOT DE PASSE
+	bcrypt.hash(passwordUser, saltRounds, (err, hash) => {
+		if(err){
+			return res.json({Error: "Erreur de hash"});
+		}
+	// REQUETE
+	db.query(
+		"INSERT INTO user (pseudoUser,mailUser,passwordUser,birthdayUser, roleUser) VALUES (?,?,?,?,'user')",
+		[pseudoUser, mailUser, hash, birthdayUser, roleUser],
+		(err, result) => {
+			if(err) return res.json({Error: "Problème de requête"});
+			return alert('CRUD: utilisateur ajouté');
+		}
+		);
+	});
+});
 
 // MODIFIER UN COMPTE UTILISATEUR POUR ADMIN
+//LISTE DE TOUS LES UTILISATEURS
+app.get('/connect-admin/home/user/choiceUpdate', (req, res) => {
+	const sql = "SELECT * FROM user";
+	db.query(sql,(err , result)=>{
+		if(err) return res.json({Message: "Erreur"});
+		return res.json(result);
+	})
+})
+// CLIQUE SUR LE BOUTON MODIFIER
+app.put('/connect-admin/home/user/update/:idUser', (res, res) => {
+	const pseudoUser = req.body.pseudoUser;
+	const mailUser = req.body.mailUser;
+	const sql = 'UPDATE user SET `pseudoUser` = ?, `mailUser` = ? WHERE idUser = ?';
+	const idUser = req.params.idUser;
+	db.query(sql, [pseudoUser, mailUser, idUser], (err, result) => {
+		if(err) return res.json({Message: "Erreur"});
+		return res.json(result);
+	})
+})
 
 // SUPPRIMER UN COMPTE UTILISATEUR POUR ADMIN
+app.delete('/connect-admin/home/user/delete/:idUser', (req, res) => {
+	const sql = 'DELETE FROM user WHERE idUser=?' ;
+	const idUser = req.params.idUser;
+	db.query(sql, [idUser], (err, result) => {
+		if(err) return res.json({Message: "erreur"});
+		return res.json(result);
+	})
+})
 
 // LIRE LES COMPTES UTILISATEUR POUR ADMIN
 app.get('/connect-admin/home/user/read', (req, res) => {
