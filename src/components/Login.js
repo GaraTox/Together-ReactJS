@@ -1,12 +1,15 @@
 import React, { useState }  from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Btnmd from './btn/Btnmd';
+import ModalPassword from "./modales/ModalePassword";
 import axios from 'axios';
 
 function Connect() {
  // INITIALISATION DES VALEURS
   const [mailUser, setMailUser] = useState('');
   const [passwordUser, setPasswordUser] = useState('');
+
+  const [openModal, setOpenModal] = useState(false);
 
   const history = useNavigate;
 
@@ -31,7 +34,8 @@ const handleSubmit = (event) => {
 
     return (
         <section className="loginPage">
-        <h1 className="titrePresentation mt-3">Bienvenue sur Together, <br/> le nouveau réseau social gratuit.</h1>
+          {openModal && <ModalPassword closeModal={setOpenModal}/>}
+        <h1 className="titrePresentation">Bienvenue sur Together, <br/> le nouveau réseau social gratuit.</h1>
         <div className="blocForm">
         <form onChange={handleSubmit} className="formConnect rounded" method="POST" action="#">
             <p className="dejaInscrit">Déjà inscrit ?</p>
@@ -43,7 +47,7 @@ const handleSubmit = (event) => {
               <label htmlFor="exampleInput" className="form-label">Mot de passe</label>
               <input onChange={(e) => {setPasswordUser(e.target.value);}} type="password" className="form-control" id="passw" name="passwordUser" autoComplete="off"/>
             </div>
-            <p className="text-danger m-4">Mot de passe oublié ?</p>
+            <p className="passwordForget text-danger m-4" onClick={() => {setOpenModal(true)}}>Mot de passe oublié ?</p>
             <Btnmd  type="submit" className="btn" caracteristique="md" text="Se connecter"/>
           </form>
         </div>
