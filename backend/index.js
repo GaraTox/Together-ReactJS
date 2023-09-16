@@ -85,7 +85,7 @@ app.post('/connect-admin/home/user/create', (req, res) => {
 		[pseudoUser, mailUser, hash, birthdayUser, roleUser],
 		(err, result) => {
 			if(err) return res.json({Error: "Problème de requête"});
-			return res.redirect('/')
+			return res.redirect('/connect-admin/home')
 		}
 		);
 	});
@@ -104,10 +104,9 @@ app.get('/connect-admin/home/user/choiceUpdate', (req, res) => {
 app.put('/connect-admin/home/user/update/:idUser', (req, res) => {
 	const pseudoUser = req.body.pseudoUser;
 	const mailUser = req.body.mailUser;
-	const passwordUser = req.body.passwordUser;
-	const sql = 'UPDATE user SET `pseudoUser` = ?, `mailUser` = ?, `passwordUser` = ? WHERE idUser = ?';
+	const sql = 'UPDATE user SET `pseudoUser` = ?, `mailUser` = ? WHERE idUser = ?';
 	const idUser = req.params.idUser;
-	db.query(sql, [pseudoUser, mailUser, passwordUser, idUser], (err, result) => {
+	db.query(sql, [pseudoUser, mailUser, idUser], (err, result) => {
 		if(err) return res.json({Message: "Erreur"});
 		return res.json(result);
 	})

@@ -15,7 +15,7 @@ function Delete() {
     }, [])
 
     const handleDelete = (idUser) => {
-        axios.delete('http://localhost:3001/connect-admin/home/user/delete/'+idUser)
+        axios.delete('http://localhost:3001/connect-admin/home/user/delete'+idUser)
         .then(res => {
             navigate('/connect-admin/home');
         })

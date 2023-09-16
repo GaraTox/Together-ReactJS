@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Btnsm from "./btn/Btnsm";
 import { useNavigate, useParams } from "react-router-dom";
 
 function Update() {
@@ -17,7 +18,7 @@ function Update() {
   
   const [values, setValues] = useState({
     pseudoUser: '',
-    mailUser:'',
+    mailUser: '',
   })
 
   const handleUpdate = (event) => {
@@ -31,7 +32,7 @@ function Update() {
   }
 
     return (
-        <section>
+        <section className="bg-admin">
         <h4 className="text-center mt-5 ">Modifier les données de l'utilisateur</h4>
         <div className="blocUpdate">
         <form method="POST" onSubmit={handleUpdate} className="formUpdate text-center p-3">
@@ -47,12 +48,7 @@ function Update() {
             value={values.mailUser}
             className="form-control" id="names" name="mailUser" autocomplete="off" required/>
           </div>
-          <div className="mb-3">
-            <label for="exampleInput" className="form-label">Mot de passe</label>
-            <input type="password" onChange={e => setValues({...values, passwordUser: e.target.value})}
-            className="form-control" id="passw" name="passwordUser" autocomplete="off" required/>
-          </div>
-          <button type="submit" className="btn btn-success" id="inscription" name="inscription">Modifier</button>
+          <Btnsm type="submit" className="btn" caracteristique="sm" text="Modifier"/>
           </form>
         </div>
         </section>

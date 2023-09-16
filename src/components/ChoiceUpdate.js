@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import profil from '../assets/icons/person.svg';
 import Btnsm from '../components/btn/Btnsm';
-import ModalModifyUser from "./modales/ModaleModifyUser";
 
 function ChoiceUpdate() {
     const [data, setData] = useState([])
