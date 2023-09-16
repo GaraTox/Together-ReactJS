@@ -24,19 +24,19 @@ function Create() {
         <form method="POST" className="formCreate text-center p-3">
           <div className="mb-2">
             <label htmlFor="exampleInput" className="form-label">Pseudo</label>
-            <input type="text" onChange={(e) => {setPseudoReg(e.target.value);}} className="form-control" id="pseudo" name="Pseudo" autoComplete="off" required/>
+            <input type="text" onChange={(e) => {setPseudoReg(e.target.value);}} className="form-control" id="pseudo" name="pseudoUser" autoComplete="off" required/>
           </div>
           <div className="mb-2">
             <label htmlFor="exampleInput" className="form-label">Adresse mail</label>
-            <input type="email" onChange={(e) => {setMailReg(e.target.value);}} className="form-control" id="mail" name="Mail" autoComplete="off" required/>
+            <input type="email" onChange={(e) => {setMailReg(e.target.value);}} className="form-control" id="mail" name="mailUser" autoComplete="off" required/>
           </div>
           <div className="mb-2">
             <label htmlFor="exampleInput" className="form-label">Date de naissance</label>
-            <input type="date" onChange={(e) => {setBirthdayReg(e.target.value);}} className="form-control" id="birthday" name="Birthday" autoComplete="off" required/>
+            <input type="date" onChange={(e) => {setBirthdayReg(e.target.value);}} className="form-control" id="birthday" name="birthdayUser" autoComplete="off" required/>
           </div>
           <div className="mb-2">
             <label htmlFor="exampleInput" className="form-label">Mot de passe</label>
-            <input type="password" onChange={(e) => {setPasswordReg(e.target.value);}} className="form-control" id="passw" name="Passwords" autoComplete="off" required/>
+            <input type="password" onChange={(e) => {setPasswordReg(e.target.value);}} className="form-control" id="passw" name="passwordUser" autoComplete="off" required/>
           </div>
           <div className="mb-2">
             <div className="form-check">

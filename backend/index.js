@@ -61,7 +61,7 @@ app.post('/register', (req, res) => {
 		[pseudoUser, mailUser, hash, birthdayUser, roleUser],
 		(err, result) => {
 			if(err) return res.json({Error: "Problème de requête"});
-			return res.redirect('/')
+			return res.redirect('/connect-admin/home')
 		}
 		);
 	});
@@ -85,7 +85,7 @@ app.post('/connect-admin/home/user/create', (req, res) => {
 		[pseudoUser, mailUser, hash, birthdayUser, roleUser],
 		(err, result) => {
 			if(err) return res.json({Error: "Problème de requête"});
-			return alert('CRUD: utilisateur ajouté');
+			return res.redirect('/')
 		}
 		);
 	});
