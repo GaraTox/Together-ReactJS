@@ -1,9 +1,28 @@
 import React, { useState } from "react";
+import { useFormik, Formik} from 'formik';
+import { Validation } from "./controles/ValidationsRegister";
 import { Link } from "react-router-dom";
 import Btnlg from './btn/Btnlg';
 import axios from 'axios';
 
+  // CONTROLES DE CHAMPS
+  const initialValues = {
+    pseudoUser: '',
+    passwordUser: '',
+}
+
+
 function Inscrire() {
+  // CONTROLE DE CHAMPS
+  const {values, handleBlur, errors} = useFormik({
+    initialValues: initialValues,
+    validationSchema: Validation,
+    onSubmit: (values) => {
+        console.log(values)
+    }
+})
+
+
   // INITIALISATION DES VALEURS
     const [pseudoReg, setPseudoReg] = useState('');
     const [mailReg, setMailReg] = useState('');
@@ -24,22 +43,35 @@ function Inscrire() {
         <h3 className="text-center mt-2 createNewAccount">Création d'un nouveau compte</h3>
         <p className="text-center text-secondary completeForm">Veuillez renseigner le formulaire ci-dessous.</p>
         <div className="blocRegister">
+          <Formik initialValues={initialValues} validationSchema={Validation}>
         <form method="POST" className="formConnect text-center border border-dark p-3 rounded">
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Pseudo</label>
-            <input onChange={(e) => {setPseudoReg(e.target.value);}} type="text" className="form-control" id="pseudo" name="pseudoUser" autoComplete="off"/>
+            <input onChange={(e) => {setPseudoReg(e.target.value);}} type="text" 
+            value={values.pseudoUser} onBlur={handleBlur}
+            className="form-control" id="pseudo" name="pseudoUser" autoComplete="off"/>
+            {errors.pseudoUser && <small>{errors.pseudoUser}</small>}
           </div>
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Adresse mail</label>
-            <input onChange={(e) => {setMailReg(e.target.value);}} type="mail" className="form-control" id="mail" name="mailUser" autoComplete="off"/>
+            <input onChange={(e) => {setMailReg(e.target.value);}} type="mail" 
+            value={values.mailUser} onBlur={handleBlur}
+            className="form-control" id="mail" name="mailUser" autoComplete="off"/>
+            {errors.mailUser && <small>{errors.mailUser}</small>}
           </div>
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Date de naissance</label>
-            <input onChange={(e) => {setBirthdayReg(e.target.value);}} type="date" className="form-control" id="birthday" name="birthdayUser" autoComplete="off" title="âge requis : 13 ans minimum" max="2010-12-01"/>
+            <input onChange={(e) => {setBirthdayReg(e.target.value);}} type="date" 
+            value={values.birthdayUser} onBlur={handleBlur}
+            className="form-control" id="birthday" name="birthdayUser" autoComplete="off" title="âge requis : 13 ans minimum" max="2010-12-01"/>
+            {errors.birthdayUser && <small>{errors.birthdayUser}</small>}
           </div>
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Mot de passe</label>
-            <input onChange={(e) => {setPasswordReg(e.target.value);}} type="password" className="form-control" id="passw" name="passwordUser" autoComplete="off"/>
+            <input onChange={(e) => {setPasswordReg(e.target.value);}} type="password" 
+            value={values.passwordUser} onBlur={handleBlur}
+            className="form-control" id="passw" name="passwordUser" autoComplete="off"/>
+            {errors.passwordUser && <small>{errors.passwordUser}</small>}
           </div>
           <div className="mb-1">
             <div className="form-check">
@@ -49,6 +81,7 @@ function Inscrire() {
           </div>
           <Btnlg onClick={register} type="submit" className="btn" caracteristique="lg" text="Confirmer l'inscription"/>
           </form>
+          </Formik>
         </div>
         <div className="accountExist">
             <p>Déjà un compte ? <Link to="/" className="connectVous">Se connecter !</Link></p>

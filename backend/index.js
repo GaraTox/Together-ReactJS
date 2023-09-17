@@ -140,7 +140,7 @@ app.post('/', (req, res) => {
 		"SELECT * FROM user WHERE mailUser = ?",
 		mailUser,
 		(err, data) => {
-			if(err) return res.json({Error: "Erreur de login"});
+			if(err) return console.log("erreur de login");
 			if(data.length > 0) {
 				bcrypt.compare(passwordUser,data[0].passwordUser, (err, response) => {
 					if(response){
@@ -149,10 +149,10 @@ app.post('/', (req, res) => {
 						
 						res.redirect('/myprofile')
 					}
-					if(err) return res.json({Error: "Probleme de mot de passe"});
+					if(err) return console.log('probleme de mot de passe');
 				});
 			}else {
-				return res.json({ Error: "Utilisateur non trouvé" });
+				return console.log('utilisateur non trouvé');
 			}
 		}
 	);
