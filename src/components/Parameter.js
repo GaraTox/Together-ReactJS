@@ -1,13 +1,8 @@
 import React from "react";
-import { useSelector } from 'react-redux';
-import { setIdUser, setAvatarUser, setPseudoUser, setMailUser } from '../redux/store';
+import { connect } from "react-redux";
 import profil from '../assets/icons/person-circle.svg';
 
-function Parameter() {
-    const user = useSelector((state) => state.idUser);
-    const pseudo = useSelector((state) => state.PseudoUser);
-    const mail = useSelector((state) => state.mailUser);
-
+function Parameter({ idUser, pseudoUser, mailUser }) {
     // NETTOYER REACT DEVTOOL
     // useEffect(() => {
     //     localStorage.clear();
@@ -22,14 +17,22 @@ function Parameter() {
                         <img className="imgPhoto" src={profil} alt="profil"/>
                     </div>
                     <div className="infoPerso">
-                        <p>{user}</p>
-                        <p>{pseudo}</p>
-                        <p>{mail}</p>
+                        <p>{idUser}</p>
+                        <p>{pseudoUser}</p>
+                        <p>{mailUser}</p>
                     </div>
                 </div>
             </div>
         </section>
     );
   }
+
+  const mapStateToProps = (state) => {
+    return {
+      idUser: state.idUser,
+      pseudoUser: state.pseudoUser,
+      mailUser: state.mailUser,
+    };
+  };
   
-  export default Parameter;
+  export default connect(mapStateToProps)(Parameter);

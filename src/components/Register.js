@@ -26,16 +26,16 @@ function Inscrire() {
 
 
   // INITIALISATION DES VALEURS
-    const [pseudoReg, setPseudoReg] = useState('');
-    const [mailReg, setMailReg] = useState('');
-    const [birthdayReg, setBirthdayReg] = useState('');
-    const [passwordReg, setPasswordReg] = useState('');
+    const [pseudoUser, setPseudoUser] = useState('');
+    const [mailUser, setMailUser] = useState('');
+    const [birthdayUser, setBirthdayUser] = useState('');
+    const [passwordUser, setPasswordUser] = useState('');
 
   // EVENEMENT DE CLIQUE
     const register = (event) => {
       event.preventDefault();
       axios.post('http://localhost:3001/register', 
-      {pseudoUser: pseudoReg, mailUser: mailReg, birthdayUser: birthdayReg, passwordUser: passwordReg})
+      {pseudoUser: pseudoUser, mailUser: mailUser, birthdayUser: birthdayUser, passwordUser: passwordUser})
       .then(res => {return res.redirect('/')})
       .then(err => console.log(err))
     }
@@ -49,28 +49,28 @@ function Inscrire() {
         <form method="POST" className="formConnect text-center border border-dark p-3 rounded">
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Pseudo</label>
-            <input onChange={(e) => {setPseudoReg(e.target.value);}} type="text" 
+            <input onChange={(e) => {setPseudoUser(e.target.value);}} type="text" 
             value={pseudoUser} onBlur={handleBlur}
             className="form-control" id="pseudo" name="pseudoUser" autoComplete="off"/>
             {errors.pseudoUser && <small>{errors.pseudoUser}</small>}
           </div>
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Adresse mail</label>
-            <input onChange={(e) => {setMailReg(e.target.value);}} type="mail" 
+            <input onChange={(e) => {setMailUser(e.target.value);}} type="mail" 
             value={mailUser} onBlur={handleBlur}
             className="form-control" id="mail" name="mailUser" autoComplete="off"/>
             {errors.mailUser && <small>{errors.mailUser}</small>}
           </div>
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Date de naissance</label>
-            <input onChange={(e) => {setBirthdayReg(e.target.value);}} type="date" 
+            <input onChange={(e) => {setBirthdayUser(e.target.value);}} type="date" 
             value={birthdayUser} onBlur={handleBlur}
             className="form-control" id="birthday" name="birthdayUser" autoComplete="off" title="âge requis : 13 ans minimum" max="2010-12-01"/>
             {errors.birthdayUser && <small>{errors.birthdayUser}</small>}
           </div>
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Mot de passe</label>
-            <input onChange={(e) => {setPasswordReg(e.target.value);}} type="password" 
+            <input onChange={(e) => {setPasswordUser(e.target.value);}} type="password" 
             value={passwordUser} onBlur={handleBlur}
             className="form-control" id="passw" name="passwordUser" autoComplete="off"/>
             {errors.passwordUser && <small>{errors.passwordUser}</small>}

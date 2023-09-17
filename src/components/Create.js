@@ -32,7 +32,7 @@ function Create() {
           </div>
           <div className="mb-2">
             <label htmlFor="exampleInput" className="form-label">Date de naissance</label>
-            <input type="date" onChange={(e) => {setBirthdayReg(e.target.value);}} className="form-control" id="birthday" name="birthdayUser" autoComplete="off" required/>
+            <input type="date" onChange={(e) => {setBirthdayReg(e.target.value);}} className="form-control" id="birthday" name="birthdayUser" title="âge requis : 13 ans minimum" max="2010-12-01" autoComplete="off" required/>
           </div>
           <div className="mb-2">
             <label htmlFor="exampleInput" className="form-label">Mot de passe</label>

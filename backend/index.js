@@ -159,15 +159,21 @@ app.post('/', (req, res) => {
 });
 
 // RECUPERATION DES DONNEES DE PROFIL
-app.get('/myprofile/parameter/:idUser', (req, res) => {
-    const idUser = req.params.idUser;
-    const sql = `SELECT * FROM user WHERE idUser = ${idUser}`;
-
-    db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.json(result[0]);
-    });
-});
+app.get('/user/:idUser', (req, res) => {
+	const idUser = req.params.idUser;
+	db.query('SELECT * FROM user WHERE idUser = ?', idUser, (err, results) => {
+	  if (err) {
+		console.error('Erreur lors de la récupération des données utilisateur :', err);
+		res.status(500).json({ error: 'Erreur lors de la récupération des données utilisateur' });
+	  } else {
+		if (results.length === 1) {
+		  res.json(results[0]);
+		} else {
+		  res.status(404).json({ error: 'Utilisateur non trouvé' });
+		}
+	  }
+	});
+  });
 
 
 // DECONNEXION A LA SESSION

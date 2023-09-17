@@ -7,7 +7,6 @@ import storage from 'redux-persist/lib/storage';
 // Store
 const initStore = {
   idUser: 0,
-  avatarUser: '',
   pseudoUser: '',
   mailUser: '',
 };
@@ -15,11 +14,6 @@ const initStore = {
 // Actions creators
 const setIdUser = (value) => ({
   type: "setIdUser",
-  payload: value,
-});
-
-const setAvatarUser = (value) => ({
-  type: "setAvatarUser",
   payload: value,
 });
 
@@ -36,22 +30,17 @@ const setMailUser = (value) => ({
 // Reducer
 const rootReducers = (state = initStore, action) => {
   switch (action.type) {
-    case "setIdUser":
+    case 'setIdUser':
       return {
         ...state,
         idUser: action.payload,
       };
-    case "setAvatarUser":
-      return {
-        ...state,
-        avatarUser: action.payload,
-      };
-    case "setPseudoUser":
+    case 'setPseudoUser':
       return {
         ...state,
         pseudoUser: action.payload,
       };
-    case "setMailUser":
+    case 'setMailUser':
       return {
         ...state,
         mailUser: action.payload,
@@ -71,4 +60,4 @@ const persistedReducer = persistReducer(persistConfig, rootReducers);
 const store = legacy_createStore(persistedReducer, composeWithDevTools());
 const persistor = persistStore(store);
 
-export { store, persistor, setIdUser, setAvatarUser, setPseudoUser, setMailUser };
+export { store, persistor, setIdUser, setPseudoUser, setMailUser };

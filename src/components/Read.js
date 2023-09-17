@@ -21,7 +21,7 @@ function Read() {
                 <div className="searchAvatar">
                     <img src={profil} className="avatar" alt="avatar"/>
                 </div>
-                <p className="searchFirstname">{user.idUser}</p>
+                <p className="searchFirstname">{user.pseudoUser}</p>
                 <p className="searchName">{user.mailUser}</p>
                 <div className="searchButton">
                     <p><Btnsm type="submit" className="btn" caracteristique="sm" text="UTILISATEUR"/></p>
