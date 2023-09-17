@@ -8,13 +8,15 @@ import axios from 'axios';
   // CONTROLES DE CHAMPS
   const initialValues = {
     pseudoUser: '',
-    passwordUser: '',
+    mailUser: '',
+    birthdayUser: '',
+    passwordUser: ''
 }
 
 
 function Inscrire() {
   // CONTROLE DE CHAMPS
-  const {values, handleBlur, errors} = useFormik({
+  const {handleBlur, errors} = useFormik({
     initialValues: initialValues,
     validationSchema: Validation,
     onSubmit: (values) => {
@@ -48,28 +50,28 @@ function Inscrire() {
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Pseudo</label>
             <input onChange={(e) => {setPseudoReg(e.target.value);}} type="text" 
-            value={values.pseudoUser} onBlur={handleBlur}
+            value={pseudoUser} onBlur={handleBlur}
             className="form-control" id="pseudo" name="pseudoUser" autoComplete="off"/>
             {errors.pseudoUser && <small>{errors.pseudoUser}</small>}
           </div>
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Adresse mail</label>
             <input onChange={(e) => {setMailReg(e.target.value);}} type="mail" 
-            value={values.mailUser} onBlur={handleBlur}
+            value={mailUser} onBlur={handleBlur}
             className="form-control" id="mail" name="mailUser" autoComplete="off"/>
             {errors.mailUser && <small>{errors.mailUser}</small>}
           </div>
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Date de naissance</label>
             <input onChange={(e) => {setBirthdayReg(e.target.value);}} type="date" 
-            value={values.birthdayUser} onBlur={handleBlur}
+            value={birthdayUser} onBlur={handleBlur}
             className="form-control" id="birthday" name="birthdayUser" autoComplete="off" title="âge requis : 13 ans minimum" max="2010-12-01"/>
             {errors.birthdayUser && <small>{errors.birthdayUser}</small>}
           </div>
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Mot de passe</label>
             <input onChange={(e) => {setPasswordReg(e.target.value);}} type="password" 
-            value={values.passwordUser} onBlur={handleBlur}
+            value={passwordUser} onBlur={handleBlur}
             className="form-control" id="passw" name="passwordUser" autoComplete="off"/>
             {errors.passwordUser && <small>{errors.passwordUser}</small>}
           </div>

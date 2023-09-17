@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { date } from 'yup';
 import * as Yup from 'yup';
 
-const limit = dayjs().subtract(13, "ans").format("YYYY-MM-DD");
+const limit = dayjs().subtract(13, "years").format("YYYY-MM-DD");
 
 export const Validation = Yup.object().shape({
   pseudoUser: Yup.string()

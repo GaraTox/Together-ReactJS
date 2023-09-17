@@ -8,13 +8,13 @@ import axios from 'axios';
 
   // CONTROLES DE CHAMPS
   const initialValues = {
-    pseudoUser: '',
-    passwordUser: '',
+    mailUser: '',
+    passwordUser: ''
 }
 
 function Connect() {
   // CONTROLE DE CHAMPS
-  const {values, handleBlur, errors} = useFormik({
+  const {handleBlur, errors} = useFormik({
     initialValues: initialValues,
     validationSchema: Validation,
     onSubmit: (values) => {
@@ -61,7 +61,7 @@ const handleSubmit = (event) => {
             <div className="m-4">
               <label htmlFor="exampleInput" className="form-label">Adresse Mail</label>
               <input onChange={(e) => {setMailUser(e.target.value);}} type="mail" 
-              value={values.mailUser} onBlur={handleBlur}
+              value={mailUser} onBlur={handleBlur}
               className="form-control" id="mail" name="mailUser" autoComplete="off"/>
             {errors.mailUser && <small>{errors.mailUser}</small>}
             </div>
@@ -69,7 +69,7 @@ const handleSubmit = (event) => {
             <div className="m-4">
               <label htmlFor="exampleInput" className="form-label">Mot de passe</label>
               <input onChange={(e) => {setPasswordUser(e.target.value);}} type="password" 
-              value={values.passwordUser} onBlur={handleBlur}
+              value={passwordUser} onBlur={handleBlur}
               className="form-control" id="passw" name="passwordUser" autoComplete="off"/>
             {errors.passwordUser && <small>{errors.passwordUser}</small>}
             </div>
