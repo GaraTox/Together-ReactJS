@@ -1,12 +1,16 @@
 import React from "react";
-import { connect } from "react-redux";
 import profil from '../assets/icons/person-circle.svg';
+import { useSelector } from 'react-redux';
 
-function Parameter({ idUser, pseudoUser, mailUser }) {
+function Parameter() {
     // NETTOYER REACT DEVTOOL
     // useEffect(() => {
     //     localStorage.clear();
     // })
+
+    const idUser = useSelector(state => state.idUser);
+    const pseudoUser = useSelector(state => state.pseudoUser);
+    const mailUser = useSelector(state => state.mailUser);
 
     return (
         <section>
@@ -26,13 +30,5 @@ function Parameter({ idUser, pseudoUser, mailUser }) {
         </section>
     );
   }
-
-  const mapStateToProps = (state) => {
-    return {
-      idUser: state.idUser,
-      pseudoUser: state.pseudoUser,
-      mailUser: state.mailUser,
-    };
-  };
   
-  export default connect(mapStateToProps)(Parameter);
+export default Parameter;

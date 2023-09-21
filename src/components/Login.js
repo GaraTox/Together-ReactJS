@@ -5,6 +5,8 @@ import { Validation } from "./controles/ValidationsLogin";
 import Btnmd from './btn/Btnmd';
 import ModalPassword from "./modales/ModalePassword";
 import axios from 'axios';
+import { useDispatch } from 'react-redux'; // Importez le hook useDispatch
+import { setIdUser, setPseudoUser} from '../redux/store';
 
   // CONTROLES DE CHAMPS
   const initialValues = {
@@ -26,6 +28,9 @@ function Connect() {
   const [mailUser, setMailUser] = useState('');
   const [passwordUser, setPasswordUser] = useState('');
 
+   // Utilisez useDispatch pour obtenir la fonction de dispatch
+ const dispatch = useDispatch();
+
   const [openModal, setOpenModal] = useState(false);
 
   const history = useNavigate;
@@ -38,7 +43,9 @@ const handleSubmit = (event) => {
   axios.post('http://localhost:3001/', { mailUser, passwordUser })
     .then((res) => {
       if (res.data.success) {
-
+        dispatch(setIdUser(res.data.idUser));
+        dispatch(setPseudoUser(res.data.pseudoUser));
+        // dispatch(setMailUser(res.data.mailUser));
         history.push('/myprofile'); 
       } else {
         console.log("Probleme de connexion")

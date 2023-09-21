@@ -5,6 +5,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: space-around;
+    .textAdmin{
+        color: orange;
+    }
 }
 }
 
@@ -15,6 +18,9 @@
         display: inline-flex;
         align-items: center;
         justify-content: space-around;
+        .textAdmin{
+            color: orange;
+        }
     }
 }
 
@@ -23,5 +29,8 @@
         width: 100%;
         height: max-content;
         display: block;
+        .textAdmin{
+            color: orange;
+        }
     }
 }

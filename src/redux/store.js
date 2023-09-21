@@ -1,4 +1,3 @@
-// store.js
 import { legacy_createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { persistReducer, persistStore } from 'redux-persist';
