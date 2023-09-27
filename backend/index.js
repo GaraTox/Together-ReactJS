@@ -25,15 +25,15 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
-// app.use(session({
-// 	key: "CookieTogether",
-// 	secret: "Together",
-// 	resave: false,
-// 	saveUninitialized: false,
-// 	cookie:{
-// 		expires: 3600000 //millisecondes 	// EXPIRE AU BOUT D'UNE HEURE
-// 	},
-// }));
+app.use(session({
+	key: "CookieTogether",
+	secret: "Together",
+	resave: false,
+	saveUninitialized: false,
+	cookie:{
+		expires: 3600000 //millisecondes 	// EXPIRE AU BOUT D'UNE HEURE
+	},
+}));
 
 // CONNEXION A LA BASE DE DONNEES
 const db = mysql.createConnection({
