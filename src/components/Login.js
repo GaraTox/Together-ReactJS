@@ -57,7 +57,8 @@ const handleSubmit = async () => {
   try {
     const response = await axios.post('http://localhost:3001/', { mailUser, passwordUser });
     console.log(response.data);
-    // history.push('/myprofile');
+    localStorage.setItem('idUser', response.data);
+    history.push('/myprofile');
   } catch (error) {
     console.error(error);
   }

@@ -148,7 +148,8 @@ app.post('/', (req, res) => {
 						// req.session.user = data;
 						// console.log(req.session.user)
 						console.log('login success')
-						res.redirect('/myprofile');
+						res.status(200).json(data[0].idUser);
+						// res.redirect('/myprofile');
 					}else{
 						console.log('login failed')
 					}
@@ -162,7 +163,7 @@ app.post('/', (req, res) => {
 });
 
 // RECUPERATION DES DONNEES DE PROFIL
-app.get('/user/:idUser', (req, res) => {
+app.get('/myprofile/parameter', (req, res) => {
 	const idUser = req.params.idUser;
 	db.query('SELECT * FROM user WHERE idUser = ?', idUser, (err, results) => {
 	  if (err) {
