@@ -15,7 +15,7 @@ function Delete() {
     }, [])
 
     const handleDelete = (idUser) => {
-        axios.delete('http://localhost:3001/connect-admin/home/user/delete'+idUser)
+        axios.delete('http://localhost:3001/connect-admin/home/user/delete/'+idUser)
         .then(res => {
             navigate('/connect-admin/home');
         })
@@ -25,9 +25,9 @@ function Delete() {
     return (
     <section className="bg-admin">
         <div className="grid-admin">
-        {data.map((user, key) => {
+        {data.map((user, index) => {
             return(
-        <div className="text-center search">
+        <div key={index} className="text-center search">
             <div className="searchAvatar">
                 <img src={profil} className="avatar" alt="avatar"/>
             </div>

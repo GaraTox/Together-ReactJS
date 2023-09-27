@@ -26,10 +26,12 @@ function Connect() {
   const [mailUser, setMailUser] = useState('');
   const [passwordUser, setPasswordUser] = useState('');
 
-
+// MODALE
   const [openModal, setOpenModal] = useState(false);
 
-  const history = useNavigate;
+  const history = useNavigate();
+
+  // const dispatch = useDispatch();
 
 axios.defaults.withCredentials = true;
 
@@ -39,31 +41,49 @@ const handleSubmit = (event) => {
   axios.post('http://localhost:3001/', { mailUser, passwordUser })
     .then((res) => {
       if (res.data.success) {
-
+        console.log(res.data)
         history.push('/myprofile'); 
       } else {
         console.log("Probleme de connexion")
       }
+      console.log(res);
     })
     .catch((err) => {
       console.error(err);
     });
 };
+// const handleSubmit = (event) => {
+//   event.preventDefault();
+//   axios.post("http://localhost:3001?mail=" + mailUser + "?psw=" + passwordUser )
+//   .then((res) => {
+//     if(res.data){
+//       console.log('res:' + ' ' + res)
+//       history.push('/myprofile');
+//     }else{
+//       console.log('problème de connexion')
+//     }
+//   }) 
+//   .catch((err) => {
+//     console.log('erreur: ' + mailUser)
+//   })
+
+//   // console.log('mailUser' + ' ' + mailUser + ' ' + 'passwordUser' + ' ' + passwordUser);
+// }
 
     return (
         <section className="loginPage">
-          {openModal && <ModalPassword closeModal={setOpenModal}/>}
+        {openModal && <ModalPassword closeModal={setOpenModal}/>}
         <h1 className="titrePresentation">Bienvenue sur Together, <br/> le nouveau réseau social gratuit.</h1>
         <div className="blocForm">
         <Formik initialValues={initialValues} validationSchema={Validation}>
-        <form onChange={handleSubmit} className="formConnect rounded" method="POST" action="#">
+        <form onSubmit={handleSubmit} className="formConnect rounded" method="POST">
             <p className="dejaInscrit">Déjà inscrit ?</p>
 
             <div className="m-4">
               <label htmlFor="exampleInput" className="form-label">Adresse Mail</label>
               <input onChange={(e) => {setMailUser(e.target.value);}} type="mail" 
               value={mailUser} onBlur={handleBlur}
-              className="form-control" id="mail" name="mailUser" autoComplete="off"/>
+              className="form-control" id="mail" name="mailUser"/>
             {errors.mailUser && <small>{errors.mailUser}</small>}
             </div>
 
@@ -71,7 +91,7 @@ const handleSubmit = (event) => {
               <label htmlFor="exampleInput" className="form-label">Mot de passe</label>
               <input onChange={(e) => {setPasswordUser(e.target.value);}} type="password" 
               value={passwordUser} onBlur={handleBlur}
-              className="form-control" id="passw" name="passwordUser" autoComplete="off"/>
+              className="form-control" id="passw" name="passwordUser"/>
             {errors.passwordUser && <small>{errors.passwordUser}</small>}
             </div>
 

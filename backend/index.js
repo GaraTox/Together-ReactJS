@@ -61,7 +61,7 @@ app.post('/register', (req, res) => {
 		[pseudoUser, mailUser, hash, birthdayUser, roleUser],
 		(err, result) => {
 			if(err) return res.json({Error: "Problème de requête"});
-			return res.redirect('/connect-admin/home')
+			return res.redirect('/')
 		}
 		);
 	});
@@ -133,21 +133,19 @@ app.get('/connect-admin/home/user/read', (req, res) => {
 
 // SE CONNECTER EN TANT UTILISATEUR
 app.post('/', (req, res) => {
-	const mailUser = req.body.mailUser;
-	const passwordUser = req.body.passwordUser;
+	const mailUser = req.mailUser;
+	const passwordUser = req.passwordUser;
 	// REQUETE
 	db.query(
 		"SELECT * FROM user WHERE mailUser = ?",
 		mailUser,
 		(err, data) => {
-			if(err) return console.log("erreur de login");
+			if(err) return console.log("erreur de login", req);
 			if(data.length > 0) {
 				bcrypt.compare(passwordUser,data[0].passwordUser, (err, response) => {
 					if(response){
 						req.session.user = data;
 						console.log(req.session.user)
-						
-						res.redirect('/myprofile')
 					}
 					if(err) return console.log('probleme de mot de passe');
 				});

@@ -8,9 +8,9 @@ function Parameter() {
     //     localStorage.clear();
     // })
 
-    const idUser = useSelector(state => state.idUser);
-    const pseudoUser = useSelector(state => state.pseudoUser);
-    const mailUser = useSelector(state => state.mailUser);
+    const idUser = useSelector((state) => state.idUser);
+    const pseudoUser = useSelector((state) => state.pseudoUser);
+    const mailUser = useSelector((state) => state.mailUser);
 
     return (
         <section>
