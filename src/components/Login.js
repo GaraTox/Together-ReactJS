@@ -29,11 +29,13 @@ function Connect() {
 // MODALE
   const [openModal, setOpenModal] = useState(false);
 
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   // const dispatch = useDispatch();
 
 axios.defaults.withCredentials = true;
+
+console.log(localStorage.getItem('idUser'))
 
 // ACTION DU CLIQUE SUR LE BOUTON SE CONNECTER
 // const handleSubmit = (event) => {
@@ -53,13 +55,15 @@ axios.defaults.withCredentials = true;
 //     });
 // };
 
-const handleSubmit = async () => {
+const handleSubmit = async (e) => {
+  e.preventDefault()
   try {
     const response = await axios.post('http://localhost:3001/', { mailUser, passwordUser });
     console.log(response.data);
     localStorage.setItem('idUser', response.data);
-    history.push('/myprofile');
-  } catch (error) {
+    navigate('/myprofile')
+  } 
+  catch (error) {
     console.error(error);
   }
 }

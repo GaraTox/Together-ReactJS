@@ -148,7 +148,7 @@ app.post('/', (req, res) => {
 						// req.session.user = data;
 						// console.log(req.session.user)
 						console.log('login success')
-						res.status(200).json(data[0].idUser);
+						res.status(200).json(data[0].idUser)
 						// res.redirect('/myprofile');
 					}else{
 						console.log('login failed')
