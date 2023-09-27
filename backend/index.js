@@ -25,15 +25,15 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(session({
-	key: "CookieTogether",
-	secret: "Together",
-	resave: false,
-	saveUninitialized: false,
-	cookie:{
-		expires: 3600000 //millisecondes 	// EXPIRE AU BOUT D'UNE HEURE
-	},
-}));
+// app.use(session({
+// 	key: "CookieTogether",
+// 	secret: "Together",
+// 	resave: false,
+// 	saveUninitialized: false,
+// 	cookie:{
+// 		expires: 3600000 //millisecondes 	// EXPIRE AU BOUT D'UNE HEURE
+// 	},
+// }));
 
 // CONNEXION A LA BASE DE DONNEES
 const db = mysql.createConnection({
@@ -133,19 +133,24 @@ app.get('/connect-admin/home/user/read', (req, res) => {
 
 // SE CONNECTER EN TANT UTILISATEUR
 app.post('/', (req, res) => {
-	const mailUser = req.mailUser;
-	const passwordUser = req.passwordUser;
+	const mailUser = req.body.mailUser;
+	const passwordUser = req.body.passwordUser;
 	// REQUETE
 	db.query(
 		"SELECT * FROM user WHERE mailUser = ?",
 		mailUser,
 		(err, data) => {
-			if(err) return console.log("erreur de login", req);
+			if(err) return console.log("erreur de login");
 			if(data.length > 0) {
 				bcrypt.compare(passwordUser,data[0].passwordUser, (err, response) => {
 					if(response){
-						req.session.user = data;
-						console.log(req.session.user)
+						res.cookie('CookieTogether', data[0].idUser)
+						// req.session.user = data;
+						// console.log(req.session.user)
+						console.log('login success')
+						res.redirect('/myprofile');
+					}else{
+						console.log('login failed')
 					}
 					if(err) return console.log('probleme de mot de passe');
 				});

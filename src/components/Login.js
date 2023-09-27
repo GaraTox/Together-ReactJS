@@ -36,22 +36,33 @@ function Connect() {
 axios.defaults.withCredentials = true;
 
 // ACTION DU CLIQUE SUR LE BOUTON SE CONNECTER
-const handleSubmit = (event) => {
-  event.preventDefault();
-  axios.post('http://localhost:3001/', { mailUser, passwordUser })
-    .then((res) => {
-      if (res.data.success) {
-        console.log(res.data)
-        history.push('/myprofile'); 
-      } else {
-        console.log("Probleme de connexion")
-      }
-      console.log(res);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-};
+// const handleSubmit = (event) => {
+//   event.preventDefault();
+//   axios.post('http://localhost:3001/', { mailUser, passwordUser })
+//     .then((res) => {
+//       if (res.data.success) {
+//         console.log(res.data.success)
+//         history.push('/myprofile'); 
+//       } else {
+//         console.log("Probleme de connexion")
+//       }
+//       console.log(res);
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//     });
+// };
+
+const handleSubmit = async () => {
+  try {
+    const response = await axios.post('http://localhost:3001/', { mailUser, passwordUser });
+    console.log(response.data);
+    history.push('/myprofile');
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 // const handleSubmit = (event) => {
 //   event.preventDefault();
 //   axios.post("http://localhost:3001?mail=" + mailUser + "?psw=" + passwordUser )
@@ -83,7 +94,7 @@ const handleSubmit = (event) => {
               <label htmlFor="exampleInput" className="form-label">Adresse Mail</label>
               <input onChange={(e) => {setMailUser(e.target.value);}} type="mail" 
               value={mailUser} onBlur={handleBlur}
-              className="form-control" id="mail" name="mailUser"/>
+              className="form-control" id="mail" name="mailUser" autoComplete="off"/>
             {errors.mailUser && <small>{errors.mailUser}</small>}
             </div>
 
@@ -91,7 +102,7 @@ const handleSubmit = (event) => {
               <label htmlFor="exampleInput" className="form-label">Mot de passe</label>
               <input onChange={(e) => {setPasswordUser(e.target.value);}} type="password" 
               value={passwordUser} onBlur={handleBlur}
-              className="form-control" id="passw" name="passwordUser"/>
+              className="form-control" id="passw" name="passwordUser" autoComplete="off"/>
             {errors.passwordUser && <small>{errors.passwordUser}</small>}
             </div>
 
