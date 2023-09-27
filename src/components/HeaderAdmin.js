@@ -31,6 +31,7 @@ function HeaderAdmin() {
           if (response.status === 200) {
             // La déconnexion a réussi, vous pouvez rediriger l'utilisateur ou effectuer d'autres actions nécessaires
             window.location.href = '/'; // Redirection vers la page de connexion
+            localStorage.clear();
           } else {
             // Gérez les erreurs de déconnexion
             console.error('Erreur lors de la déconnexion');

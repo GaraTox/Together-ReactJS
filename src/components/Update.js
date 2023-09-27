@@ -8,7 +8,7 @@ function Update() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:3001/connect-admin/home/user/read/'+idUser)
+    axios.get('http://localhost:3001/connect-admin/home/user/read/'+ idUser)
     .then(res => {
       console.log(res)
       setValues({...values, pseudoUser: res.data[0].pseudoUser, mailUser: res.data[0].mailUser})

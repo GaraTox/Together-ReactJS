@@ -24,7 +24,7 @@ function Read() {
                 <p className="searchFirstname">{user.pseudoUser}</p>
                 <p className="searchName">{user.mailUser}</p>
                 <div className="searchButton">
-                    <p><Btnsm type="submit" className="btn" caracteristique="sm" text="UTILISATEUR"/></p>
+                    <p><Btnsm type="submit" className="btn" caracteristique="sm" text={user.roleUser}/></p>
                 </div> 
             </div>        
         )})}

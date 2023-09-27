@@ -16,10 +16,6 @@ function Home() {
     <div className="contenuPrincipal">
         <div className="blocAmis">
             <button className="btn_friend" type="submit"><div className="titreAmis"><p className="text-center text-light bg bg-dark"><img src={friend} className="me-1 mb-1 bg bg-light rounded p-1 m-1" alt="message"/><strong>Amis</strong></p></div></button>
-            <div className="blocContenu text-center mt-2">
-                <p>ID Pseudo</p>
-                <hr className="text-center"/>
-            </div>
         </div>
         <div className="blocPublication">
             <div className="blocInputComm">

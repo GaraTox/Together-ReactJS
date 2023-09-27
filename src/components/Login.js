@@ -35,7 +35,7 @@ function Connect() {
 
 axios.defaults.withCredentials = true;
 
-console.log(localStorage.getItem('idUser'))
+console.log("L38 => ", localStorage.getItem('idUser'))
 
 // ACTION DU CLIQUE SUR LE BOUTON SE CONNECTER
 // const handleSubmit = (event) => {
@@ -59,7 +59,7 @@ const handleSubmit = async (e) => {
   e.preventDefault()
   try {
     const response = await axios.post('http://localhost:3001/', { mailUser, passwordUser });
-    console.log(response.data);
+    console.log("response data", response.data);
     localStorage.setItem('idUser', response.data);
     navigate('/myprofile')
   } 

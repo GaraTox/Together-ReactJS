@@ -3,7 +3,7 @@ import React from "react";
 const Btnlg = ({caracteristique,text}) => {
   return (
     <div>
-        <button className={caracteristique}>{text}</button>
+        <button type="submit" className={caracteristique}>{text}</button>
     </div>
   );
 };

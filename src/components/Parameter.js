@@ -11,18 +11,21 @@ function Parameter() {
     // })
 
     const {idUser} = useParams();
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState('');
 
     useEffect(() => {
-        console.log(localStorage.getItem('idUser'));
-        axios.get(`http://localhost:3001/myprofile/parameter/${idUser}`)
+        const user = localStorage.getItem('idUser');
+        console.log("user =>" + user);
+        axios.get(`http://localhost:3001/myprofile/parameter/:user`)
         .then((response) => {
             setUser(response.data);
         })
         .catch((error) => {
-            console.log(error);
+            console.log("========L24===========");
+            console.log("error : ", error);
+            console.log("Error user : " + user);
         })
-    }, [idUser])
+    }, [])
 
     // const idUser = useSelector((state) => state.idUser);
     // const pseudoUser = useSelector((state) => state.pseudoUser);
@@ -32,19 +35,20 @@ function Parameter() {
         <section>
             <div className="blocParametre">
                 <p className="text-center">Vos paramètres de profil</p>
-                {user ? (
                 <div className="blocInfo text-center">
                     <div className="blocProfil">
                         <img className="imgPhoto" src={profil} alt="profil"/>
                     </div>
+                    {user ? (
                     <div className="infoPerso">
                         <p>{user.pseudoUser}</p>
                         <p>{user.mailUser}</p>
                     </div>
+                    ) : (
+                    <p>Chargement</p>
+                    )}
                 </div>
-                ) : (
-                    <p>Chargement ma couille</p>
-                )}
+                
             </div>
         </section>
     );

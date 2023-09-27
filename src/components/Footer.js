@@ -5,7 +5,7 @@ function Footer() {
     return (
         <footer>
             <div className="admin bg bg-dark">
-                <p><Link to="/myprofile/parameter" className="adminLink text-secondary pt-2"><strong>PARAMETRES</strong></Link></p>
+                <p><Link to="/myprofile/parameter/:idUser" className="adminLink text-secondary pt-2"><strong>PARAMETRES</strong></Link></p>
             </div>
         </footer>
     );

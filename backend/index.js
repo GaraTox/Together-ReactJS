@@ -163,9 +163,9 @@ app.post('/', (req, res) => {
 });
 
 // RECUPERATION DES DONNEES DE PROFIL
-app.get('/myprofile/parameter', (req, res) => {
-	const idUser = req.params.idUser;
-	db.query('SELECT * FROM user WHERE idUser = ?', idUser, (err, results) => {
+app.get('/myprofile/parameter/:user', (req, res) => {
+	console.log("==================");
+	db.query('SELECT * FROM user WHERE idUser = ' + user, (err, results) => {
 	  if (err) {
 		console.error('Erreur lors de la récupération des données utilisateur :', err);
 		res.status(500).json({ error: 'Erreur lors de la récupération des données utilisateur' });
