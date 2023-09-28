@@ -5,6 +5,7 @@ import profil from '../assets/icons/person-circle.svg';
 import Btnlg from './btn/Btnlg';
 import ModalModifyUser from "./modales/ModaleModifyUser";
 import ModaleUserDelete from "./modales/ModaleUserDelete";
+import Btnmd from "./btn/Btnmd";
 
 function Parameter() {
     // NETTOYER REACT DEVTOOL
@@ -19,6 +20,7 @@ function Parameter() {
      const [openModalModi, setOpenModalModi] = useState(false);
      const [openModalDel, setOpenModalDel] = useState(false);
 
+    // RECUPERATION DES DONNEES GRACE A ID
     useEffect(() => {
         const user = localStorage.getItem('idUser');
         console.log("user =>" + user);
@@ -33,9 +35,36 @@ function Parameter() {
         })
     }, [])
 
-    // const idUser = useSelector((state) => state.idUser);
-    // const pseudoUser = useSelector((state) => state.pseudoUser);
-    // const mailUser = useSelector((state) => state.mailUser);
+    // AVATAR
+    // const [file, setFile] = useState();
+    // const [data, setData] = useState([]);
+    // const handleFile = (event) => {
+    //     setFile(event.target.files[0])
+    // }
+
+    // useEffect(() => {
+    //     axios.get('http://localhost:3001/')
+    //     .then(res => {
+    //         setData(res.data[0])
+    //     })
+    //     .catch(err => console.log(err));
+    // }, [])
+
+    // const handleUpload = () => {
+    //     const formdata = new FormData();
+    //     formdata.append("avatar", file);
+    //     axios.post('http://localhost:3001/upload', formdata)
+    //     .then(res => {
+    //         if(res.data.Status === "Success"){
+    //             console.log('Success for avatar')
+    //         }else{
+    //             console.log('Failed for avatar')
+    //         }
+    //     })
+    //     .catch(err => console.log(err))
+    // }
+
+
 
     return (
         <section>
@@ -45,7 +74,9 @@ function Parameter() {
                 <p className="text-center">Vos paramètres de profil</p>
                 <div className="blocInfo text-center">
                     <div className="blocProfil">
-                        <img className="imgPhoto" src={profil} alt="profil"/>
+                        {/* <img className="imgPhoto" src={`http://localhost:3001/avatar/` + data.avatarUser} alt="profil"/> */}
+                        <input type="file" name="avatar"/>
+                        <Btnmd    className="btn" caracteristique="md" text="Ajouter l'avatar"/>
                     </div>
                     {user ? (
                     <div className="infoPerso">
