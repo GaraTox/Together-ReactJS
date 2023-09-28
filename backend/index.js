@@ -78,7 +78,7 @@ app.post('/register', (req, res) => {
 		[pseudoUser, mailUser, hash, birthdayUser, roleUser],
 		(err, result) => {
 			if(err) return res.json({Error: "Problème de requête"});
-			return res.redirect('/')
+			return res.status(200).send(true)
 		}
 		);
 	});

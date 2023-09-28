@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFormik, Formik} from 'formik';
 import { Validation } from "./controles/ValidationsRegister";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Btnlg from './btn/Btnlg';
 import axios from 'axios';
 
@@ -24,6 +24,7 @@ function Inscrire() {
     }
 })
 
+const navigate = useNavigate();
 
   // INITIALISATION DES VALEURS
     const [pseudoUser, setPseudoUser] = useState('');
@@ -36,8 +37,13 @@ function Inscrire() {
       event.preventDefault();
       axios.post('http://localhost:3001/register', 
       {pseudoUser: pseudoUser, mailUser: mailUser, birthdayUser: birthdayUser, passwordUser: passwordUser})
-      .then(res => {return res.redirect('/')})
-      .then(err => console.log(err))
+      .then(res => {
+        console.log(res.data)
+        if(res.data === true){
+          navigate('/')
+        }
+      })
+      .catch(err => console.log(err))
     }
 
     return (
