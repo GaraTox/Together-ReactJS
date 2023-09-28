@@ -37,16 +37,16 @@ function Update() {
         <div className="blocUpdate">
         <form method="POST" onSubmit={handleUpdate} className="formUpdate text-center p-3">
           <div className="mb-3">
-            <label for="exampleInput" className="form-label">Pseudo</label>
+            <label htmlFor="exampleInput" className="form-label">Pseudo</label>
             <input type="text" onChange={e => setValues({...values, pseudoUser: e.target.value})} 
             value={values.pseudoUser}
-            className="form-control" id="fnames" name="pseudoUser" autocomplete="off" required/>
+            className="form-control" id="fnames" name="pseudoUser" autoComplete="off" required/>
           </div>
           <div className="mb-3">
-            <label for="exampleInput" className="form-label">Mail</label>
+            <label htmlFor="exampleInput" className="form-label">Mail</label>
             <input type="text" onChange={e => setValues({...values, mailUser: e.target.value})}
             value={values.mailUser}
-            className="form-control" id="names" name="mailUser" autocomplete="off" required/>
+            className="form-control" id="names" name="mailUser" autoComplete="off" required/>
           </div>
           <Btnsm type="submit" className="btn" caracteristique="sm" text="Modifier"/>
           </form>

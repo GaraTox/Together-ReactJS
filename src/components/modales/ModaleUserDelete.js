@@ -11,7 +11,6 @@ function ModaleUserDelete({closeModal}){
                 <div className='bodyDel'>
                     <Btnsm className="btn" caracteristique="sm" text="OUI"/>
                     <Btnsm onClick={() => closeModal(false)} className="btn" caracteristique="sm" text="NON"/>
-
                 </div>
             </div>
         </section>
