@@ -9,14 +9,14 @@ function Parameter() {
     // useEffect(() => {
     //     localStorage.clear();
     // })
-
+    
     const {idUser} = useParams();
     const [user, setUser] = useState('');
 
     useEffect(() => {
         const user = localStorage.getItem('idUser');
         console.log("user =>" + user);
-        axios.get(`http://localhost:3001/myprofile/parameter/:user`)
+        axios.get(`http://localhost:3001/myprofile/parameter/${user}`)
         .then((response) => {
             setUser(response.data);
         })

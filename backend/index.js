@@ -145,11 +145,8 @@ app.post('/', (req, res) => {
 				bcrypt.compare(passwordUser,data[0].passwordUser, (err, response) => {
 					if(response){
 						res.cookie('CookieTogether', data[0].idUser)
-						// req.session.user = data;
-						// console.log(req.session.user)
 						console.log('login success')
 						res.status(200).json(data[0].idUser)
-						// res.redirect('/myprofile');
 					}else{
 						console.log('login failed')
 					}
@@ -164,8 +161,9 @@ app.post('/', (req, res) => {
 
 // RECUPERATION DES DONNEES DE PROFIL
 app.get('/myprofile/parameter/:user', (req, res) => {
+	const idUser = req.params.user;
 	console.log("==================");
-	db.query('SELECT * FROM user WHERE idUser = ' + user, (err, results) => {
+	db.query('SELECT * FROM user WHERE idUser = ' + idUser, (err, results) => {
 	  if (err) {
 		console.error('Erreur lors de la récupération des données utilisateur :', err);
 		res.status(500).json({ error: 'Erreur lors de la récupération des données utilisateur' });

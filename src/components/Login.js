@@ -31,30 +31,11 @@ function Connect() {
 
   const navigate = useNavigate();
 
-  // const dispatch = useDispatch();
-
 axios.defaults.withCredentials = true;
 
-console.log("L38 => ", localStorage.getItem('idUser'))
+// console.log("L38 => ", localStorage.getItem('idUser'))
 
 // ACTION DU CLIQUE SUR LE BOUTON SE CONNECTER
-// const handleSubmit = (event) => {
-//   event.preventDefault();
-//   axios.post('http://localhost:3001/', { mailUser, passwordUser })
-//     .then((res) => {
-//       if (res.data.success) {
-//         console.log(res.data.success)
-//         history.push('/myprofile'); 
-//       } else {
-//         console.log("Probleme de connexion")
-//       }
-//       console.log(res);
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//     });
-// };
-
 const handleSubmit = async (e) => {
   e.preventDefault()
   try {
@@ -67,24 +48,6 @@ const handleSubmit = async (e) => {
     console.error(error);
   }
 }
-
-// const handleSubmit = (event) => {
-//   event.preventDefault();
-//   axios.post("http://localhost:3001?mail=" + mailUser + "?psw=" + passwordUser )
-//   .then((res) => {
-//     if(res.data){
-//       console.log('res:' + ' ' + res)
-//       history.push('/myprofile');
-//     }else{
-//       console.log('problème de connexion')
-//     }
-//   }) 
-//   .catch((err) => {
-//     console.log('erreur: ' + mailUser)
-//   })
-
-//   // console.log('mailUser' + ' ' + mailUser + ' ' + 'passwordUser' + ' ' + passwordUser);
-// }
 
     return (
         <section className="loginPage">
