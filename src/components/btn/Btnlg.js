@@ -1,9 +1,9 @@
 import React from "react";
 
-const Btnlg = ({caracteristique,text}) => {
+const Btnlg = ({caracteristique,text, onClick}) => {
   return (
     <div>
-        <button type="submit" className={caracteristique}>{text}</button>
+        <button onClick={onClick} type="submit" className={caracteristique}>{text}</button>
     </div>
   );
 };

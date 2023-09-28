@@ -1,9 +1,9 @@
 import React from "react";
 
-const Btnmd = ({caracteristique,text}) => {
+const Btnmd = ({caracteristique,text, onClick}) => {
   return (
     <div>
-        <button className={caracteristique}>{text}</button>
+        <button onClick={onClick} className={caracteristique}>{text}</button>
     </div>
   );
 };

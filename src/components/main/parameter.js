@@ -1,7 +1,6 @@
 import React from "react";
 import HeaderWelcome from "../HeaderWelcome";
 import Parameter from "../Parameter";
-import Mode from "../Mode";
 import FooterParameter from "../FooterParameter";
 
 function parameter() {
@@ -9,7 +8,6 @@ function parameter() {
       <section>
         <HeaderWelcome/>
         <Parameter/>
-        <Mode/>
         <FooterParameter/>
       </section>
     );
