@@ -43,7 +43,7 @@ function Parameter() {
     }
 
     useEffect(() => {
-        axios.get('http://localhost:3001/')
+        axios.get(`http://localhost:3001/`)
         .then(res => {
             setData(res.data[0])
 
@@ -52,9 +52,10 @@ function Parameter() {
     }, [])
 
     const handleUpload = () => {
+        const user = localStorage.getItem('idUser');
         const formdata = new FormData();
         formdata.append('image', file);
-        axios.post('http://localhost:3001/upload', formdata)
+        axios.post(`http://localhost:3001/upload/${user}`, formdata)
         .then(res => 
             // console.log(res))
             {if(res.data.Status === "Success"){

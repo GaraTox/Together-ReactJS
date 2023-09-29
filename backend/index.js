@@ -13,7 +13,9 @@ const storage = multer.diskStorage({
 		cb(null, 'public/images')
 	},
 	filename: (req, file, cb) => {
-		cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
+		const idUser = req.params.idUser;
+		const filename = `${idUser}-${Date.now()}-${file.originalname}`;
+		cb(null, filename);
 	}
 })
 const upload = multer({
@@ -196,11 +198,12 @@ app.get('/myprofile/parameter/:user', (req, res) => {
   });
 
 // GESTION DES AVATAR
-app.post('/upload', upload.single('image'), (req, res) => {
+app.post('/upload/:idUser', upload.single('image'), (req, res) => {
 	// console.log(req.file)
+	const idUser = req.params.idUser
 	const image = req.file.filename;
-	const sql = "UPDATE user SET avatarUser = ?";
-	db.query(sql, [image],(err, result) =>{
+	const sql = "UPDATE user SET avatarUser = ? WHERE idUser = ?";
+	db.query(sql, [image, idUser],(err, result) =>{
 		if(err) return res.json({Message: "Erreur dans la requête de l'avatar"});
 		return res.json({Status: "Success"});
 	})
