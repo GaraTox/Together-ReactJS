@@ -5,19 +5,20 @@ const dotenv = require("dotenv");
 // CORS PERMET DE GERER LES PROBLEMES DE SECURITE
 const cors = require("cors");
 // AVATAR
-// const multer = require('multer');
-// const path = require('path');
-// const storage = multer.diskStorage({
-// 	destination: (req, file, cb) => {
-// 		cb(null, '../Avatar')
-// 	},
-// 	filename: (req, file, cd) => {
-// 		cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
-// 	}
-// })
-// const upload = multer({
-// 	storage: storage
-// })
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+	destination: (req, file, cb) => {
+		cb(null, 'public/images')
+	},
+	filename: (req, file, cb) => {
+		cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
+	}
+})
+const upload = multer({
+	storage: storage
+})
 // CREER UNE SESSION
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -48,9 +49,9 @@ app.use(session({
 		expires: 3600000 //millisecondes 	// EXPIRE AU BOUT D'UNE HEURE
 	},
 }));
+
 // AVATAR
-// app.engine('hbs', exphbs({extname: 'hbs'}));
-// app.set('view engine', 'hbs');
+app.use(express.static('public'));
 
 // CONNEXION A LA BASE DE DONNEES
 const db = mysql.createConnection({
@@ -195,22 +196,23 @@ app.get('/myprofile/parameter/:user', (req, res) => {
   });
 
 // GESTION DES AVATAR
-// app.post('/upload', upload.single("avatar"), (req, res) => {
-// 	const avatar = req.file.filename;
-// 	const sql = "UPDATE user SET avatarUser = ?";
-// 	db.query(sql, [avatar],(err, result) =>{
-// 		if(err) return res.json({Message: "Erreur dans la requête de l'avatar"});
-// 		return res.json({Status: "Success"});
-// 	})
-// })
+app.post('/upload', upload.single('image'), (req, res) => {
+	// console.log(req.file)
+	const image = req.file.filename;
+	const sql = "UPDATE user SET avatarUser = ?";
+	db.query(sql, [image],(err, result) =>{
+		if(err) return res.json({Message: "Erreur dans la requête de l'avatar"});
+		return res.json({Status: "Success"});
+	})
+})
 
-// app.get('/', (req, res) => {
-// 	const sql = 'SELECT * FROM user';
-// 	db.query(sql, (err, result) => {
-// 		if(err) return res.json("Error L210");
-// 		return res.json(result);
-// 	})
-// })
+app.get('/', (req, res) => {
+	const sql = 'SELECT * FROM user';
+	db.query(sql, (err, result) => {
+		if(err) return res.json("Error L211");
+		return res.json(result);
+	})
+})
 
 
 // DECONNEXION A LA SESSION

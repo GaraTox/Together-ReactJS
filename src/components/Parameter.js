@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import profil from '../assets/icons/person-circle.svg';
+// import { useParams } from "react-router-dom";
+// import profil from '../assets/icons/person-circle.svg';
 import Btnlg from './btn/Btnlg';
 import ModalModifyUser from "./modales/ModaleModifyUser";
 import ModaleUserDelete from "./modales/ModaleUserDelete";
@@ -13,7 +13,7 @@ function Parameter() {
     //     localStorage.clear();
     // })
     
-    const {idUser} = useParams();
+    // const {idUser} = useParams();
     const [user, setUser] = useState('');
 
      // MODALE
@@ -36,35 +36,35 @@ function Parameter() {
     }, [])
 
     // AVATAR
-    // const [file, setFile] = useState();
-    // const [data, setData] = useState([]);
-    // const handleFile = (event) => {
-    //     setFile(event.target.files[0])
-    // }
+    const [file, setFile] = useState();
+    const [data, setData] = useState([]);
+    const handleFile = (event) => {
+        setFile(event.target.files[0])
+    }
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:3001/')
-    //     .then(res => {
-    //         setData(res.data[0])
-    //     })
-    //     .catch(err => console.log(err));
-    // }, [])
+    useEffect(() => {
+        axios.get('http://localhost:3001/')
+        .then(res => {
+            setData(res.data[0])
 
-    // const handleUpload = () => {
-    //     const formdata = new FormData();
-    //     formdata.append("avatar", file);
-    //     axios.post('http://localhost:3001/upload', formdata)
-    //     .then(res => {
-    //         if(res.data.Status === "Success"){
-    //             console.log('Success for avatar')
-    //         }else{
-    //             console.log('Failed for avatar')
-    //         }
-    //     })
-    //     .catch(err => console.log(err))
-    // }
+        })
+        .catch(err => console.log(err));
+    }, [])
 
-
+    const handleUpload = () => {
+        const formdata = new FormData();
+        formdata.append('image', file);
+        axios.post('http://localhost:3001/upload', formdata)
+        .then(res => 
+            // console.log(res))
+            {if(res.data.Status === "Success"){
+                console.log('Success for avatar')
+            }else{
+                console.log('Failed for avatar')
+            }})
+        
+        .catch(err => console.log(err))
+    }
 
     return (
         <section>
@@ -74,9 +74,9 @@ function Parameter() {
                 <p className="text-center">Vos paramètres de profil</p>
                 <div className="blocInfo text-center">
                     <div className="blocProfil">
-                        {/* <img className="imgPhoto" src={`http://localhost:3001/avatar/` + data.avatarUser} alt="profil"/> */}
-                        <input type="file" name="avatar"/>
-                        <Btnmd    className="btn" caracteristique="md" text="Ajouter l'avatar"/>
+                        <img className="imgPhoto" src={`http://localhost:3001/images/` + data.avatarUser} alt=""/>
+                        <input type="file" name="avatar" onChange={handleFile}/>
+                        <Btnmd onClick={handleUpload} className="btn" caracteristique="md" text="Ajouter l'avatar"/>
                     </div>
                     {user ? (
                     <div className="infoPerso">
