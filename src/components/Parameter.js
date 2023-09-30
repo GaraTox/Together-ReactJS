@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-// import { useParams } from "react-router-dom";
-// import profil from '../assets/icons/person-circle.svg';
 import Btnlg from './btn/Btnlg';
 import ModalModifyUser from "./modales/ModaleModifyUser";
 import ModaleUserDelete from "./modales/ModaleUserDelete";
@@ -12,11 +10,11 @@ function Parameter() {
     // useEffect(() => {
     //     localStorage.clear();
     // })
-    
-    // const {idUser} = useParams();
+
+    // AFFICHER LES DONNEES DE L'UTILISATEUR
     const [user, setUser] = useState('');
 
-     // MODALE
+     // MODALES
      const [openModalModi, setOpenModalModi] = useState(false);
      const [openModalDel, setOpenModalDel] = useState(false);
 
@@ -41,30 +39,25 @@ function Parameter() {
     const handleFile = (event) => {
         setFile(event.target.files[0])
     }
-
     useEffect(() => {
         const user = localStorage.getItem('idUser');
         axios.get(`http://localhost:3001/avatar/${user}`)
         .then(res => {
             setData(res.data[0])
-
         })
         .catch(err => console.log(err));
     }, [])
-
     const handleUpload = () => {
         const user = localStorage.getItem('idUser');
         const formdata = new FormData();
         formdata.append('image', file);
         axios.post(`http://localhost:3001/upload/${user}`, formdata)
         .then(res => 
-            // console.log(res))
             {if(res.data.Status === "Success"){
                 console.log('Success for avatar')
             }else{
                 console.log('Failed for avatar')
             }})
-        
         .catch(err => console.log(err))
     }
 

@@ -207,7 +207,7 @@ app.get('/utilisateur/:idUser', (req, res) => {
 		return res.json(result[0]);
 	})
 })
-// CLIQUE SUR LE BOUTON MODIFIER
+// CLIQUE SUR LE BOUTON CONFIRMER
 app.put('/utilisateur/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
 	const pseudoUser = req.body.pseudoUser;
@@ -218,6 +218,19 @@ app.put('/utilisateur/:idUser', (req, res) => {
 		return res.json(result);
 	})
 })
+
+// L'UTILISATEUR SUPPRIME SON COMPTE
+app.delete('/delete/:idUser', (req, res) => {
+	const idUser = req.params.idUser;
+	db.query('DELETE FROM user WHERE idUser = ?', [idUser], (err, result) => {
+		if (err){
+			console.error('Erreur lors de la suppression du compte : ' + err);
+			res.status(500).json({ error: 'Erreur lors de la suppression du compte' });
+		}else{
+			res.json({ message: 'Compte supprimé avec succès' });
+		}
+	});
+});
 
 // GESTION DES AVATAR
 app.post('/upload/:idUser', upload.single('image'), (req, res) => {

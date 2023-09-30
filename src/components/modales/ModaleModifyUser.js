@@ -21,8 +21,7 @@ function ModalModifyUser({closeModal}){
 
   const handleUpdateUser = () => {
     const user = localStorage.getItem('idUser');
-    // Mettez à jour les informations de l'utilisateur
-    axios.put(`/utilisateur/${user.idUser}`, { pseudoUser: pseudoUser, mailUser: mailUser })
+    axios.put(`/utilisateur/${user}`, { pseudoUser: pseudoUser, mailUser: mailUser })
       .then(response => console.log(response.data))
       .catch(error => console.error(error));
   };
