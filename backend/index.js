@@ -227,7 +227,9 @@ app.delete('/delete/:idUser', (req, res) => {
 			console.error('Erreur lors de la suppression du compte : ' + err);
 			res.status(500).json({ error: 'Erreur lors de la suppression du compte' });
 		}else{
-			res.json({ message: 'Compte supprimé avec succès' });
+			// res.json({ message: 'Compte supprimé avec succès' });
+			res.clearCookie('CookieTogether');
+	  		res.redirect('/');
 		}
 	});
 });

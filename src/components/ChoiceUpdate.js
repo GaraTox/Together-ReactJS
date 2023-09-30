@@ -17,7 +17,7 @@ function ChoiceUpdate() {
             <div className="grid-admin">
             {data.map((user, key) => {
                 return(
-                <div className="text-center search">
+                <div key={key} className="text-center search">
                     <div className="searchAvatar">
                         <img src={profil} className="avatar" alt="avatar"/>
                     </div>
