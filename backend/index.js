@@ -197,6 +197,28 @@ app.get('/myprofile/parameter/:user', (req, res) => {
 	});
   });
 
+// L'UTILISATEUR MODIFIE SON PROFIL
+//LISTE DES INFORMATIONS DE UTILISATEUR
+app.get('/utilisateur/:idUser', (req, res) => {
+	const idUser = req.params.idUser
+	const sql = "SELECT * FROM user WHERE idUser = ?";
+	db.query(sql, idUser, (err , result)=>{
+		if(err) return res.json({Message: "Erreur"});
+		return res.json(result[0]);
+	})
+})
+// CLIQUE SUR LE BOUTON MODIFIER
+app.put('/utilisateur/:idUser', (req, res) => {
+	const idUser = req.params.idUser;
+	const pseudoUser = req.body.pseudoUser;
+	const mailUser = req.body.mailUser;
+	const sql = 'UPDATE user SET `pseudoUser` = ?, `mailUser` = ? WHERE idUser = ?';
+	db.query(sql, [pseudoUser, mailUser, idUser], (err, result) => {
+		if(err) return res.json({Message: "Erreur"});
+		return res.json(result);
+	})
+})
+
 // GESTION DES AVATAR
 app.post('/upload/:idUser', upload.single('image'), (req, res) => {
 	// console.log(req.file)
