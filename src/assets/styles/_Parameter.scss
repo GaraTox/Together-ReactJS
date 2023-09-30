@@ -6,28 +6,32 @@
     width: 50%;
    margin-left: 25%;
    margin-right: 25%;
-   margin-top: 10%;
+   margin-top: 5%;
    height: 100%;
    font-size: larger;
    font-weight: bold;
    .blocInfo{
-        margin-left: 20%;
-        margin-right: 20%;
         display: inline-flex;
-        width: 60%;
+        width: 100%;
         .blocProfil{
-            width: 200px;
+            width: 50%;
             .imgPhoto{
-                width: 85%;
+                width: 60%;
+                margin-top: 35px;
+                border: solid 1px rgb(206, 206, 206);
             }
-            .imgPlus{
-                width: 15%;
-                margin-top: 100%;
-            }
+            .choiceAvatar{
+                padding-top: 30px;
+             }
+             .addAvatar{
+                margin-top: 5px;
+             }
         }
         .infoPerso{
-            width: 300px;
-            margin-top: 5%;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
    }
 }
@@ -52,15 +56,12 @@
                  width: 200px;
                  .imgPhoto{
                      width: 85%;
-                 }
-                 .imgPlus{
-                     width: 15%;
-                     margin-top: 100%;
+                     border: solid 1px rgb(206, 206, 206);
                  }
              }
              .infoPerso{
-                 width: 300px;
-                 margin-top: 3%;
+                width: 50%;
+                margin-top: 50px;
              }
         }
      }
@@ -81,22 +82,19 @@
         .blocInfo{
              width: 100%;
              .blocProfil{
-                 width: 60%;
-                 margin-left: 20%;
-                 margin-right: 20%;
+                 width: 100%;
                  display: flex;
                  justify-content: center;
                  flex-direction: column;
                  .imgPhoto{
-                     width: 85%;
-                 }
-                 .imgPlus{
-                     width: 15%;
-                     margin-top: 100%;
+                    border: solid 1px rgb(206, 206, 206);
+                    width: 50%;
+                    margin-left: 25%;
+                    margin-right: 25%;
                  }
              }
             .infoPerso{
-                 margin-top: 5%;
+                 margin-top: 2%;
                  font-size: larger;
             }
         }

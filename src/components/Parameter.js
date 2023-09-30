@@ -76,7 +76,8 @@ function Parameter() {
                 <p className="text-center">Vos paramètres de profil</p>
                 <div className="blocInfo text-center">
                     <div className="blocProfil">
-                        <img className="imgPhoto" src={data.avatarUser ? `http://localhost:3001/images/${data.avatarUser}` : ''} alt=""/>
+                        <img className="imgPhoto rounded-circle" src={data.avatarUser ? `http://localhost:3001/images/${data.avatarUser}` : ''} alt=""/>
+                        <p className="choiceAvatar">Choisissez un avatar</p>
                         <input type="file" name="avatar" onChange={handleFile}/>
                         <Btnmd onClick={handleUpload} className="btn" caracteristique="md" text="Ajouter l'avatar"/>
                     </div>
