@@ -43,7 +43,8 @@ function Parameter() {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/`)
+        const user = localStorage.getItem('idUser');
+        axios.get(`http://localhost:3001/avatar/${user}`)
         .then(res => {
             setData(res.data[0])
 

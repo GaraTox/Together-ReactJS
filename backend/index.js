@@ -10,7 +10,7 @@ const path = require('path');
 
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		cb(null, 'public/images')
+		cb(null, 'public/images') // DOSSIER OU SONT STOCKEES LES IMAGES
 	},
 	filename: (req, file, cb) => {
 		const idUser = req.params.idUser;
@@ -204,15 +204,16 @@ app.post('/upload/:idUser', upload.single('image'), (req, res) => {
 	const image = req.file.filename;
 	const sql = "UPDATE user SET avatarUser = ? WHERE idUser = ?";
 	db.query(sql, [image, idUser],(err, result) =>{
-		if(err) return res.json({Message: "Erreur dans la requête de l'avatar"});
+		if(err) return res.status(500).json({Message: "Erreur dans la requête de l'avatar"});
 		return res.json({Status: "Success"});
 	})
 })
 
-app.get('/', (req, res) => {
-	const sql = 'SELECT * FROM user';
-	db.query(sql, (err, result) => {
-		if(err) return res.json("Error L211");
+app.get('/avatar/:idUser', (req, res) => {
+	const idUser = req.params.idUser;
+	const sql = 'SELECT * FROM user WHERE idUser = ?';
+	db.query(sql, [idUser], (err, result) => {
+		if(err) return res.status(500).json("Error L211");
 		return res.json(result);
 	})
 })
