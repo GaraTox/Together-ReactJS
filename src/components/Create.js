@@ -9,13 +9,16 @@ function Create() {
   const [birthdayReg, setBirthdayReg] = useState('');
   const [passwordReg, setPasswordReg] = useState('');
 
+  const [message, setMessage] = useState('');
+
   // EVENEMENT DE CLIQUE
     const register = (event) => {
       event.preventDefault();
       axios.post('http://localhost:3001/connect-admin/home/user/create', 
       {pseudoUser: pseudoReg, mailUser: mailReg, birthdayUser: birthdayReg, passwordUser: passwordReg})
-      .then(res => {return res.redirect('/connect-admin/home')})
-      .then(err => console.log(err))
+      .then(setMessage('Compte ajouté avec succès')
+      )
+      .catch(err => console.log(err))
     }
     return (
         <section className="bg-admin">
@@ -45,6 +48,7 @@ function Create() {
             </div>
           </div>
           <Btnsm onClick={register} type="submit" className="btn" caracteristique="sm" text="Créer"/>
+          {message && <p className="text-success">{message}</p>}
           </form>
         </div>
         </section>

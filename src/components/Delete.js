@@ -1,10 +1,13 @@
 import React,{useState, useEffect} from "react";
+import ModaleAdminDelete from "./modales/ModaleAdminDelete";
 import profil from '../assets/icons/person.svg';
 import Btnsm from '../components/btn/Btnsm';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Delete() {
+    const [openModalDelAdmin, setOpenModalDelAdmin] = useState(false);
+
     const [data, setData] = useState([]);
     const navigate = useNavigate();
 
@@ -14,16 +17,17 @@ function Delete() {
         .catch(err => console.log(err));
     }, [])
 
-    const handleDelete = (idUser) => {
-        axios.delete('http://localhost:3001/connect-admin/home/user/delete/'+idUser)
-        .then(res => {
-            navigate('/connect-admin/home');
-        })
-        .catch(err => console.log(err));
-    }
+    // const handleDelete = (idUser) => {
+    //     axios.delete('http://localhost:3001/connect-admin/home/user/delete/'+idUser)
+    //     .then(res => {
+    //         navigate('/connect-admin/home');
+    //     })
+    //     .catch(err => console.log(err));
+    // }
 
     return (
     <section className="bg-admin">
+        {openModalDelAdmin && <ModaleAdminDelete closeModal={setOpenModalDelAdmin}/>}
         <div className="grid-admin">
         {data.map((user, index) => {
             return(
@@ -34,7 +38,7 @@ function Delete() {
             <p className="searchFirstname">{user.pseudoUser}</p>
             <p className="searchName">{user.mailUser}</p>
             <div className="searchButton">
-                <Btnsm onClick={() => handleDelete(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Supprimer"/>
+                <Btnsm onClick={() =>setOpenModalDelAdmin(true)} type="submit" className="btn" caracteristique="sm" text="Supprimer"/>
             </div> 
         </div>
         )})}

@@ -104,8 +104,12 @@ app.post('/connect-admin/home/user/create', (req, res) => {
 		"INSERT INTO user (pseudoUser,mailUser,passwordUser,birthdayUser, roleUser) VALUES (?,?,?,?,'user')",
 		[pseudoUser, mailUser, hash, birthdayUser, roleUser],
 		(err, result) => {
-			if(err) return res.json({Error: "Problème de requête"});
-			return res.redirect('/connect-admin/home')
+			if(err){
+				return res.json({Error: "Problème de requête"});			
+			}else{
+				console.log(result);
+			}
+
 		}
 		);
 	});
@@ -115,17 +119,17 @@ app.post('/connect-admin/home/user/create', (req, res) => {
 //LISTE DE TOUS LES UTILISATEURS
 app.get('/connect-admin/home/user/choiceUpdate', (req, res) => {
 	const sql = "SELECT * FROM user";
-	db.query(sql,(err , result)=>{
+	db.query(sql, (err , result)=>{
 		if(err) return res.json({Message: "Erreur"});
 		return res.json(result);
 	})
 })
 // CLIQUE SUR LE BOUTON MODIFIER
 app.put('/connect-admin/home/user/update/:idUser', (req, res) => {
+	const idUser = req.params.idUser;
 	const pseudoUser = req.body.pseudoUser;
 	const mailUser = req.body.mailUser;
 	const sql = 'UPDATE user SET `pseudoUser` = ?, `mailUser` = ? WHERE idUser = ?';
-	const idUser = req.params.idUser;
 	db.query(sql, [pseudoUser, mailUser, idUser], (err, result) => {
 		if(err) return res.json({Message: "Erreur"});
 		return res.json(result);
@@ -133,19 +137,34 @@ app.put('/connect-admin/home/user/update/:idUser', (req, res) => {
 })
 
 // SUPPRIMER UN COMPTE UTILISATEUR POUR ADMIN
+// app.delete('/connect-admin/home/user/delete/:idUser', (req, res) => {
+// 	const sql = 'DELETE FROM user WHERE idUser=?' ;
+// 	const idUser = req.params.idUser;
+// 	db.query(sql, [idUser], (err, result) => {
+// 		if(err) return res.json({Message: "erreur"});
+// 		return res.json(result);
+// 	})
+// })
+
 app.delete('/connect-admin/home/user/delete/:idUser', (req, res) => {
-	const sql = 'DELETE FROM user WHERE idUser=?' ;
 	const idUser = req.params.idUser;
-	db.query(sql, [idUser], (err, result) => {
-		if(err) return res.json({Message: "erreur"});
-		return res.json(result);
-	})
-})
+	db.query('DELETE FROM user WHERE idUser = ?', [idUser], (err, result) => {
+		if (err){
+			console.error('Erreur lors de la suppression du compte : ' + err);
+			res.status(500).json({ error: 'Erreur lors de la suppression du compte' });
+		}else{
+			res.json({ message: 'Compte supprimé avec succès' });
+			// res.clearCookie('CookieTogether');
+	  		// res.redirect('/');
+		}
+	});
+});
 
 // LIRE LES COMPTES UTILISATEUR POUR ADMIN
-app.get('/connect-admin/home/user/read', (req, res) => {
-	const sql = "SELECT * FROM user";
-	db.query(sql,(err , result)=>{
+app.get('/connect-admin/home/user/read/:idUser', (req, res) => {
+	const idUser = req.params.idUser;
+	const sql = "SELECT * FROM user WHERE idUser = ?";
+	db.query(sql, [idUser],(err , result)=>{
 		if(err) return res.json({Message: "Erreur"});
 		return res.json(result);
 	})
@@ -178,6 +197,28 @@ app.post('/', (req, res) => {
 		}
 	);
 });
+
+///////////////////////////////////////////PAGE PARAMETRE////////////////////////////////////////////
+// GESTION DES AVATAR
+app.post('/upload/:idUser', upload.single('image'), (req, res) => {
+	// console.log(req.file)
+	const idUser = req.params.idUser
+	const image = req.file.filename;
+	const sql = "UPDATE user SET avatarUser = ? WHERE idUser = ?";
+	db.query(sql, [image, idUser],(err, result) =>{
+		if(err) return res.status(500).json({Message: "Erreur dans la requête de l'avatar"});
+		return res.json({Status: "Success"});
+	})
+})
+
+app.get('/avatar/:idUser', (req, res) => {
+	const idUser = req.params.idUser;
+	const sql = 'SELECT * FROM user WHERE idUser = ?';
+	db.query(sql, [idUser], (err, result) => {
+		if(err) return res.status(500).json("Error L211");
+		return res.json(result);
+	})
+})
 
 // RECUPERATION DES DONNEES DE PROFIL
 app.get('/myprofile/parameter/:user', (req, res) => {
@@ -233,27 +274,6 @@ app.delete('/delete/:idUser', (req, res) => {
 		}
 	});
 });
-
-// GESTION DES AVATAR
-app.post('/upload/:idUser', upload.single('image'), (req, res) => {
-	// console.log(req.file)
-	const idUser = req.params.idUser
-	const image = req.file.filename;
-	const sql = "UPDATE user SET avatarUser = ? WHERE idUser = ?";
-	db.query(sql, [image, idUser],(err, result) =>{
-		if(err) return res.status(500).json({Message: "Erreur dans la requête de l'avatar"});
-		return res.json({Status: "Success"});
-	})
-})
-
-app.get('/avatar/:idUser', (req, res) => {
-	const idUser = req.params.idUser;
-	const sql = 'SELECT * FROM user WHERE idUser = ?';
-	db.query(sql, [idUser], (err, result) => {
-		if(err) return res.status(500).json("Error L211");
-		return res.json(result);
-	})
-})
 
 // AFFICHAGE SELON LE ROLE DE L'UTILISATEUR
 app.get('/roleUser/:idUser', (req, res) => {

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Btnsm from "./btn/Btnsm";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Update() {
-  const {idUser} = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:3001/connect-admin/home/user/read/'+ idUser)
+    const user = localStorage.getItem('idUser');
+    axios.get( `http://localhost:3001/connect-admin/home/user/read/${user}`)
     .then(res => {
       console.log(res)
       setValues({...values, pseudoUser: res.data[0].pseudoUser, mailUser: res.data[0].mailUser})
@@ -22,8 +22,9 @@ function Update() {
   })
 
   const handleUpdate = (event) => {
+    const user = localStorage.getItem('idUser');
     event.preventDefault();
-    axios.put('/connect-admin/home/user/update/'+idUser, values)
+    axios.put(`/connect-admin/home/user/update/${user}`, values)
     .then(res => {
       console.log(res)
       navigate('/connect-admin/home')

@@ -20,7 +20,7 @@ function ModaleUserDelete({closeModal}){
             <div className='content_modal_del'>
                 <div className='titleDel'>
                     <h4 className='text-center'>Voulez-vous supprimer votre compte ?</h4>
-                    {message && <p>{message}</p>}
+                    {message && <p className='text-danger'>{message}</p>}
                 </div>
                 <div className='bodyDel'>
                     <Btnsm onClick={handleDelete} className="btn" caracteristique="sm" text="OUI"/>
