@@ -227,9 +227,9 @@ app.delete('/delete/:idUser', (req, res) => {
 			console.error('Erreur lors de la suppression du compte : ' + err);
 			res.status(500).json({ error: 'Erreur lors de la suppression du compte' });
 		}else{
-			// res.json({ message: 'Compte supprimé avec succès' });
-			res.clearCookie('CookieTogether');
-	  		res.redirect('/');
+			res.json({ message: 'Compte supprimé avec succès' });
+			// res.clearCookie('CookieTogether');
+	  		// res.redirect('/');
 		}
 	});
 });
@@ -255,6 +255,23 @@ app.get('/avatar/:idUser', (req, res) => {
 	})
 })
 
+// AFFICHAGE SELON LE ROLE DE L'UTILISATEUR
+app.get('/roleUser/:idUser', (req, res) => {
+	const idUser = req.params.idUser;
+	db.query('SELECT roleUser FROM user WHERE idUser = ?', [idUser], (err, results) => {
+		if(err){
+			console.log("erreur du role de l'utilisateur", err);
+			res.status(500).json({error: 'Erreur serveur'});
+			return;
+		}
+		if(results.length === 0){
+			res.status(404).json({error: 'utilisateur non trouvé'});
+		}else{
+			const roleUser = results[0].roleUser;
+			res.json({roleUser: roleUser});
+		}
+	});
+});
 
 // DECONNEXION A LA SESSION
 app.get('/logout', (req, res) => {

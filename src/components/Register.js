@@ -83,7 +83,7 @@ const navigate = useNavigate();
           </div>
           <div className="mb-1">
             <div className="form-check">
-              <input className="form-check-input" type="checkbox" id="gridCheck"/>
+              <input className="form-check-input" type="checkbox" id="gridCheck" required/>
               <label className="form-check-label accepterConditions" htmlFor="gridCheck">Accepter les <Link className="conditionsUtili" to="/conditions">conditions d'utilisation</Link></label>
             </div>
           </div>

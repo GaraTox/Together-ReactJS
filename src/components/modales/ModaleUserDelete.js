@@ -1,18 +1,15 @@
 import React, {useState} from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Btnsm from '../btn/Btnsm';
 
 function ModaleUserDelete({closeModal}){
     const [message, setMessage] = useState('');
-    const navigate = useNavigate();
-  
+
     const handleDelete = async () => {
         const user = localStorage.getItem('idUser');
       try {
         await axios.delete(`/delete/${user}`);
-        setMessage('Compte supprimé avec succès');
-        navigate('/')
+        setMessage('Compte supprimé avec succès')
       } catch (error) {
         setMessage('Erreur lors de la suppression du compte');
       }
