@@ -119,7 +119,7 @@ app.post('/connect-admin/home/user/create', (req, res) => {
 //LISTE DE TOUS LES UTILISATEURS
 app.get('/connect-admin/home/user/choiceUpdate', (req, res) => {
 	const sql = "SELECT * FROM user";
-	db.query(sql, (err , result)=>{
+	db.query(sql,(err , result)=>{
 		if(err) return res.json({Message: "Erreur"});
 		return res.json(result);
 	})
@@ -161,10 +161,10 @@ app.delete('/connect-admin/home/user/delete/:idUser', (req, res) => {
 });
 
 // LIRE LES COMPTES UTILISATEUR POUR ADMIN
-app.get('/connect-admin/home/user/read/:idUser', (req, res) => {
+app.get('/connect-admin/home/user/read', (req, res) => {
 	const idUser = req.params.idUser;
-	const sql = "SELECT * FROM user WHERE idUser = ?";
-	db.query(sql, [idUser],(err , result)=>{
+	const sql = "SELECT * FROM user";
+	db.query(sql,(err , result)=>{
 		if(err) return res.json({Message: "Erreur"});
 		return res.json(result);
 	})
