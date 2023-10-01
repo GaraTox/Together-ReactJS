@@ -15,6 +15,7 @@ function Home() {
     // AFFICHER LES DONNEES DE L'UTILISATEUR
     const [user, setUser] = useState('');
     const [data, setData] = useState([]);
+    const users = localStorage.getItem('idUser');
 
     useEffect(() => {
         const user = localStorage.getItem('idUser');
@@ -47,22 +48,13 @@ function Home() {
             <div className="blocInputComm">
                 <div className="w-100">
                     <div>
-                    {/* {user ? (
-                    <div className="infoPerso">
-                        <p>ID: {user.idUser}</p>
-                        <p>{user.pseudoUser}</p>
-                        <p>{user.mailUser}</p>
-                    </div>
-                    ) : (
-                    <p>Chargement</p>
-                    )} */}
                         <img className="imgProfil" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
                         <form className="formPubli" method="#" action="#">
                             <input type="text" placeholder="Publier un post ..."/>
                             <button type="submit"><img className="btnSend" src={send} alt="bouton de validation"/></button>
                         </form>
                     </div>
-                    <Link className="blocConversation" to="/myprofile/message">
+                    <Link className="blocConversation" to={`/myprofile/message/${users}`}>
                         <img className="messageConv" src={conversation} alt="messagerie privée"/>
                         <p className="mess">Messages</p>
                     </Link>

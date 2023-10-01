@@ -80,6 +80,22 @@ app.get('/myprofile/:user', (req, res) => {
 	});
   });
 
+  app.get('/myprofile/message/:user', (req, res) => {
+	const idUser = req.params.user;
+	db.query('SELECT * FROM user WHERE idUser = ' + idUser, (err, results) => {
+	  if (err) {
+		console.error('Erreur lors de la récupération des données utilisateur :', err);
+		res.status(500).json({ error: 'Erreur lors de la récupération des données utilisateur' });
+	  } else {
+		if (results.length === 1) {
+		  res.json(results[0]);
+		} else {
+		  res.status(404).json({ error: 'Utilisateur non trouvé' });
+		}
+	  }
+	});
+  });
+
 app.post('/search', (req, res) => {
 	const query = req.body.query;
 	db.query(
