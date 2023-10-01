@@ -37,12 +37,13 @@ axios.defaults.withCredentials = true;
 
 // ACTION DU CLIQUE SUR LE BOUTON SE CONNECTER
 const handleSubmit = async (e) => {
+  const user = localStorage.getItem('idUser');
   e.preventDefault()
   try {
     const response = await axios.post('http://localhost:3001/', { mailUser, passwordUser });
     console.log("response data", response.data);
     localStorage.setItem('idUser', response.data);
-    navigate('/myprofile')
+    navigate(`/myprofile/${user}`)
   } 
   catch (error) {
     console.error(error);

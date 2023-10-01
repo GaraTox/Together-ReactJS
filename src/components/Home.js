@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import friend from '../assets/icons/people.svg';
 import profil from '../assets/icons/person.svg';
@@ -11,6 +12,31 @@ import commentaire from '../assets/icons/commentaire.png';
 import signaler from '../assets/icons/signaler.png';
 
 function Home() {
+    // AFFICHER LES DONNEES DE L'UTILISATEUR
+    const [user, setUser] = useState('');
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const user = localStorage.getItem('idUser');
+        console.log("user =>" + user);
+        axios.get(`http://localhost:3001/myprofile/${user}`)
+        .then((response) => {
+            setUser(response.data);
+        })
+        .catch((error) => {
+            console.log("========L22 mon gars===========");
+            console.log("error : ", error);
+            console.log("Error user : " + user);
+        })
+    }, [])
+    useEffect(() => {
+        const user = localStorage.getItem('idUser');
+        axios.get(`http://localhost:3001/avatar/${user}`)
+        .then(res => {
+            setData(res.data[0])
+        })
+        .catch(err => console.log(err));
+    }, [])
     return (
     <section>
     <div className="contenuPrincipal">
@@ -21,7 +47,16 @@ function Home() {
             <div className="blocInputComm">
                 <div className="w-100">
                     <div>
-                        <img className="imgProfil" src={profil} alt="photo de profil"/>
+                    {/* {user ? (
+                    <div className="infoPerso">
+                        <p>ID: {user.idUser}</p>
+                        <p>{user.pseudoUser}</p>
+                        <p>{user.mailUser}</p>
+                    </div>
+                    ) : (
+                    <p>Chargement</p>
+                    )} */}
+                        <img className="imgProfil" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
                         <form className="formPubli" method="#" action="#">
                             <input type="text" placeholder="Publier un post ..."/>
                             <button type="submit"><img className="btnSend" src={send} alt="bouton de validation"/></button>

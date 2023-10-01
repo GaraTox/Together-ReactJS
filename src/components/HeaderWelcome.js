@@ -6,23 +6,23 @@ import { Link } from "react-router-dom";
 
 function HeaderWelcome() {
 // SEARCHBAR
-    const [query, setQuery] = useState('');
-    const navigate = useNavigate();
+  //   const [query, setQuery] = useState('');
+  //   const navigate = useNavigate();
 
-    const handleSearch = async () => {
-    try {
-      const response = await fetch(`/search?query=${query}`);
-      if (response.ok) {
-        const data = await response.json();
-        // Redirigez l'utilisateur vers la page des résultats avec les données de recherche
-        navigate('/myprofile/resultsearch', { results: data });
-      } else {
-        console.error('Erreur lors de la recherche');
-      }
-    } catch (error) {
-      console.error('Erreur réseau :', error);
-    }
-  };
+  //   const handleSearch = async () => {
+  //   try {
+  //     const response = await fetch(`/search?query=${query}`);
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       // Redirigez l'utilisateur vers la page des résultats avec les données de recherche
+  //       navigate('/myprofile/resultsearch', { results: data });
+  //     } else {
+  //       console.error('Erreur lors de la recherche');
+  //     }
+  //   } catch (error) {
+  //     console.error('Erreur réseau :', error);
+  //   }
+  // };
     // CHANGE BURGER CLASS
     const [burgerLogo, setburgerLogo] = useState("burger-bar unclicked");
     const [menuClass, setmenuClass] = useState("menu hidden");
@@ -69,11 +69,12 @@ function HeaderWelcome() {
                 </div>
                 <div className='formSearcher'>
                 <form className="formSearch" method='GET' action='#'>
-                    <input className='inputSearch border-light' type='search' value={query}
-                    onChange={(e) => setQuery(e.target.value)}
+                    <input className='inputSearch border-light' type='search' 
+                    // value={query}
+                    // onChange={(e) => setQuery(e.target.value)}
                     placeholder='Rechercher un ami ...' autoComplete='off'/>
                     <button className="btnSearch" type="submit">
-                    <img onClick={handleSearch} className="imgLoupe mb-1" src={search} alt="loupe"/>
+                    <img className="imgLoupe mb-1" src={search} alt="loupe"/>
                     </button>
                 </form>
                 </div>
@@ -90,10 +91,10 @@ function HeaderWelcome() {
             </nav>
             <div className={menuClass}>
                 <form className='formBurger' method='GET' action='#'>
-                    <input className='inputSearch border-light' type='search' value={query}
+                    <input className='inputSearch border-light' type='search'
                     placeholder='Rechercher un ami ...' autoComplete='off'/>
                     <button className="btn btn_search" type="submit">
-                    <img onChange={(e) => setQuery(e.target.value)} className="mb-1" src={search} alt="loupe"/>
+                    <img className="mb-1" src={search} alt="loupe"/>
                     </button>
                 </form>
                 <div className='btn_disconnect_burger'>
