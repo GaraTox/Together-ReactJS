@@ -117,24 +117,49 @@ app.post('/connect-admin/home/user/create', (req, res) => {
 
 // MODIFIER UN COMPTE UTILISATEUR POUR ADMIN
 //LISTE DE TOUS LES UTILISATEURS
+// app.get('/connect-admin/home/user/choiceUpdate', (req, res) => {
+// 	const sql = "SELECT * FROM user";
+// 	db.query(sql,(err , result)=>{
+// 		if(err) return res.json({Message: "Erreur"});
+// 		return res.json(result);
+// 	})
+// })
 app.get('/connect-admin/home/user/choiceUpdate', (req, res) => {
-	const sql = "SELECT * FROM user";
-	db.query(sql,(err , result)=>{
-		if(err) return res.json({Message: "Erreur"});
-		return res.json(result);
-	})
-})
+	db.query('SELECT * FROM user', (err, results) => {
+	  if (err) {
+		console.error('Erreur lors de la récupération des utilisateurs : ' + err);
+		res.status(500).send('Erreur lors de la récupération des utilisateurs');
+	  } else {
+		res.json(results);
+	  }
+	});
+  });
 // CLIQUE SUR LE BOUTON MODIFIER
-app.put('/connect-admin/home/user/update/:idUser', (req, res) => {
+// app.put('/connect-admin/home/user/update/:idUser', (req, res) => {
+// 	const idUser = req.params.idUser;
+// 	const pseudoUser = req.body.pseudoUser;
+// 	const mailUser = req.body.mailUser;
+// 	const sql = 'UPDATE user SET `pseudoUser` = ?, `mailUser` = ? WHERE idUser = ?';
+// 	db.query(sql, [pseudoUser, mailUser, idUser], (err, result) => {
+// 		if(err) return res.json({Message: "Erreur"});
+// 		return res.json(result);
+// 	})
+// })
+app.put('/connect-admin/home/user/choiceUpdate/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
 	const pseudoUser = req.body.pseudoUser;
 	const mailUser = req.body.mailUser;
 	const sql = 'UPDATE user SET `pseudoUser` = ?, `mailUser` = ? WHERE idUser = ?';
 	db.query(sql, [pseudoUser, mailUser, idUser], (err, result) => {
-		if(err) return res.json({Message: "Erreur"});
-		return res.json(result);
-	})
-})
+	  if (err) {
+		console.error('Erreur lors de la mise à jour de l\'utilisateur : ' + err);
+		res.status(500).send('Erreur lors de la mise à jour de l\'utilisateur');
+	  } else {
+		console.log('Utilisateur mis à jour avec succès');
+		res.status(200).send('Utilisateur mis à jour avec succès');
+	  }
+	});
+  });
 
 // SUPPRIMER UN COMPTE UTILISATEUR POUR ADMIN
 // app.delete('/connect-admin/home/user/delete/:idUser', (req, res) => {
