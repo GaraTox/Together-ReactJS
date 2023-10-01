@@ -1,23 +1,23 @@
 import React from "react";
-import profil from '../assets/icons/person.svg';
 import Btnsm from '../components/btn/Btnsm';
 
-function SearchResult() {
+function SearchResult({location}) {
+    const results = location.state.results || [];
     return (
     <section>
         <div className="grid-admin">
-
-        <div className="text-center bg bg-light search">
-            <div className="searchAvatar">
-                <img src={profil} className="avatar" alt="avatar"/>
+        {results.map((result) => {
+            <div key={result.idUser} className="text-center bg bg-light search">
+                <div className="searchAvatar">
+                    <img src={result.avatarUser} className="avatar" alt="avatar"/>
+                </div>
+                <p className="searchFirstname">{result.pseudoUser}</p>
+                <p className="searchName">{result.mailUser}</p>
+                <div className="searchButton">
+                    <Btnsm type="submit" className="btn" caracteristique="sm" text="Ajouter"/>
+                </div>
             </div>
-            <p className="searchFirstname">Pseudo</p>
-            <p className="searchName">Adresse mail</p>
-            <div className="searchButton">
-                <Btnsm type="submit" className="btn" caracteristique="sm" text="Ajouter"/>
-            </div>
-        </div>
- 
+        })}
         </div>
         <hr/>
     </section>

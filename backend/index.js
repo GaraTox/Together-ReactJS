@@ -63,6 +63,22 @@ const db = mysql.createConnection({
 	database : process.env.DATABASE
 });
 
+app.post('/search', (req, res) => {
+	const query = req.body.query;
+	db.query(
+		'SELECT * FROM user WHERE pseudoUser LIKE ?',
+		[`%${query}%`],
+		(error, results) => {
+		  if (error) {
+			console.error('Database query error: ' + error);
+			res.status(500).json({ error: 'Database query error' });
+		  } else {
+			res.json(results);
+		  }
+		}
+	  );
+  });
+
 // CREER UN COMPTE POUR UTILISATEUR
 app.post('/register', (req, res) => {
 	const pseudoUser = req.body.pseudoUser;

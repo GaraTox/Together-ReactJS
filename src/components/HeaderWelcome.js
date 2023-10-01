@@ -1,9 +1,28 @@
 import React, {useState} from "react";
+import { useNavigate } from "react-router-dom";
 import search from '../assets/icons/search.svg';
 import logo from '../assets/icons/logo.png';
 import { Link } from "react-router-dom";
 
 function HeaderWelcome() {
+// SEARCHBAR
+    const [query, setQuery] = useState('');
+    const navigate = useNavigate();
+
+    const handleSearch = async () => {
+    try {
+      const response = await fetch(`/search?query=${query}`);
+      if (response.ok) {
+        const data = await response.json();
+        // Redirigez l'utilisateur vers la page des résultats avec les données de recherche
+        navigate('/myprofile/resultsearch', { results: data });
+      } else {
+        console.error('Erreur lors de la recherche');
+      }
+    } catch (error) {
+      console.error('Erreur réseau :', error);
+    }
+  };
     // CHANGE BURGER CLASS
     const [burgerLogo, setburgerLogo] = useState("burger-bar unclicked");
     const [menuClass, setmenuClass] = useState("menu hidden");
@@ -21,20 +40,18 @@ function HeaderWelcome() {
         setmenuClick(!menuClick);
     }
 
+    // DECONNEXION
     const handleLogout = async () => {
         try {
-          // Effectuez une requête GET vers la route de déconnexion côté serveur
           const response = await fetch('/logout', {
             method: 'GET',
             credentials: 'include', // Inclut les cookies dans la requête
           });
     
           if (response.status === 200) {
-            // La déconnexion a réussi, vous pouvez rediriger l'utilisateur ou effectuer d'autres actions nécessaires
             window.location.href = '/'; // Redirection vers la page de connexion
             localStorage.clear();
           } else {
-            // Gérez les erreurs de déconnexion
             console.error('Erreur lors de la déconnexion');
           }
         } catch (error) {
@@ -52,9 +69,11 @@ function HeaderWelcome() {
                 </div>
                 <div className='formSearcher'>
                 <form className="formSearch" method='GET' action='#'>
-                    <input className='inputSearch border-light' type='search' placeholder='Rechercher un ami ...' autoComplete='off'/>
+                    <input className='inputSearch border-light' type='search' value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder='Rechercher un ami ...' autoComplete='off'/>
                     <button className="btnSearch" type="submit">
-                    <img className="imgLoupe mb-1" src={search} alt="loupe"/>
+                    <img onClick={handleSearch} className="imgLoupe mb-1" src={search} alt="loupe"/>
                     </button>
                 </form>
                 </div>
@@ -71,9 +90,10 @@ function HeaderWelcome() {
             </nav>
             <div className={menuClass}>
                 <form className='formBurger' method='GET' action='#'>
-                    <input className='inputSearch border-light' type='search' placeholder='Rechercher un ami ...' autoComplete='off'/>
+                    <input className='inputSearch border-light' type='search' value={query}
+                    placeholder='Rechercher un ami ...' autoComplete='off'/>
                     <button className="btn btn_search" type="submit">
-                    <img className="mb-1" src={search} alt="loupe"/>
+                    <img onChange={(e) => setQuery(e.target.value)} className="mb-1" src={search} alt="loupe"/>
                     </button>
                 </form>
                 <div className='btn_disconnect_burger'>
