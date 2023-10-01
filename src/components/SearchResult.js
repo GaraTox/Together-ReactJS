@@ -9,7 +9,7 @@ function SearchResult({location}) {
         {results.map((result) => {
             <div key={result.idUser} className="text-center bg bg-light search">
                 <div className="searchAvatar">
-                    <img src={result.avatarUser} className="avatar" alt="avatar"/>
+                    <img src="" className="avatar" alt="avatar"/>
                 </div>
                 <p className="searchFirstname">{result.pseudoUser}</p>
                 <p className="searchName">{result.mailUser}</p>

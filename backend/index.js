@@ -96,20 +96,17 @@ app.get('/myprofile/:user', (req, res) => {
 	});
   });
 
-app.post('/search', (req, res) => {
-	const query = req.body.query;
-	db.query(
-		'SELECT * FROM user WHERE pseudoUser LIKE ?',
-		[`%${query}%`],
-		(error, results) => {
-		  if (error) {
-			console.error('Database query error: ' + error);
-			res.status(500).json({ error: 'Database query error' });
-		  } else {
-			res.json(results);
-		  }
-		}
-	  );
+  app.get('/recherche', (req, res) => {
+	const searchTerm = req.query.search;
+	const query = `SELECT * FROM votre_table WHERE champ LIKE '%${searchTerm}%'`;
+	db.query(query, (err, result) => {
+	  if (err) {
+		console.error('Erreur de requête MySQL :', err);
+		res.status(500).send('Erreur interne du serveur');
+	  } else {
+		res.json(result); // Envoyer les résultats au format JSON
+	  }
+	});
   });
 
 //////////////////////////////////////////ADMIN//////////////////////////////////////////////////////
