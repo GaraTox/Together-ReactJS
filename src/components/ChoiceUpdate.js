@@ -3,8 +3,11 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import profil from '../assets/icons/person.svg';
 import Btnsm from '../components/btn/Btnsm';
+import ModaleAdminUpdate from "./modales/ModaleAdminUpdate";
 
 function ChoiceUpdate() {
+    const [openModaleAdminUpdate, setOpenModaleAdminUpdate] = useState(false);
+
     const [data, setData] = useState([])
 
     useEffect(() => {
@@ -14,6 +17,7 @@ function ChoiceUpdate() {
     }, [])
     return (
         <section className="bg-admin">
+            {openModaleAdminUpdate && <ModaleAdminUpdate closeModal={setOpenModaleAdminUpdate}/>}
             <div className="grid-admin">
             {data.map((user, key) => {
                 return(
@@ -24,7 +28,7 @@ function ChoiceUpdate() {
                     <p className="searchFirstname">{user.pseudoUser}</p>
                     <p className="searchName">{user.mailUser}</p>
                     <div className="searchButton">
-                        <Link to={`/connect-admin/home/user/update/${user.idUser}`}><Btnsm type="submit" className="btn" caracteristique="sm" text="Modifier"/></Link>
+                        <Btnsm onClick={() => {setOpenModaleAdminUpdate(true)}} type="submit" className="btn" caracteristique="sm" text="Modifier"/>
                     </div> 
                 </div>
             )})}

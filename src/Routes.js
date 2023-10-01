@@ -11,7 +11,6 @@ import crudpost from './components/main/crudpost';
 import crud from './components/main/adminHome';
 import create from './components/main/create';
 import choiceUpdate from './components/main/choiceUpdate';
-import update from './components/main/update';
 import deleted from './components/main/delete';
 import read from './components/main/read';
 import moderation from './components/main/moderation';
@@ -34,7 +33,6 @@ function LaRoute() {
         <Route path="/connect-admin/home/post" Component={crudpost}/>
         <Route path="/connect-admin/home/user/create" Component={create}/>
         <Route path="/connect-admin/home/user/choiceUpdate" Component={choiceUpdate}/>
-        <Route path="/connect-admin/home/user/update/:idUser" Component={update}/>
         <Route path="/connect-admin/home/user/delete" Component={deleted}/>
         <Route path="/connect-admin/home/user/read" Component={read}/>
         <Route path="/connect-admin/moderation" Component={moderation}/>

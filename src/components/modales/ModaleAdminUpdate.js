@@ -3,28 +3,28 @@ import axios from 'axios';
 import Btnsm from '../btn/Btnsm';
 
 function ModaleAdminUpdate({closeModal}){
-    const [user, setUser] = useState({});
+  const [user, setUser] = useState({});
   const [pseudoUser, setPseudoUser] = useState('');
   const [mailUser, setMailUser] = useState('');
 
-  useEffect(() => {
-    const user = localStorage.getItem('idUser');
-    // Récupérez les informations de l'utilisateur au chargement de la page
-    axios.put(`/connect-admin/home/user/update/${user}`)
-      .then(response => {
-        setUser(response.data);
-        setPseudoUser(response.data.pseudoUser);
-        setMailUser(response.data.mailUser);
-      })
-      .catch(error => console.error(error));
-  }, []);
+  // useEffect(() => {
+  //   const user = localStorage.getItem('idUser');
+  //   // Récupérez les informations de l'utilisateur au chargement de la page
+  //   axios.put(`/connect-admin/home/user/update/${user}`)
+  //     .then(response => {
+  //       setUser(response.data);
+  //       setPseudoUser(response.data.pseudoUser);
+  //       setMailUser(response.data.mailUser);
+  //     })
+  //     .catch(error => console.error(error));
+  // }, []);
 
-  const handleUpdateUser = () => {
-    const user = localStorage.getItem('idUser');
-    axios.put(`/utilisateur/${user}`, { pseudoUser: pseudoUser, mailUser: mailUser })
-      .then(response => console.log(response.data))
-      .catch(error => console.error(error));
-  };
+  // const handleUpdateUser = () => {
+  //   const user = localStorage.getItem('idUser');
+  //   axios.put(`/utilisateur/${user}`, { pseudoUser: pseudoUser, mailUser: mailUser })
+  //     .then(response => console.log(response.data))
+  //     .catch(error => console.error(error));
+  // };
 
     return(
         <section className='bg_modal'>
@@ -44,7 +44,7 @@ function ModaleAdminUpdate({closeModal}){
                     onChange={e => setMailUser(e.target.value)} name="mailUser" autoComplete="off"/>
                 </div>
                 <div className='footer'>
-                    <Btnsm onClick={handleUpdateUser} type="submit" className="btn" caracteristique="sm" text="Confirmer"/>
+                    <Btnsm type="submit" className="btn" caracteristique="sm" text="Confirmer"/>
                 </div>
             </div>
         </section>
