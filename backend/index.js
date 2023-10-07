@@ -96,15 +96,15 @@ app.get('/myprofile/:user', (req, res) => {
 	});
   });
 
-  app.get('/recherche', (req, res) => {
-	const searchTerm = req.query.search;
-	const query = `SELECT * FROM votre_table WHERE champ LIKE '%${searchTerm}%'`;
+  app.get('/search', (req, res) => {
+	const search = req.query.search;
+	const query = `SELECT * FROM user WHERE pseudoUser LIKE '%${search}%'`;
 	db.query(query, (err, result) => {
 	  if (err) {
 		console.error('Erreur de requête MySQL :', err);
 		res.status(500).send('Erreur interne du serveur');
 	  } else {
-		res.json(result); // Envoyer les résultats au format JSON
+		res.json(result);
 	  }
 	});
   });

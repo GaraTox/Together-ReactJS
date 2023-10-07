@@ -25,7 +25,7 @@ function LaRoute() {
         <Route path="/" Component={seConnecter}/>
         <Route path="/register" Component={sinscrire}/>
         <Route path="/myprofile/:idUser" Component={home}/>
-        <Route path="/myprofile/resultsearch/:idUser" Component={searchs}/>
+        <Route path="/myprofile/resultsearch" Component={searchs}/>
         <Route path="/myprofile/message/:idUser" Component={message}/>
         <Route path="/myprofile/parameter/:idUser" Component={parameter}/>
         <Route path="/connect-admin/home" Component={crud}/>
