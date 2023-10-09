@@ -10,11 +10,14 @@ const [searchTerm, setSearchTerm] = useState('');
 const [results, setResults] = useState([]);
   const navigate = useNavigate();
 
-  const handleSearch = () => {
+  const handleSearch = (event) => {
+    event.preventDefault();
     fetch(`/search?search=${searchTerm}`)
       .then(response => response.json())
-      .then(data => setResults(data));
-      navigate(`/myprofile/resultsearch?search=${searchTerm}`);
+      .then(data => {
+        setResults(data);
+        navigate(`/myprofile/resultsearch?search=${searchTerm}`);
+      });
   };
     // CHANGE BURGER CLASS
     const [burgerLogo, setburgerLogo] = useState("burger-bar unclicked");
@@ -86,12 +89,12 @@ const [results, setResults] = useState([]);
                     <p className="together">Together</p>
                 </div>
                 <div className='formSearcher'>
-                <form className="formSearch" method='GET' action='#'>
-                    <input className='inputSearch border-light' type='search' placeholder="Recherche..."
+                <form className="formSearch" method='GET' action='#' onSubmit={handleSearch}>
+                  <input className='inputSearch border-light' type='search' placeholder="Recherche..."
                     value={searchTerm} onChange={e => setSearchTerm(e.target.value)} autoComplete="off"/>
-                    <button onClick={handleSearch} className="btnSearch" type="submit">
+                  <button type="submit" className="btnSearch">
                     <img className="imgLoupe mb-1" src={searchimg} alt="loupe"/>
-                    </button>
+                  </button>
                 </form>
                 </div>
                 <div className='btnDisconnect'>
@@ -106,14 +109,12 @@ const [results, setResults] = useState([]);
                 </div>
             </nav>
             <div className={menuClass}>
-                <form className='formBurger' method='GET' action='#'>
-                    <input className='inputSearch border-light' type='search'
-                    placeholder="Recherche..."
-                    value={searchTerm} onChange={e => setSearchTerm(e.target.value)}
-                    autoComplete="off"/>
-                    <button onClick={handleSearch} className="btn btn_search" type="submit">
-                    <img className="mb-1" src={searchimg} alt="loupe"/>
-                    </button>
+                <form className="formBurger" method='GET' action='#' onSubmit={handleSearch}>
+                  <input className='inputSearch border-light' type='search' placeholder="Recherche..."
+                    value={searchTerm} onChange={e => setSearchTerm(e.target.value)} autoComplete="off"/>
+                  <button type="submit" className="btnSearch">
+                    <img className="imgLoupe mb-1" src={searchimg} alt="loupe"/>
+                  </button>
                 </form>
                 <div className='btn_disconnect_burger'>
                     <p onClick={handleLogout} className="text-danger mt-1 pb-1"><strong>DECONNEXION</strong></p>
