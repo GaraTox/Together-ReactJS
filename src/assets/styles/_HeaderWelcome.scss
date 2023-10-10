@@ -23,10 +23,31 @@
     .formSearcher{
         width: 50%;
         display: inline-flex;
+        align-items: center;
         .formSearch{
             width: 300px;
             margin: 0 auto;
-            margin-top: 20px;
+            .results{
+                position: absolute;
+                z-index: 2;
+            }
+            ul{
+                padding-left: 0;
+                padding-top: 1px;
+            }
+            ul li{
+                margin: 0;
+                padding: 0;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                border: solid 1px black;
+                border-radius: 10px;
+                width: 300px;
+                background-color: white;
+                display: inline-flex;
+                align-items: center;
+                justify-content: space-around;
+            }
         }
     }
 
@@ -215,6 +236,30 @@
         width: 70%;
         margin-left: 15%;
         margin-right: 15%;
+        .results{
+            position: absolute;
+            z-index: 2;
+            width: 70%;
+
+        }
+       .ulsearch{
+            padding-left: 0;
+            padding-bottom: 0;
+            padding-top: 1px;
+        }
+        .ulsearch .lisearch{
+            margin: 0;
+            padding: 0;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            background-color: white;
+            border: solid 1px rgb(194, 194, 194);
+            border-radius: 10px;
+            color: black;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-around;
+        }
     }
 
     .inputSearch{

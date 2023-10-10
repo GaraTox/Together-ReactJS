@@ -3,22 +3,30 @@ import axios from "axios";
 import searchimg from '../assets/icons/search.svg';
 import logo from '../assets/icons/logo.png';
 import { Link, useNavigate } from "react-router-dom";
+import Btnsm from "./btn/Btnsm";
 
 function HeaderWelcome() {
 // SEARCHBAR
-const [searchTerm, setSearchTerm] = useState('');
-const [results, setResults] = useState([]);
-  const navigate = useNavigate();
+const [inputVal, setInputVal] = useState("");
+const [tab, setTab] = useState([])
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-    fetch(`/search?search=${searchTerm}`)
-      .then(response => response.json())
-      .then(data => {
-        setResults(data);
-        navigate(`/myprofile/resultsearch?search=${searchTerm}`);
-      });
-  };
+const handleChangeInp = (e) => {
+  const value = e.target.value;
+  setInputVal(value)
+  // console.log(value)
+}
+
+useEffect(() => {
+  axios.post('http://localhost:3001/data', {pseudoUser: inputVal})
+  .then((response) => {
+    const resp = response.data;
+      if(resp!==""){
+        setTab(resp)
+        console.log(tab)
+      }
+  })
+}, [inputVal])
+
     // CHANGE BURGER CLASS
     const [burgerLogo, setburgerLogo] = useState("burger-bar unclicked");
     const [menuClass, setmenuClass] = useState("menu hidden");
@@ -89,12 +97,24 @@ const [results, setResults] = useState([]);
                     <p className="together">Together</p>
                 </div>
                 <div className='formSearcher'>
-                <form className="formSearch" method='GET' action='#' onSubmit={handleSearch}>
+                <form className="formSearch" method='GET' action='#'>
                   <input className='inputSearch border-light' type='search' placeholder="Recherche..."
-                    value={searchTerm} onChange={e => setSearchTerm(e.target.value)} autoComplete="off"/>
+                    onChange={(e) => {handleChangeInp(e)}} autoComplete="off"/>
                   <button type="submit" className="btnSearch">
                     <img className="imgLoupe mb-1" src={searchimg} alt="loupe"/>
                   </button>
+                  <div className="results">
+                    <ul>
+                       {tab.map((user) => {
+                        return(
+                          <li key={user.idUser}>
+                            {user.pseudoUser}
+                            <Btnsm type="submit" className="btn" caracteristique="sm" text="Ajouter"/>
+                          </li>
+                        )
+                       })}
+                    </ul>
+                  </div>
                 </form>
                 </div>
                 <div className='btnDisconnect'>
@@ -109,12 +129,24 @@ const [results, setResults] = useState([]);
                 </div>
             </nav>
             <div className={menuClass}>
-                <form className="formBurger" method='GET' action='#' onSubmit={handleSearch}>
+                <form className="formBurger" method='GET' action='#'>
                   <input className='inputSearch border-light' type='search' placeholder="Recherche..."
-                    value={searchTerm} onChange={e => setSearchTerm(e.target.value)} autoComplete="off"/>
+                    onChange={(e) => {handleChangeInp(e)}} autoComplete="off"/>
                   <button type="submit" className="btnSearch">
                     <img className="imgLoupe mb-1" src={searchimg} alt="loupe"/>
                   </button>
+                  <div className="results">
+                    <ul className="ulsearch">
+                       {tab.map((user) => {
+                        return(
+                          <li className="lisearch" key={user.idUser}>
+                            {user.pseudoUser}
+                            <Btnsm type="submit" className="btn" caracteristique="sm" text="Suivre"/>
+                          </li>
+                        )
+                       })}
+                    </ul>
+                  </div>
                 </form>
                 <div className='btn_disconnect_burger'>
                     <p onClick={handleLogout} className="text-danger mt-1 pb-1"><strong>DECONNEXION</strong></p>
