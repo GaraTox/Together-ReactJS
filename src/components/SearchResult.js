@@ -4,6 +4,7 @@ import Btnsm from '../components/btn/Btnsm';
 
 function SearchResult() {
     const [results, setResults] = useState('');
+    console.log(results)
     // // AFFICHER LES DONNEES DE L'UTILISATEUR
     // const [user, setUser] = useState('');
 
@@ -44,7 +45,7 @@ function SearchResult() {
                     <Btnsm type="submit" className="btn" caracteristique="sm" text="Ajouter"/>
                 </div>
             </div>
-            )) : <p>Aucun résultat trouvé...</p>}
+            )) : <p>Aucun résultat trouvé ...</p>}
         </div>
         <hr/>
     </section>
