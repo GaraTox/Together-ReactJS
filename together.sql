@@ -22,8 +22,8 @@ CREATE TABLE `friend` (
     `id_Friend` INT(255) NOT NULL,
 
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`id_User`) REFERENCES user(`idUser`) ON DELETE CASCADE,
-    FOREIGN KEY (`id_Friend`) REFERENCES user(`idUser`) ON DELETE CASCADE
+    FOREIGN KEY (`id_User`) REFERENCES user(`idUser`),
+    FOREIGN KEY (`id_Friend`) REFERENCES user(`idUser`)
 )
 ENGINE = InnoDB;
 

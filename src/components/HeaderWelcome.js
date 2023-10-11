@@ -27,6 +27,23 @@ useEffect(() => {
   })
 }, [inputVal])
 
+// FRIENDSHIP
+const suivreUtilisateur = (id_User) => {
+  // Envoyez une requête au serveur Node.js pour suivre un utilisateur
+  fetch('/friendship', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id_User, id_Friend: id_User }),
+  })
+    .then(() => {
+      console.log('Vous suivez cet utilisateur.');
+      // navigate('/')
+    })
+    .catch((error) => console.error(error));
+};
+
     // CHANGE BURGER CLASS
     const [burgerLogo, setburgerLogo] = useState("burger-bar unclicked");
     const [menuClass, setmenuClass] = useState("menu hidden");
@@ -109,7 +126,7 @@ useEffect(() => {
                         return(
                           <li key={user.idUser}>
                             {user.pseudoUser}
-                            <Btnsm type="submit" className="btn" caracteristique="sm" text="Ajouter"/>
+                            <Btnsm onClick={() => suivreUtilisateur(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Suivre"/>
                           </li>
                         )
                        })}
@@ -141,7 +158,7 @@ useEffect(() => {
                         return(
                           <li className="lisearch" key={user.idUser}>
                             {user.pseudoUser}
-                            <Btnsm type="submit" className="btn" caracteristique="sm" text="Suivre"/>
+                            <Btnsm onClick={() => suivreUtilisateur(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Suivre"/>
                           </li>
                         )
                        })}

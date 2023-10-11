@@ -96,6 +96,7 @@ app.get('/myprofile/:user', (req, res) => {
 	});
   });
 
+  //SEARCHBAR
   app.post('/data', (req, res) => {
 	const pseudoUser = req.body.pseudoUser;
 	if(pseudoUser!==""){
@@ -108,6 +109,20 @@ app.get('/myprofile/:user', (req, res) => {
 	}else{
 		res.send([])
 	}
+  });
+
+  // FRIENDSHIP
+  app.post('/friendship', (req, res) => {
+	const { id_User, id_Friend } = req.body;
+	const follow = `INSERT INTO friend (id_User, id_Friend) VALUES (${id_User}, ${id_Friend})`;
+	
+	db.query(follow, (err) => {
+	  if (err) {
+		res.status(500).send(err);
+	  } else {
+		res.status(201).send('Vous suivez cet utilisateur.');
+	  }
+	});
   });
 
 //////////////////////////////////////////ADMIN//////////////////////////////////////////////////////
