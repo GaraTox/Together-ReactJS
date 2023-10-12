@@ -115,22 +115,21 @@ app.get('/myprofile/:user', (req, res) => {
   app.post('/friendship', (req, res) => {
 	const { id_User, id_Friend } = req.body;
 	const follow = `INSERT INTO friend (id_User, id_Friend) VALUES (${id_User}, ${id_Friend})`;
-	
 	db.query(follow, (err) => {
-	  if (err) {
+	if (err) {
 		res.status(500).send(err);
-	  } else {
+	} else {
 		res.status(201).send('Vous suivez cet utilisateur.');
-	  }
+	}
 	});
   });
 
   // UNFOLLOW FRIEND
 
+
   // DISPLAY FRIEND
   app.get('/follow/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
-  
 	db.query(
 	  'SELECT * FROM user JOIN friend ON user.idUser = friend.id_Friend WHERE friend.id_User = ?',
 	  [idUser],

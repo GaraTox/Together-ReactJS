@@ -68,10 +68,11 @@ function Home() {
                 </div>
             </button>
             <div>
-            <ul>
+            <ul className="text-center">
                 {followingUsers.map(user => (
                     <li key={user.idUser}>
                         {user.pseudoUser}
+                        <hr/>
                     </li>
                 ))}
             </ul>
