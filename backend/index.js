@@ -111,7 +111,7 @@ app.get('/myprofile/:user', (req, res) => {
 	}
   });
 
-  // FRIENDSHIP
+  // FOLLOW FRIEND
   app.post('/friendship', (req, res) => {
 	const { id_User, id_Friend } = req.body;
 	const follow = `INSERT INTO friend (id_User, id_Friend) VALUES (${id_User}, ${id_Friend})`;
@@ -125,7 +125,27 @@ app.get('/myprofile/:user', (req, res) => {
 	});
   });
 
-//////////////////////////////////////////ADMIN//////////////////////////////////////////////////////
+  // UNFOLLOW FRIEND
+
+  // DISPLAY FRIEND
+  app.get('/follow/:idUser', (req, res) => {
+	const idUser = req.params.idUser;
+  
+	db.query(
+	  'SELECT * FROM user JOIN friend ON user.idUser = friend.id_Friend WHERE friend.id_User = ?',
+	  [idUser],
+	  (err, results) => {
+		if (err) {
+		  console.error('Error fetching following users:', err);
+		  res.status(500).json({ error: 'Internal server error' });
+		} else {
+		  res.json(results);
+		}
+	  }
+	);
+  });
+
+//////////////////////////////////////////ADMIN/////////////////////////////////////////////////////////////
 // CREER UN COMPTE POUR UTILISATEUR
 app.post('/register', (req, res) => {
 	const pseudoUser = req.body.pseudoUser;

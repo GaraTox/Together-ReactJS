@@ -38,11 +38,44 @@ function Home() {
         })
         .catch(err => console.log(err));
     }, [])
+
+    // DISPLAY FRIEND
+    const [followingUsers, setFollowingUsers] = useState([]);
+
+    useEffect(() => {
+        getFollowingUsers();
+    }, []);
+    const getFollowingUsers = () => {
+        const idUser = localStorage.getItem('idUser');
+        axios.get(`/follow/${idUser}`)
+          .then(response => {
+            setFollowingUsers(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching following users:', error);
+          });
+      };
     return (
     <section>
     <div className="contenuPrincipal">
         <div className="blocAmis">
-            <button className="btn_friend" type="submit"><div className="titreAmis"><p className="text-center text-light bg bg-dark"><img src={friend} className="me-1 mb-1 bg bg-light rounded p-1 m-1" alt="message"/><strong>Amis</strong></p></div></button>
+            <button className="btn_friend" type="submit">
+                <div className="titreAmis">
+                    <p className="text-center text-light bg bg-dark">
+                        <img src={friend} className="me-1 mb-1 bg bg-light rounded p-1 m-1" alt="message"/>
+                        <strong>Amis</strong>
+                    </p>
+                </div>
+            </button>
+            <div>
+            <ul>
+                {followingUsers.map(user => (
+                    <li key={user.idUser}>
+                        {user.pseudoUser}
+                    </li>
+                ))}
+            </ul>
+            </div>
         </div>
         <div className="blocPublication">
             <div className="blocInputComm">

@@ -116,7 +116,7 @@ const suivreUtilisateur = (id_Friend) => {
                 </div>
                 <div className='formSearcher'>
                 <form className="formSearch" method='GET' action='#'>
-                  <input className='inputSearch border-light' type='search' placeholder="Recherche..."
+                  <input className='inputSearch border-light' type='search' placeholder="Rechercher un ami..."
                     onChange={(e) => {handleChangeInp(e)}} autoComplete="off"/>
                   <button type="submit" className="btnSearch">
                     <img className="imgLoupe mb-1" src={searchimg} alt="loupe"/>
@@ -127,7 +127,7 @@ const suivreUtilisateur = (id_Friend) => {
                         return(
                           <li key={user.idUser}>
                             {user.pseudoUser}
-                            <Btnsm onClick={() => suivreUtilisateur(idUser, user.idUser)} type="submit" className="btn" caracteristique="sm" text="Suivre"/>
+                            <Btnsm onClick={() => suivreUtilisateur(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Suivre"/>
                           </li>
                         )
                        })}
@@ -148,7 +148,7 @@ const suivreUtilisateur = (id_Friend) => {
             </nav>
             <div className={menuClass}>
                 <form className="formBurger" method='GET' action='#'>
-                  <input className='inputSearch border-light' type='search' placeholder="Recherche..."
+                  <input className='inputSearch border-light' type='search' placeholder="Rechercher un ami..."
                     onChange={(e) => {handleChangeInp(e)}} autoComplete="off"/>
                   <button type="submit" className="btnSearch">
                     <img className="imgLoupe mb-1" src={searchimg} alt="loupe"/>
