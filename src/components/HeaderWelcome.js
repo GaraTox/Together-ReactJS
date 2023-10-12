@@ -28,14 +28,15 @@ useEffect(() => {
 }, [inputVal])
 
 // FRIENDSHIP
-const suivreUtilisateur = (id_User) => {
+const idUser = localStorage.getItem('idUser');
+const suivreUtilisateur = (id_Friend) => {
   // Envoyez une requête au serveur Node.js pour suivre un utilisateur
   fetch('/friendship', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ id_User, id_Friend: id_User }),
+    body: JSON.stringify({ id_User: idUser, id_Friend}),
   })
     .then(() => {
       console.log('Vous suivez cet utilisateur.');
@@ -126,7 +127,7 @@ const suivreUtilisateur = (id_User) => {
                         return(
                           <li key={user.idUser}>
                             {user.pseudoUser}
-                            <Btnsm onClick={() => suivreUtilisateur(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Suivre"/>
+                            <Btnsm onClick={() => suivreUtilisateur(idUser, user.idUser)} type="submit" className="btn" caracteristique="sm" text="Suivre"/>
                           </li>
                         )
                        })}
