@@ -27,7 +27,9 @@ useEffect(() => {
   })
 }, [inputVal])
 
-// FRIENDSHIP
+const [followed, setFollowed] = useState(false);
+
+// FOLLOW
 const idUser = localStorage.getItem('idUser');
 const suivreUtilisateur = (id_Friend) => {
   // Envoyez une requête au serveur Node.js pour suivre un utilisateur
@@ -40,9 +42,22 @@ const suivreUtilisateur = (id_Friend) => {
   })
     .then(() => {
       console.log('Vous suivez cet utilisateur.');
+      setFollowed(true);
       // navigate('/')
     })
     .catch((error) => console.error(error));
+};
+
+// UNFOLLOW
+const handleUnfollow = (id_Friend) => {
+  const idUser = localStorage.getItem('idUser');
+  axios.post('/unfollow', { id_User: idUser, id_Friend })
+    .then(response => {
+      setFollowed(false);
+    })
+    .catch(error => {
+      console.error(error);
+    });
 };
 
     // CHANGE BURGER CLASS
@@ -127,7 +142,11 @@ const suivreUtilisateur = (id_Friend) => {
                         return(
                           <li key={user.idUser}>
                             {user.pseudoUser}
-                            <Btnsm onClick={() => suivreUtilisateur(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Suivre"/>
+                            {followed ? (
+                              <Btnsm onClick={() => handleUnfollow(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Suivi(e)"/>
+                            ) : (
+                              <Btnsm onClick={() => suivreUtilisateur(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Suivre"/>
+                            )}
                           </li>
                         )
                        })}
@@ -155,11 +174,15 @@ const suivreUtilisateur = (id_Friend) => {
                   </button>
                   <div className="results">
                     <ul className="ulsearch">
-                       {tab.map((user) => {
+                    {tab.map((user) => {
                         return(
                           <li className="lisearch" key={user.idUser}>
                             {user.pseudoUser}
-                            <Btnsm onClick={() => suivreUtilisateur(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Suivre"/>
+                            {followed ? (
+                              <Btnsm onClick={() => handleUnfollow(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Suivi(e)"/>
+                            ) : (
+                              <Btnsm onClick={() => suivreUtilisateur(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Suivre"/>
+                            )}
                           </li>
                         )
                        })}

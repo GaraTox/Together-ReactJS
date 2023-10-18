@@ -37,7 +37,7 @@ const app = express();
 app.use(express.json());
 app.use(cors({
 	origin: ["http://localhost:3000"],
-	methods: ["GET", "POST"],
+	methods: ["GET", "POST", "PUT", "DELETE"],
 	credentials: true
 }));
 app.use(cookieParser());
@@ -112,20 +112,53 @@ app.get('/myprofile/:user', (req, res) => {
   });
 
   // FOLLOW FRIEND
-  app.post('/friendship', (req, res) => {
+//   app.post('/friendship', (req, res) => {
+// 	const { id_User, id_Friend } = req.body;
+// 	const follow = `INSERT INTO friend (id_User, id_Friend) VALUES (${id_User}, ${id_Friend})`;
+// 	db.query(follow, (err) => {
+// 	if (err) {
+// 		res.status(500).send(err);
+// 	} else {
+// 		res.status(201).send('Vous suivez cet utilisateur.');
+// 	}
+// 	});
+//   });
+app.post('/friendship', (req, res) => {
 	const { id_User, id_Friend } = req.body;
-	const follow = `INSERT INTO friend (id_User, id_Friend) VALUES (${id_User}, ${id_Friend})`;
-	db.query(follow, (err) => {
-	if (err) {
-		res.status(500).send(err);
-	} else {
-		res.status(201).send('Vous suivez cet utilisateur.');
+	if (id_User === id_Friend) {
+	  return res.status(400).json({ error: 'Vous ne pouvez pas vous suivre vous-même.' });
 	}
+	db.query('SELECT * FROM friend WHERE id_User = ? AND id_Friend= ?', [id_User, id_Friend], (err, results) => {
+	  if (err) {
+		console.error(err);
+		return res.status(500).json({ error: 'Erreur de suivi' });
+	  }
+	  if (results.length > 0) {
+		return res.status(400).json({ error: 'Vous êtes déjà amis avec cet utilisateur.' });
+	  }
+	  db.query('INSERT INTO friend (id_User, id_Friend) VALUES (?, ?)', [id_User, id_Friend], (err) => {
+		if (err) {
+		  console.error(err);
+		  res.status(500).json({ error: 'Erreur de suivi' });
+		} else {
+		  res.json({ success: true });
+		}
+	  });
 	});
   });
 
   // UNFOLLOW FRIEND
-
+  app.post('/unfollow', (req, res) => {
+	const { id_User, id_Friend } = req.body;
+	db.query('DELETE FROM friend WHERE id_User = ? AND id_Friend = ?', [id_User, id_Friend], (err) => {
+	  if (err) {
+		console.error(err);
+		res.status(500).json({ error: 'Erreur de désabonnement' });
+	  } else {
+		res.json({ success: true });
+	  }
+	});
+  });
 
   // DISPLAY FRIEND
   app.get('/follow/:idUser', (req, res) => {
@@ -143,6 +176,22 @@ app.get('/myprofile/:user', (req, res) => {
 	  }
 	);
   });
+
+    // THE RELATIONSHIP EXIST ?
+	// app.get('/checkFollow/:idUser/:idFriend', (req, res) => {
+	// 	const { idUser, idFriend } = req.params;
+	  
+	// 	const query = 'SELECT COUNT(*) AS count FROM friend WHERE id_User= ? AND id_Friend = ?';
+	// 	connection.query(query, [idUser, idFriend], (error, results) => {
+	// 	  if (error) {
+	// 		console.error(error);
+	// 		res.status(500).json({ error: 'Erreur lors de la vérification de la relation.' });
+	// 	  } else {
+	// 		const isFollowing = results[0].count > 0;
+	// 		res.json({ isFollowing });
+	// 	  }
+	// 	});
+	//   });
 
 //////////////////////////////////////////ADMIN/////////////////////////////////////////////////////////////
 // CREER UN COMPTE POUR UTILISATEUR
