@@ -41,10 +41,10 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `feedCommentary`;
 CREATE TABLE `feedCommentary` (
     `idFeedCommentary` INT(255) NOT NULL AUTO_INCREMENT,
-    `idFeed` INT(255) NOT NULL,
-    `idUser` INT(255) NOT NULL,
     `commentary` VARCHAR(255) NOT NULL,
     `timeCommentary` DATETIME NOT NULL,
+    `idFeed` INT(255) NOT NULL,
+    `idUser` INT(255) NOT NULL,
 
     PRIMARY KEY (`idFeedCommentary`),
     FOREIGN KEY(`idFeed`) REFERENCES feed(`idFeed`) ON DELETE CASCADE,

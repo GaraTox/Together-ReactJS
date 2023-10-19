@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import friend from '../assets/icons/people.svg';
-import profil from '../assets/icons/person.svg';
 import send from '../assets/icons/send.png';
 import conversation from '../assets/icons/conversation.png';
 import modifier from '../assets/icons/modifier.png';
@@ -10,8 +9,12 @@ import supprimer from '../assets/icons/supprimer.png';
 import aimer from '../assets/icons/aimer.png';
 import commentaire from '../assets/icons/commentaire.png';
 import signaler from '../assets/icons/signaler.png';
+import ModaleFeed from "./modales/ModaleFeed";
 
 function Home() {
+    // MODALE
+    const [openModal, setOpenModal] = useState(false);
+
     // AFFICHER LES DONNEES DE L'UTILISATEUR
     const [user, setUser] = useState('');
     const [data, setData] = useState([]);
@@ -85,6 +88,7 @@ function Home() {
     }, [idUser]);
     return (
     <section>
+    {openModal && <ModaleFeed closeModal={setOpenModal}/>}
     <div className="contenuPrincipal">
         <div className="blocAmis">
             <button className="btn_friend" type="submit">
@@ -133,7 +137,7 @@ function Home() {
                         <img className="imgSupprimer" src={supprimer} alt="supprimer le commentaire"/>
                     </div>
                 </div>
-                <div className="blocCommentaire">
+                <div onClick={() => {setOpenModal(true)}} className="blocCommentaire">
                     <p>{post.contentFeed}</p>
                 </div>
                 <div className="blocAimer">
