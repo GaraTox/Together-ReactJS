@@ -55,6 +55,34 @@ function Home() {
             console.error('Error fetching following users:', error);
           });
       };
+
+    // AJOUTER FEED
+    const [contentFeed, setContentFeed] = useState('');
+    const handlePost = async () => {
+        const idUser = localStorage.getItem('idUser');
+        try {
+          await axios.post('/addfeed', { idUser: idUser, contentFeed });
+          console.log('le post a été envoyer')
+        } catch (error) {
+          console.error('Erreur lors de la création de la publication : ' + error);
+        }
+      }
+
+    // LIRE FEED
+    const [posts, setPosts] = useState([]);
+    const idUser = localStorage.getItem('idUser');
+    useEffect(() => {
+      const fetchPosts = async () => {
+        try {
+          const response = await axios.get(`/readfeed/${idUser}`);
+          setPosts(response.data);
+        } catch (error) {
+          console.error('Erreur lors de la récupération des publications : ' + error);
+        }
+      };
+  
+      fetchPosts();
+    }, [idUser]);
     return (
     <section>
     <div className="contenuPrincipal">
@@ -84,8 +112,9 @@ function Home() {
                     <div>
                         <img className="imgProfil" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
                         <form className="formPubli" method="#" action="#">
-                            <input type="text" placeholder="Publier un post ..."/>
-                            <button type="submit"><img className="btnSend" src={send} alt="bouton de validation"/></button>
+                            <input type="text" placeholder="Publier un post ..." value={contentFeed}
+                            onChange={(e) => setContentFeed(e.target.value)}/>
+                            <button onClick={handlePost} type="submit"><img className="btnSend" src={send} alt="bouton de validation"/></button>
                         </form>
                     </div>
                     <Link className="blocConversation" to={`/myprofile/message/${users}`}>
@@ -94,25 +123,27 @@ function Home() {
                     </Link>
                 </div>
             </div>
-
-            <div className="blocPubli">
+            {posts.map(post => (
+                <div key={post.idFeed} className="blocPubli">
                 <div className="nomPubli">
-                    <img className="imgProfil" src={profil} alt="photo de profil"/>
-                    <p className="nameFirstname">Pseudo</p>
+                <img className="imgProfil" src={post.avatarUser ? `http://localhost:3001/images/${post.avatarUser}` : ''} alt="photo de profil"/>
+                    <p className="nameFirstname">{post.pseudoUser}</p>
                     <div className="modifierSupprimer">
                         <img className="imgModifier" src={modifier} alt="modifier le commentaire"/>
                         <img className="imgSupprimer" src={supprimer} alt="supprimer le commentaire"/>
                     </div>
                 </div>
                 <div className="blocCommentaire">
-                    <p>yo la zone</p>
+                    <p>{post.contentFeed}</p>
                 </div>
                 <div className="blocAimer">
-                    <button type="submit" className="btnAime"><img className="imgAime" src={aimer} alt="j'aime"/><p>25</p></button>
-                    <button type="submit" className="btnComm"><img className="imgComm" src={commentaire} alt="commentaire"/><p>10</p></button>
+                    <button type="submit" className="btnAime"><img className="imgAime" src={aimer} alt="j'aime"/></button>
+                    <button type="submit" className="btnComm"><img className="imgComm" src={commentaire} alt="commentaire"/></button>
                     <button type="submit" className="btnSignaler"><img className="imgSignaler" src={signaler} alt="signaler"/></button>
                 </div>
             </div>
+            ))}
+            
         </div>
     </div>
     </section>

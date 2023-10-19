@@ -111,18 +111,7 @@ app.get('/myprofile/:user', (req, res) => {
 	}
   });
 
-  // FOLLOW FRIEND
-//   app.post('/friendship', (req, res) => {
-// 	const { id_User, id_Friend } = req.body;
-// 	const follow = `INSERT INTO friend (id_User, id_Friend) VALUES (${id_User}, ${id_Friend})`;
-// 	db.query(follow, (err) => {
-// 	if (err) {
-// 		res.status(500).send(err);
-// 	} else {
-// 		res.status(201).send('Vous suivez cet utilisateur.');
-// 	}
-// 	});
-//   });
+  // FOLLOW FRIEND IF NOT FRIEND
 app.post('/friendship', (req, res) => {
 	const { id_User, id_Friend } = req.body;
 	if (id_User === id_Friend) {
@@ -147,7 +136,7 @@ app.post('/friendship', (req, res) => {
 	});
   });
 
-  // UNFOLLOW FRIEND
+  // UNFOLLOW FRIEND IF FRIEND
   app.post('/unfollow', (req, res) => {
 	const { id_User, id_Friend } = req.body;
 	db.query('DELETE FROM friend WHERE id_User = ? AND id_Friend = ?', [id_User, id_Friend], (err) => {
@@ -193,6 +182,46 @@ app.post('/friendship', (req, res) => {
 	// 	});
 	//   });
 
+// CREER UN POST
+app.post('/addfeed', (req, res) => {
+	const { contentFeed, idUser } = req.body;
+	db.query('INSERT INTO feed (contentFeed, idUser) VALUES (?,?)', [contentFeed, idUser], (err, result) => {
+	  if (err) throw err;
+	  res.json({ message: 'Publication ajoutée avec succès'});
+	});
+  });
+// RECUPERER LES FEED DE UTILISATEUR
+  app.get('/addfeed/user/:idUser', (req, res) => {
+	const idUser = req.params.idUser;
+	const query = 'SELECT user.pseudoUser, feed.contentFeed FROM user INNER JOIN feed ON user.idUser = feed.idUser WHERE user.idUser = ?';
+	db.query(query, [idUser], (err, results) => {
+	  if (err) {
+		console.error('Erreur lors de la récupération des publications : ' + err);
+		res.status(500).send('Erreur lors de la récupération des publications');
+	  } else {
+		res.status(200).json(results);
+	  }
+	});
+  });
+
+// LIRE LES POST DE UTILISATEUR ET SES AMIS
+app.get('/readfeed/:idUser', (req, res) => {
+	const idUser = req.params.idUser;
+	const query = `
+	  SELECT user.avatarUser, user.pseudoUser, feed.contentFeed FROM user INNER JOIN feed ON user.idUser = feed.idUser WHERE user.idUser = ?
+	  UNION 
+	  SELECT user.avatarUser, user.pseudoUser, feed.contentFeed FROM user INNER JOIN feed ON user.idUser = feed.idUser INNER JOIN friend ON user.idUser = friend.id_Friend WHERE friend.id_User = ? `;
+	db.query(query, [idUser, idUser], (err, results) => {
+	  if (err) {
+		console.error('Erreur lors de la récupération des publications : ' + err);
+		res.status(500).send('Erreur lors de la récupération des publications');
+	  } else {
+		res.status(200).json(results);
+	  }
+	});
+  });
+  
+  
 //////////////////////////////////////////ADMIN/////////////////////////////////////////////////////////////
 // CREER UN COMPTE POUR UTILISATEUR
 app.post('/register', (req, res) => {

@@ -30,9 +30,8 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `feed`;
 CREATE TABLE `feed` (
     `idFeed` INT(255) NOT NULL AUTO_INCREMENT,
-    `idUser` INT(255) NOT NULL,
     `contentFeed` VARCHAR(255) NOT NULL,
-    `timeFeed` DATETIME NOT NULL,
+    `idUser` INT(255) NOT NULL,
 
     PRIMARY KEY (`idFeed`),
     FOREIGN KEY(`idUser`) REFERENCES user(`idUser`) ON DELETE CASCADE

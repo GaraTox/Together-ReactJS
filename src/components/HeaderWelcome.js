@@ -138,9 +138,9 @@ const handleUnfollow = (id_Friend) => {
                   </button>
                   <div className="results">
                     <ul>
-                       {tab.map((user) => {
+                    {tab.map((user) => {
                         return(
-                          <li key={user.idUser}>
+                          <li className="lisearch" key={user.idUser}>
                             {user.pseudoUser}
                             {followed ? (
                               <Btnsm onClick={() => handleUnfollow(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Suivi(e)"/>
