@@ -14,6 +14,8 @@ import ModaleFeed from "./modales/ModaleFeed";
 function Home() {
     // MODALE
     const [openModal, setOpenModal] = useState(false);
+    const [feeds, setFeeds] = useState([]);
+    const [selectedFeed, setSelectedFeed] = useState(null);
 
     // AFFICHER LES DONNEES DE L'UTILISATEUR
     const [user, setUser] = useState('');
@@ -86,9 +88,10 @@ function Home() {
   
       fetchPosts();
     }, [idUser]);
+    
     return (
     <section>
-    {openModal && <ModaleFeed closeModal={setOpenModal}/>}
+    {openModal && <ModaleFeed idFeed={selectedFeed} closeModal={setOpenModal}/>}
     <div className="contenuPrincipal">
         <div className="blocAmis">
             <button className="btn_friend" type="submit">

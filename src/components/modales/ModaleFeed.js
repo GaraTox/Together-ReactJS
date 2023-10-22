@@ -3,20 +3,19 @@ import send from '../../assets/icons/send.png';
 import axios from 'axios';
 
 function ModaleFeed({closeModal}){
-    const [posts, setPosts] = useState([]);
-    const idUser = localStorage.getItem('idUser');
-    useEffect(() => {
-      const fetchPosts = async () => {
-        try {
-          const response = await axios.get(`/readfeed/${idUser}`);
-          setPosts(response.data);
-        } catch (error) {
-          console.error('Erreur lors de la récupération des publications : ' + error);
-        }
-      };
+    const [selectedPost, setSelectedPost] = useState(null); // Renommez l'état en selectedPost
   
-      fetchPosts();
-    }, [idUser]);
+    useEffect(() => {
+      if (selectedPost) {
+        axios.get(`/modalefeed/${selectedPost.idFeed}`)
+          .then((response) => {
+            setSelectedPost(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    }, [selectedPost]);
     return(
         <section className='bg_modal_feed'>
             <div className='content_modal_feed'>
@@ -24,17 +23,17 @@ function ModaleFeed({closeModal}){
                     <button onClick={() => closeModal(false)} type="button" className="btn-close" aria-label="Close"></button>
                 </div>
                 <div className='body'>
-                {posts.map(post => (
-                <div key={post.idFeed} className="blocPubli">
+                {selectedPost && (
+                <div key={selectedPost.idFeed} className="blocPubli">
                     <div className="nomPubli">
-                        <img className="imgProfil" src={post.avatarUser ? `http://localhost:3001/images/${post.avatarUser}` : ''} alt="photo de profil"/>
-                        <p className="nameFirstname">{post.pseudoUser}</p>
+                        <img className="imgProfil" src={selectedPost.avatarUser ? `http://localhost:3001/images/${selectedPost.avatarUser}` : ''} alt="photo de profil"/>
+                        <p className="nameFirstname">{selectedPost.pseudoUser}</p>
                     </div>
                     <div className="blocCommentaire">
-                        <p>{post.contentFeed}</p>
+                        <p>{selectedPost.contentFeed}</p>
                     </div>
                 </div>
-                ))}
+                )}
                 <div>
                         <form className='formModale mt-2' method="#" action="#">
                             <input type="text" placeholder="Ecrire un commentaire..."/>

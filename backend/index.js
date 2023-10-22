@@ -221,6 +221,33 @@ app.get('/readfeed/:idUser', (req, res) => {
 	});
   });
   
+  // AFFICHER UN FEED DANS LA MODALE
+//   app.get('/modalefeed', (req, res) => {
+// 	db.query('SELECT * FROM feed', (err, results) => {
+// 	  if (err) {
+// 		console.error('Erreur lors de la récupération des données de feed : ' + err);
+// 		res.status(500).json({ error: 'Erreur serveur' });
+// 	  } else {
+// 		res.json(results);
+// 	  }
+// 	});
+//   });
+
+  app.get('/modalefeed/:idFeed', (req, res) => {
+	const idFeed = req.params.idFeed;
+	db.query('SELECT * FROM feed WHERE idFeed = ?', [idFeed], (err, results) => {
+	  if (err) {
+		console.error('Erreur lors de la récupération du feed : ' + err);
+		res.status(500).json({ error: 'Erreur serveur' });
+	  } else {
+		if (results.length === 0) {
+		  res.status(404).json({ error: 'Feed non trouvé' });
+		} else {
+		  res.json(results[0]);
+		}
+	  }
+	});
+  });
   
 //////////////////////////////////////////ADMIN/////////////////////////////////////////////////////////////
 // CREER UN COMPTE POUR UTILISATEUR
