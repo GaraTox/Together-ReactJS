@@ -26,6 +26,7 @@
         align-items: center;
         .formSearch{
             width: 300px;
+            background-color: white;
             margin: 0 auto;
             .results{
                 position: absolute;
@@ -116,8 +117,8 @@
     }
 
     .inputSearch{
-        width: 80%;
-        height: 33px;
+        width: 90%;
+        height: 35px;
         border-radius: 20px 0px 0px 20px;
         border: none;
         padding-left: 10px;
@@ -125,7 +126,7 @@
 
     .btnSearch{
         background-color: #ffff;
-        width: 20%;
+        width: 10%;
         height: 37px;
         border-radius: 0px 20px 20px 0px;
     }
@@ -165,11 +166,12 @@
     }
 
     .formBurger{
-        width: 50%;
+        width: 40%;
         display: flex;
         justify-content: center;
-        margin-left: 25%;
-        margin-right: 25%;
+        margin-left: 30%;
+        margin-right: 30%;
+        background-color: white;
     }
 
     .btn_disconnect_burger{
@@ -236,6 +238,7 @@
         width: 70%;
         margin-left: 15%;
         margin-right: 15%;
+        background-color: white;
         .results{
             position: absolute;
             z-index: 2;
@@ -268,6 +271,7 @@
         border-radius: 20px 0px 0px 20px;
         border: none;
         padding-left: 5px;
+        background-color: white;
     }
 
     .btnSearch{

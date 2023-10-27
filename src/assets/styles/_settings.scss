@@ -28,7 +28,6 @@ body{
         text-align: center;
     }
     form{
-        background-color: $global-color-text;
         height: max-content;
         text-align: center;
         border: solid 1px black;
@@ -36,7 +35,6 @@ body{
     }
     input{
         outline: none;
-        background-color: $global-color-text;
     }
     input::placeholder{
         opacity: 0.6;
