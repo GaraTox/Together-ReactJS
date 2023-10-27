@@ -145,12 +145,12 @@ function Home() {
                         <img className="imgSupprimer" src={supprimer} alt="supprimer le commentaire"/>
                     </div>
                 </div>
-                <div onClick={() => openPostModal(post)} className="blocCommentaire">
+                <div className="blocCommentaire">
                     <p>{post.contentFeed}</p>
                 </div>
                 <div className="blocAimer">
                     <button type="submit" className="btnAime"><img className="imgAime" src={aimer} alt="j'aime"/></button>
-                    <button type="submit" className="btnComm"><img className="imgComm" src={commentaire} alt="commentaire"/></button>
+                    <button onClick={() => openPostModal(post)} type="submit" className="btnComm"><img className="imgComm" src={commentaire} alt="commentaire"/></button>
                     <button type="submit" className="btnSignaler"><img className="imgSignaler" src={signaler} alt="signaler"/></button>
                 </div>
             </div>

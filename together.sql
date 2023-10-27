@@ -42,9 +42,9 @@ DROP TABLE IF EXISTS `feedCommentary`;
 CREATE TABLE `feedCommentary` (
     `idFeedCommentary` INT(255) NOT NULL AUTO_INCREMENT,
     `commentary` VARCHAR(255) NOT NULL,
-    `timeCommentary` DATETIME NOT NULL,
     `idFeed` INT(255) NOT NULL,
     `idUser` INT(255) NOT NULL,
+    `create` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (`idFeedCommentary`),
     FOREIGN KEY(`idFeed`) REFERENCES feed(`idFeed`) ON DELETE CASCADE,

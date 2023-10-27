@@ -220,19 +220,8 @@ app.get('/readfeed/:idUser', (req, res) => {
 	  }
 	});
   });
-  
-  // AFFICHER UN FEED DANS LA MODALE
-//   app.get('/modalefeed', (req, res) => {
-// 	db.query('SELECT * FROM feed', (err, results) => {
-// 	  if (err) {
-// 		console.error('Erreur lors de la récupération des données de feed : ' + err);
-// 		res.status(500).json({ error: 'Erreur serveur' });
-// 	  } else {
-// 		res.json(results);
-// 	  }
-// 	});
-//   });
 
+  // LIRE UN POST DANS UNE MODALE
   app.get('/modalefeed/:idFeed', (req, res) => {
 	const idFeed = req.params.idFeed;
 	db.query('SELECT * FROM feed WHERE idFeed = ?', [idFeed], (err, results) => {
@@ -248,6 +237,34 @@ app.get('/readfeed/:idUser', (req, res) => {
 	  }
 	});
   });
+
+  // CREER UN COMMENTAIRE DANS UN POST MODALE
+  app.post('/modale/comment', (req, res) => {
+	const { commentary, idFeed, idUser } = req.body;
+	const query = 'INSERT INTO feedcommentary (commentary, idFeed, idUser) VALUES (?, ?, ?)';
+	db.query(query, [commentary, idFeed, idUser], (err, result) => {
+	  if (err) {
+		console.error('Erreur lors de l\'ajout du commentaire : ' + err);
+		res.status(500).send('Erreur lors de l\'ajout du commentaire');
+	  } else {
+		res.status(201).send('Commentaire ajouté avec succès');
+	  }
+	});
+  });
+
+  // AFFICHER LE COMMENTAIRE DANS LA MODALE
+  app.get('/modale/getComment/:idFeed', (req, res) => {
+	const idFeed = req.params.idFeed;
+	const query = 'SELECT feedcommentary.*, user.pseudoUser FROM feedcommentary INNER JOIN user ON feedcommentary.idUser = user.idUser WHERE feedcommentary.idFeed = ?';
+	db.query(query, [idFeed], (err, results) => {
+	  if (err) {
+		console.error(err);
+		return res.status(500).send('Failed to fetch comments');
+	  }
+	  res.status(200).json(results);
+	});
+  });
+
   
 //////////////////////////////////////////ADMIN/////////////////////////////////////////////////////////////
 // CREER UN COMPTE POUR UTILISATEUR
