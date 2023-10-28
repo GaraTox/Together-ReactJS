@@ -135,15 +135,17 @@ function Home() {
                     </Link>
                 </div>
             </div>
-            {posts.map(post => (
-                <div key={post.idFeed} className="blocPubli">
+            {posts.map((post, key) => (
+                <div key={key} className="blocPubli">
                 <div className="nomPubli">
                 <img className="imgProfil" src={post.avatarUser ? `http://localhost:3001/images/${post.avatarUser}` : ''} alt="photo de profil"/>
                     <p className="nameFirstname">{post.pseudoUser}</p>
+                    {post.idUser === idUser && (
                     <div className="modifierSupprimer">
                         <img className="imgModifier" src={modifier} alt="modifier le commentaire"/>
                         <img className="imgSupprimer" src={supprimer} alt="supprimer le commentaire"/>
                     </div>
+                    )}
                 </div>
                 <div className="blocCommentaire">
                     <p>{post.contentFeed}</p>
