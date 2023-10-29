@@ -56,8 +56,9 @@ DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
     `idMessage` INT(255) NOT NULL AUTO_INCREMENT,
     `idUser` INT(255) NOT NULL,
+    `idSender` INT(255) NOT NULL,
     `contentMessage` VARCHAR(255) NOT NULL,
-    `timeMessage` DATETIME NOT NULL,
+    `timeMessage` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (`idMessage`),
     FOREIGN KEY(`idUser`) REFERENCES user(`idUser`) ON DELETE CASCADE

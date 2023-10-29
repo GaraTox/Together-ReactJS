@@ -7,7 +7,6 @@ const cors = require("cors");
 // AVATAR
 const multer = require('multer');
 const path = require('path');
-
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
 		cb(null, 'public/images') // DOSSIER OU SONT STOCKEES LES IMAGES
@@ -253,17 +252,17 @@ app.get('/readfeed/:idUser', (req, res) => {
   });
 
   // AFFICHER LE COMMENTAIRE DANS LA MODALE
-  app.get('/modale/getComment/:idFeed', (req, res) => {
-	const idFeed = req.params.idFeed;
-	const query = 'SELECT feedcommentary.*, user.pseudoUser FROM feedcommentary INNER JOIN user ON feedcommentary.idUser = user.idUser WHERE feedcommentary.idFeed = ?';
-	db.query(query, [idFeed], (err, results) => {
-	  if (err) {
-		console.error(err);
-		return res.status(500).send('Failed to fetch comments');
-	  }
-	  res.status(200).json(results);
-	});
-  });
+//   app.get('/modale/getComment/:idFeed', (req, res) => {
+// 	const idFeed = req.params.idFeed;
+// 	const query = 'SELECT feedcommentary.*, user.pseudoUser FROM feedcommentary INNER JOIN user ON feedcommentary.idUser = user.idUser WHERE feedcommentary.idFeed = ?';
+// 	db.query(query, [idFeed], (err, results) => {
+// 	  if (err) {
+// 		console.error(err);
+// 		return res.status(500).send('Failed to fetch comments');
+// 	  }
+// 	  res.status(200).json(results);
+// 	});
+//   });
 
   
 //////////////////////////////////////////ADMIN/////////////////////////////////////////////////////////////

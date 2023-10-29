@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import friend from '../assets/icons/people.svg';
 import send from '../assets/icons/send.png';
 import conversation from '../assets/icons/conversation.png';
@@ -14,8 +14,11 @@ import ModaleFeed from "./modales/ModaleFeed";
 function Home() {
     // MODALE
     const [selectedPost, setSelectedPost] = useState(null);
+    const [idFeedRecup, setIdFeedRecup] = useState();
+    const idFeed = useParams();
     const openPostModal = (post) => {
         setSelectedPost(post);
+        setIdFeedRecup(post.idFeed);
       };
     
       const closeModal = () => {
@@ -90,13 +93,12 @@ function Home() {
           console.error('Erreur lors de la récupération des publications : ' + error);
         }
       };
-  
       fetchPosts();
     }, [idUser]);
     
     return (
     <section>
-    {selectedPost && (<ModaleFeed post={selectedPost} closeModal={closeModal} />)}    
+    {selectedPost && (<ModaleFeed post={selectedPost} idFeed={idFeed} closeModal={closeModal} />)}    
       <div className="contenuPrincipal">
         <div className="blocAmis">
             <button className="btn_friend" type="submit">
@@ -108,9 +110,10 @@ function Home() {
                 </div>
             </button>
             <div>
-            <ul className="text-center">
+            <ul className="text-center mt-2">
                 {followingUsers.map(user => (
                     <li key={user.idUser}>
+                        <img className="w-25" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
                         {user.pseudoUser}
                         <hr/>
                     </li>
@@ -140,12 +143,10 @@ function Home() {
                 <div className="nomPubli">
                 <img className="imgProfil" src={post.avatarUser ? `http://localhost:3001/images/${post.avatarUser}` : ''} alt="photo de profil"/>
                     <p className="nameFirstname">{post.pseudoUser}</p>
-                    {post.idUser === idUser && (
                     <div className="modifierSupprimer">
                         <img className="imgModifier" src={modifier} alt="modifier le commentaire"/>
                         <img className="imgSupprimer" src={supprimer} alt="supprimer le commentaire"/>
                     </div>
-                    )}
                 </div>
                 <div className="blocCommentaire">
                     <p>{post.contentFeed}</p>

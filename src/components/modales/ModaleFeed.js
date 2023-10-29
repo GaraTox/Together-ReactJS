@@ -1,7 +1,29 @@
-import React from 'react';
+import React, {useState} from 'react';
+import axios from 'axios';
 import send from '../../assets/icons/send.png';
+import { useParams } from 'react-router-dom';
 
-function ModaleFeed({post, closeModal}){
+function ModaleFeed({post, closeModal, idFeed}){
+    const [commentary, setCommentary] = useState('');
+    const idUser = localStorage.getItem('idUser');
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      axios.post(`http://localhost:3001/modale/comment`, {
+        commentary: commentary,
+        idFeed: idFeed,
+        idUser: idUser
+        })
+      .then((res) => {
+        console.log('Commentaire ajouté');
+        console.log(post.idFeed)
+        setCommentary('');
+      })
+      .catch((err) => {
+        console.error(err);
+        console.log(post.idFeed)
+      });
+};
     return(
         <section className='bg_modal_feed'>
             <div className='content_modal_feed'>
@@ -19,8 +41,9 @@ function ModaleFeed({post, closeModal}){
                     </div>
                 </div>
                 <div>
-                    <form className='formModale mt-2' method="#" action="#">
-                        <input type="text" placeholder="Ecrire un commentaire..."/>
+                    <form onSubmit={handleSubmit} className='formModale mt-2' method="#" action="#">
+                        <input type="text" placeholder="Ecrire un commentaire..."
+                        value={commentary} onChange={(e) => setCommentary(e.target.value)}/>
                         <button type="submit"><img className="btnSend" src={send} alt="bouton de validation"/></button>
                     </form>
                 </div>

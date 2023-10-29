@@ -14,8 +14,16 @@
             border-left: solid 1px rgb(236, 236, 236);
         }
         .blocContenu{
+            width: 60%;
+            margin-left: 20%;
+            margin-right: 20%;
             overflow-y: scroll;
-            height: 100vh;
+            display: flex;
+            height: 50px;
+            border: solid 1px rgb(33, 37, 41);
+            align-items: center;
+            justify-content: center;
+            margin-top: 20%;
         }
         .blocContenu::-webkit-scrollbar{
             background-color: rgb(248, 249, 250);
@@ -78,7 +86,14 @@
             }
             .blocContenu{
                 overflow-y: scroll;
-                height: 100vh;
+                display: flex;
+                border-radius: 10px;
+                height: 50px;
+                border: solid 1px rgb(33, 37, 41);
+                align-items: center;
+                justify-content: center;
+                margin-top: 40%;
+            
             }
             .blocCntenu::-webkit-scrollbar{
                 background-color: rgb(248, 249, 250);
@@ -129,10 +144,14 @@
             height: 100%;
             .blocMessage{
                 width: 100%;
-                height: 100vh;
-                border-bottom: solid 1px rgb(182, 182, 182);
                 .blocContenu{
-                    display: hidden;
+                    display: flex;
+                    border-radius: 10px;
+                    height: 50px;
+                    border: solid 1px rgb(33, 37, 41);
+                    align-items: center;
+                    justify-content: center;
+                    margin-top: 40%;
                 }
             }
         
@@ -145,9 +164,9 @@
                     padding: 0;
                     margin: 0;
                 }
-                .blocContenu{
-                    display:none;
-                }
+                // .blocContenu{
+                //     display:none;
+                // }
             }
         }
     }
