@@ -257,18 +257,18 @@ app.get('/readfeed/:idUser', (req, res) => {
 	});	
   });
 
-  // AFFICHER LE COMMENTAIRE DANS LA MODALE
-//   app.get('/modale/getComment/:idFeed', (req, res) => {
-// 	const idFeed = req.params.idFeed;
-// 	const query = 'SELECT feedcommentary.*, user.pseudoUser FROM feedcommentary INNER JOIN user ON feedcommentary.idUser = user.idUser WHERE feedcommentary.idFeed = ?';
-// 	db.query(query, [idFeed], (err, results) => {
-// 	  if (err) {
-// 		console.error(err);
-// 		return res.status(500).send('Failed to fetch comments');
-// 	  }
-// 	  res.status(200).json(results);
-// 	});
-//   });
+// AFFICHER LE COMMENTAIRE DANS LA MODALE
+  app.get('/modale/getComment/:idFeed', (req, res) => {
+	const idFeed = req.params.idFeed;
+	const query = 'SELECT feedcommentary.*, user.pseudoUser, user.avatarUser FROM feedcommentary INNER JOIN user ON feedcommentary.idUser = user.idUser WHERE feedcommentary.idFeed = ?';
+	db.query(query, [idFeed], (err, results) => {
+	  if (err) {
+		console.error(err);
+		return res.status(500).send('Failed to fetch comments');
+	  }
+	  res.status(200).json(results);
+	});
+  });
 
 //////////////////////////////////////MESSAGERIE PRIVEE/////////////////////////////////////////////////////
 // GESTION DE CONNECTION SOCKET IO

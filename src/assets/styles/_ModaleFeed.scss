@@ -51,7 +51,9 @@
             padding: 10px;
         }
     }
-    .formModale{
+    .blocFormComm{
+        padding: 5px;
+        .formModale{
         background-color: rgb(255, 255, 255);
         border: none;
         input{
@@ -69,7 +71,40 @@
             background-color: white;
             height: 35px;
         }
+    } 
     }
+    .blocAllComm{
+        padding: 5px;
+        .blocFeedComm{
+        padding: 10px;
+        border: solid 1px rgb(197, 197, 197);
+        border-radius: 10px;
+        .blocCommModale{
+            display: inline-flex;
+            width: 100%;
+            padding-bottom: 3px;
+            .imgProfilModale{
+                width: 25px;
+                height: 25px;
+                border: solid 1px rgb(33, 37, 41);
+                border-radius: 50%;
+            }
+            .pseudoComm{
+                margin-left: 10px;
+            }
+            .createComm{
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+            }
+        }
+        .blocContentModale{
+            padding-top: 3px;
+        }
+    } 
+    }
+
+
 }
 }
 }
@@ -127,7 +162,9 @@
                 padding: 10px;
             }
         }
-        .formModale{
+        .blocFormComm{
+            padding: 10px;
+            .formModale{
             background-color: rgb(255, 255, 255);
             border: none;
             input{
@@ -146,7 +183,40 @@
                 height: 35px;
             }
         }
+        }
+
     }
+    .blocAllComm{
+        padding: 10px;
+        .blocFeedComm{
+        padding: 10px;
+        border: solid 1px rgb(197, 197, 197);
+        border-radius: 10px;
+        .blocCommModale{
+            display: inline-flex;
+            width: 100%;
+            padding-bottom: 3px;
+            .imgProfilModale{
+                width: 25px;
+                height: 25px;
+                border: solid 1px rgb(33, 37, 41);
+                border-radius: 50%;
+            }
+            .pseudoComm{
+                margin-left: 10px;
+            }
+            .createComm{
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+            }
+        }
+        .blocContentModale{
+            padding-top: 3px;
+        }
+    } 
+    }
+
     }
 }
 
@@ -205,7 +275,9 @@
             }
             
         }
-        .formModale{
+        .blocFormComm{
+            padding: 10px;
+            .formModale{
             background-color: rgb(255, 255, 255);
             border: none;
             input{
@@ -224,6 +296,40 @@
                 height: 35px;
             }
         }
+        }
+
+    }
+    .blocAllComm{
+        padding: 10px;
+        .blocFeedComm{
+        padding: 10px;
+        border: solid 1px rgb(197, 197, 197);
+        border-radius: 10px;
+        .blocCommModale{
+            display: inline-flex;
+            width: 100%;
+            padding-bottom: 3px;
+            .imgProfilModale{
+                width: 25px;
+                height: 25px;
+                border: solid 1px rgb(33, 37, 41);
+                border-radius: 50%;
+            }
+            .pseudoComm{
+                margin-left: 10px;
+            }
+            .createComm{
+                font-size: small;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+            }
+        }
+        .blocContentModale{
+            padding-top: 3px;
+        }
+    } 
     }
     }
 }

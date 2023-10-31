@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import send from '../../assets/icons/send.png';
 // import { useParams } from 'react-router-dom';
 
 function ModaleFeed({post, closeModal, idFeed}){
     const [commentary, setCommentary] = useState('');
+    const [comments, setComments] = useState([]);
     const idUser = localStorage.getItem('idUser');
 
+    // CREER UN COMMENTAIRE DE FEED
     const handleSubmit = (e) => {
       e.preventDefault();
       axios.post(`http://localhost:3001/modale/comment`, {
@@ -23,7 +25,22 @@ function ModaleFeed({post, closeModal, idFeed}){
         console.log(err);
         console.log(post.idFeed)
       });
-};
+    };
+
+    // AFFICHER LES COMMENTAIRES DE FEED
+    useEffect(() => {
+        if (idFeed) {
+          // Appeler la route pour récupérer les commentaires associés
+          axios.get(`/modale/getComment/${idFeed}`)
+            .then((response) => {
+              setComments(response.data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }
+      }, [idFeed]);
+
     return(
         <section className='bg_modal_feed'>
             <div className='content_modal_feed'>
@@ -40,12 +57,26 @@ function ModaleFeed({post, closeModal, idFeed}){
                         <p>{post.contentFeed}</p>
                     </div>
                 </div>
-                <div>
-                    <form onSubmit={handleSubmit} className='formModale mt-2' method="#" action="#">
+                <div className='blocFormComm'>
+                    <form onSubmit={handleSubmit} className='formModale' method="#" action="#">
                         <input type="text" placeholder="Ecrire un commentaire..."
                         value={commentary} onChange={(e) => setCommentary(e.target.value)}/>
                         <button type="submit"><img className="btnSend" src={send} alt="bouton de validation"/></button>
                     </form>
+                </div>
+                <div className='blocAllComm'>
+                    {comments.map((comment) => (
+                    <div className='blocFeedComm' key={comment.idFeedCommentary}>
+                        <div className='blocCommModale'>
+                            <img className="imgProfilModale" src={comment.avatarUser ? `http://localhost:3001/images/${comment.avatarUser}` : ''} alt="photo de profil"/>
+                            <p className='pseudoComm'>{comment.pseudoUser}</p>
+                            <p className='createComm'>{comment.create}</p>
+                        </div>
+                        <div className='blocContentModal'>
+                            <p>{comment.commentary}</p>
+                        </div>
+                    </div>
+                    ))}
                 </div>
                 </div>
             </div>
