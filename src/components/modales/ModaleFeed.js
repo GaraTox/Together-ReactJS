@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import send from '../../assets/icons/send.png';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 
 function ModaleFeed({post, closeModal, idFeed}){
     const [commentary, setCommentary] = useState('');
@@ -20,7 +20,7 @@ function ModaleFeed({post, closeModal, idFeed}){
         setCommentary('');
       })
       .catch((err) => {
-        console.error(err);
+        console.log(err);
         console.log(post.idFeed)
       });
 };

@@ -148,6 +148,9 @@
                     width: 25px;
                     margin-right: 5px;
                 }
+                .listFriendMess{
+                    cursor: pointer;
+                }
             } 
         }
         .blocContenu::-webkit-scrollbar{
@@ -313,6 +316,9 @@
                         width: 25px;
                         margin-right: 5px;
                     }
+                    .listFriendMess{
+                        cursor: pointer;
+                    }
                 } 
             }
             .blocContenu::-webkit-scrollbar{
@@ -451,6 +457,9 @@
                         li img{
                             width: 25px;
                             margin-right: 5px;
+                        }
+                        .listFriendMess{
+                            cursor: pointer;
                         }
                     } 
                 }

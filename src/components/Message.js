@@ -5,6 +5,10 @@ import message from '../assets/icons/envelope.svg';
 import send from '../assets/icons/send.png';
 
 function Message() {
+    // DISPLAY FRIEND
+    const [followingUsers, setFollowingUsers] = useState([]);
+    // SELECT FRIEND
+    const [seletedFriend, setSelectedFriend] = useState(null);
     const [data, setData] = useState([]);
     useEffect(() => {
         const user = localStorage.getItem('idUser');
@@ -14,8 +18,7 @@ function Message() {
         })
         .catch(err => console.log(err));
     }, [])
-     // DISPLAY FRIEND
-    const [followingUsers, setFollowingUsers] = useState([]);
+
 
     useEffect(() => {
          getFollowingUsers();
@@ -30,6 +33,12 @@ function Message() {
             console.error('Error fetching following users:', error);
         });
     };
+
+    // AMI SELECTIONNE
+    const handleFriendClick = (friend) => {
+        setSelectedFriend(friend);
+      };
+
     return (
     <section>
     <div className="contenuPrincipal">
@@ -38,7 +47,7 @@ function Message() {
             <div className="blocContenu text-center mt-2">
             <ul className="text-center">
                 {followingUsers.map(user => (
-                    <li key={user.idUser}>
+                    <li className="listFriendMess" key={user.idUser} onClick={() => handleFriendClick(user)}>
                         <img src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
                         {user.pseudoUser}
                         <hr/>
@@ -75,9 +84,6 @@ function Message() {
                     </form>
                 </div>
             </div>
-            {/* <div className="blocContenu text-center">
-                <p>Sélectionnez un(e) de vos ami(e) pour discuter</p>
-            </div> */}
         </div>
     </div>
     </section>

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import friend from '../assets/icons/people.svg';
 import send from '../assets/icons/send.png';
 import conversation from '../assets/icons/conversation.png';
@@ -15,10 +15,12 @@ function Home() {
     // MODALE
     const [selectedPost, setSelectedPost] = useState(null);
     const [idFeedRecup, setIdFeedRecup] = useState();
-    const idFeed = useParams();
+
     const openPostModal = (post) => {
         setSelectedPost(post);
+        console.log(post);
         setIdFeedRecup(post.idFeed);
+        console.log(post.idFeed);
       };
     
       const closeModal = () => {
@@ -98,7 +100,7 @@ function Home() {
     
     return (
     <section>
-    {selectedPost && (<ModaleFeed post={selectedPost} idFeed={idFeed} closeModal={closeModal} />)}    
+    {selectedPost && (<ModaleFeed post={selectedPost} idFeed={idFeedRecup} closeModal={closeModal} />)}    
       <div className="contenuPrincipal">
         <div className="blocAmis">
             <button className="btn_friend" type="submit">
