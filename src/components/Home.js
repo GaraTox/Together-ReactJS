@@ -109,11 +109,11 @@ function Home() {
                     </p>
                 </div>
             </button>
-            <div>
+            <div className="blocContenu">
             <ul className="text-center mt-2">
                 {followingUsers.map(user => (
                     <li key={user.idUser}>
-                        <img className="w-25" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
+                        <img src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
                         {user.pseudoUser}
                         <hr/>
                     </li>

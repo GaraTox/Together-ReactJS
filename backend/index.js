@@ -2,8 +2,10 @@
 const express = require("express");
 const mysql = require("mysql");
 const dotenv = require("dotenv");
+const http = require("http");
 // CORS PERMET DE GERER LES PROBLEMES DE SECURITE
 const cors = require("cors");
+const app = express();
 // AVATAR
 const multer = require('multer');
 const path = require('path');
@@ -28,17 +30,21 @@ const session = require("express-session");
 const bcrypt = require("bcrypt");
 // LE SEL PERMET D'AMELIORER LA SECURITE DU HACHAGE. ICI ON DONNE LA VALEUR 10 AU MOT DE PASSE AVANT LE HACHAGE.
 const saltRounds = 10;
-
+// MESSAGERIE SOCKET
+const {Server} = require('socket.io');
+app.use(cors());
+const server = http.createServer(app);
 // CONFIGURER LE .ENV
 dotenv.config({path: './.env'})
 
-const app = express();
 app.use(express.json());
-app.use(cors({
-	origin: ["http://localhost:3000"],
-	methods: ["GET", "POST", "PUT", "DELETE"],
-	credentials: true
-}));
+const io = new Server(server, {
+	cors: {
+		origin: ["http://localhost:3000"],
+		methods: ["GET", "POST", "PUT", "DELETE"],
+		credentials: true,
+	}
+});
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
@@ -264,7 +270,36 @@ app.get('/readfeed/:idUser', (req, res) => {
 // 	});
 //   });
 
-  
+//////////////////////////////////////MESSAGERIE PRIVEE/////////////////////////////////////////////////////
+// GESTION DE CONNECTION SOCKET IO
+io.on("connection", (socket) => {
+	console.log(`User connected: ${socket.id}`);
+	socket.on("join_room", (data) => {
+	  socket.join(data);
+	  console.log(`User with ID: ${socket.id} joined room: ${data}`);
+	});
+	// GESTON D'ENVOI DE MESSAGE
+	socket.on("send_message", (data) => {
+    	// INSERER DANS LA BASE DONNEE
+    	const { idUser, idSender, contentMessage } = data;
+    	const sql = 'INSERT INTO message (idUser, idSender, contentMessage) VALUES (?, ?, ?)';
+    		connection.query(sql, [idUser, idSender, contentMessage], (err, result) => {
+      			if (err) {
+        			console.error("Erreur lors de l'insertion du message :", err);
+      			} else {
+        		console.log("Message inséré dans la base de données");
+        		// EMET UN EVENEMENT D'ENVOI DE MESSAGE
+        		io.to(idSender).emit("send_message", {idUser, contentMessage});
+      		}
+    	});
+    	// socket.to(data.room).emit("receive_message", data);
+  	});
+    // GESTION DE DECONNEXION
+	socket.on("disconnect", () => {
+		console.log("User disconnected", socket.id);
+	});
+});
+
 //////////////////////////////////////////ADMIN/////////////////////////////////////////////////////////////
 // CREER UN COMPTE POUR UTILISATEUR
 app.post('/register', (req, res) => {
@@ -533,6 +568,6 @@ app.get('/logout', (req, res) => {
   });
 
 // ECOUTE LE PORT 3001
-app.listen(3001, () => {
+server.listen(3001, () => {
 	console.log(`Le port de mon backend est le : 3001`);
 });

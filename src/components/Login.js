@@ -31,7 +31,7 @@ function Connect() {
 
   const navigate = useNavigate();
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 // console.log("L38 => ", localStorage.getItem('idUser'))
 

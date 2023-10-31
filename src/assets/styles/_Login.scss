@@ -6,16 +6,19 @@
         padding-top: 10px;
     }
     .blocForm{
-    display: flex;
-    margin: 0 auto;
-    justify-content: center;
-    .formConnect{
-        width: 300px;
-        .dejaInscrit{
-            margin-top: 15px;
-            color: #3AAD28;
+        width: max-content;
+        border: solid 1px black;
+        border-radius: 10px;
+        display: flex;
+        margin: 0 auto;
+        justify-content: center;
+        .formConnect{
+            width: 300px;
+            .dejaInscrit{
+                margin-top: 15px;
+                color: #3AAD28;
+            }
         }
-    }
     .passwordForget{
         cursor: pointer;
     }
@@ -40,6 +43,9 @@
     .blocForm{
     display: flex;
     margin: 0 auto;
+    border: solid 1px black;
+    width: max-content;
+    border-radius: 10px;
     justify-content: center;
     .formConnect{
         width: 300px;
@@ -72,17 +78,20 @@
         display: flex;
         margin: 0 auto;
         justify-content: center;
-            .formConnect{
-                width: 300px;
-    .dejaInscrit{
-        margin-top: 15px;
-        color: #3AAD28;
-    }
-    .passwordForget{
-        cursor: pointer;
-    }
-}
-} 
+        width: max-content;
+        border-radius: 10px;
+        border: solid 1px black;
+        .formConnect{
+            width: 300px;
+            .dejaInscrit{
+                 margin-top: 15px;
+                color: #3AAD28;
+            }
+            .passwordForget{
+                cursor: pointer;
+            }
+        }           
+    } 
     .noAccount{
         text-align: center;
         .inscrivezVous{

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import friend from '../assets/icons/people.svg';
 import message from '../assets/icons/envelope.svg';
+import send from '../assets/icons/send.png';
 
 function Message() {
     const [data, setData] = useState([]);
@@ -38,7 +39,7 @@ function Message() {
             <ul className="text-center">
                 {followingUsers.map(user => (
                     <li key={user.idUser}>
-                        <img className="w-25" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
+                        <img src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
                         {user.pseudoUser}
                         <hr/>
                     </li>
@@ -48,9 +49,35 @@ function Message() {
         </div>
         <div className="blocMessage">
             <div className="titreMessage"><p className="text-center text-light bg bg-dark"><img src={message} className="me-1 mb-1 bg bg-light rounded p-1 m-1" alt="friend"/><strong>Messagerie privée</strong></p></div>
-            <div className="blocContenu text-center">
-                <p>Sélectionnez un(e) de vos ami(e) pour discuter</p>
+            {/*BODY*/}
+            <div className='chat-body'>
+                <div className='message'>
+                    <div className="w-100">
+                        <div className='message-meta'>
+                            <p id="author">moi</p>
+                            <p id="time">02-02</p>
+                        </div>
+                        <div className='message-content'>
+                            <p>coucou</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+            {/*FOOTER*/}
+            <div className='chat-footer'>
+                <div>
+                    <form id="form" action='#'>
+                        <textarea type='text' className='form-control' rows="2" cols="50" maxLength="200"
+                        placeholder='Votre message ...' id="input" autoComplete="off" />
+                        <button className='btnSend'>
+                            <img src={send} alt="envoyer message privée"/>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {/* <div className="blocContenu text-center">
+                <p>Sélectionnez un(e) de vos ami(e) pour discuter</p>
+            </div> */}
         </div>
     </div>
     </section>
