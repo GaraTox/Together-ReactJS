@@ -213,9 +213,9 @@ app.post('/addfeed', (req, res) => {
 app.get('/readfeed/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
 	const query = `
-	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed FROM user INNER JOIN feed ON user.idUser = feed.idUser WHERE user.idUser = ?
+	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed, feed.likes FROM user INNER JOIN feed ON user.idUser = feed.idUser WHERE user.idUser = ?
 	  UNION 
-	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed FROM user INNER JOIN feed ON user.idUser = feed.idUser INNER JOIN friend ON user.idUser = friend.id_Friend WHERE friend.id_User = ? `;
+	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed, feed.likes FROM user INNER JOIN feed ON user.idUser = feed.idUser INNER JOIN friend ON user.idUser = friend.id_Friend WHERE friend.id_User = ? `;
 	db.query(query, [idUser, idUser], (err, results) => {
 	  if (err) {
 		console.error('Erreur lors de la récupération des publications : ' + err);
@@ -241,6 +241,31 @@ app.get('/readfeed/:idUser', (req, res) => {
 		}
 	  }
 	});
+  });
+
+// AJOUTER UN LIKE AU FEED
+app.post('/feedlike/:idFeed/likes', async (req, res) => {
+	const idFeed = req.params.idFeed;
+	try {
+	  await db.query('UPDATE feed SET likes = likes + 1 WHERE idFeed = ?', [idFeed]);
+	  const [rows] = await db.query('SELECT likes FROM feed WHERE idFeed = ?', [idFeed]);
+	  if (rows.length === 1) {
+		const updatedLikes = rows[0].likes;
+		res.json({ message: 'Like added', likes: updatedLikes });
+	  } else {
+		res.status(404).json({ message: 'Publication non trouvée' });
+	  }
+	} catch (error) {
+	  console.error('Erreur lors de l\'ajout de like : ' + error);
+	  res.status(500).json({ message: 'Erreur lors de l\'ajout de like.' });
+	}
+  });
+
+// SUPPRIMER UN LIKE AU FEED
+app.delete('/feedlike/:idFeed/likes', async (req, res) => {
+	const idFeed = req.params.idFeed;
+	await db.query('UPDATE feed SET likes = likes - 1 WHERE idFeed = ?', [idFeed]);
+	res.json({ message: 'Like removed.' });
   });
 
   // CREER UN COMMENTAIRE DANS UN POST MODALE
