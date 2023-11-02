@@ -410,6 +410,77 @@ app.get('/connect-admin/home/user/read', (req, res) => {
 	})
 })
 
+// CREER UN POST POUR ADMIN
+app.get('/users', (req, res) => {
+	const query = 'SELECT idUser, pseudoUser FROM user';
+	db.query(query, (err, results) => {
+	  if (err) {
+		console.error('Erreur lors de la récupération des utilisateurs : ' + err.message);
+		res.status(500).json({ error: 'Erreur lors de la récupération des utilisateurs' });
+	  } else {
+		res.json(results);
+	  }
+	});
+  });
+app.post('/connect-admin/home/user/createPost', (req, res) => {
+	const { idUser, contentFeed } = req.body;
+	const query = 'INSERT INTO feed (idUser, contentFeed) VALUES (?, ?)';
+	db.query(query, [idUser, contentFeed], (err, results) => {
+	  if (err) {
+		console.error('Erreur lors de la création du post : ' + err.message);
+		res.status(500).json({ error: 'Erreur lors de la création du post' });
+	  } else {
+		res.status(201).json({ message: 'Post créé avec succès' });
+	  }
+	});
+  });
+
+// MODIFIER UN POST UTILISATEUR POUR ADMIN
+//LISTE DE TOUS LES POST
+app.get('/connect-admin/home/user/choiceUpdate/readPost', (req, res) => {
+	db.query("SELECT feed.idFeed, user.pseudoUser, feed.contentFeed FROM feed INNER JOIN user ON feed.idUser = user.idUser", (err, results) => {
+	  if (err) {
+		console.error('Erreur lors de la récupération des utilisateurs : ' + err);
+		res.status(500).send('Erreur lors de la récupération des utilisateurs');
+	  } else {
+		res.json(results);
+	  }
+	});
+  });
+// CLIQUE SUR LE BOUTON MODIFIER
+app.put('/connect-admin/home/user/readPost/:idUser', (req, res) => {
+	const idUser = req.params.idUser;
+	const { contentFeed } = req.body;
+	const sql = 'UPDATE feed SET contentFeed = ? WHERE idFeed = ?';
+	db.query(sql, [contentFeed, idUser], (err, result) => {
+	  if (err) {
+		console.error('Erreur lors de la mise à jour de l\'utilisateur : ' + err);
+		res.status(500).send('Erreur lors de la mise à jour de l\'utilisateur');
+	  } else {
+		console.log('Utilisateur mis à jour avec succès');
+		res.status(200).send('Utilisateur mis à jour avec succès');
+	  }
+	});
+  });
+
+// SUPPRIMER UN COMPTE UTILISATEUR POUR ADMIN
+app.delete('/connect-admin/home/user/deletePost/:idFeed', (req, res) => {
+	const idFeed = req.params.idFeed;
+	db.query('DELETE FROM feed WHERE idFeed =?', [idFeed], (err, results) => {
+	  if (err) throw err;
+	  res.json(results);
+	});
+  });
+
+// LIRE LES PUBLICATIONS
+app.get('/connect-admin/home/user/readPost', (req, res) => {
+	const sql = "SELECT feed.idFeed, user.pseudoUser, feed.contentFeed FROM feed INNER JOIN user ON feed.idUser = user.idUser";
+	db.query(sql,(err , result)=>{
+		if(err) return res.json({Message: "Erreur"});
+		return res.json(result);
+	})
+})
+
 // SE CONNECTER EN TANT UTILISATEUR
 app.post('/', (req, res) => {
 	const mailUser = req.body.mailUser;

@@ -13,19 +13,19 @@ function UpdatePost() {
 
     // LIRE TOUS LES UTILISATEURS
     useEffect(() => {
-        axios.get('http://localhost:3001/connect-admin/home/user/choiceUpdate/read')
+        axios.get('http://localhost:3001/connect-admin/home/user/choiceUpdate/readPost')
         .then(res => setData(res.data))
         .catch(err => console.log(err));
     }, [])
 
     // SELECTIONNE LE USER ET SES DONNEES
-    const handleSelectUser = (user) => {
-        setSelectedUser(user);
+    const handleSelectUser = (feed) => {
+        setSelectedUser(feed);
     };
 
     // MODIFIER UTILISATEUR
     const handleUpdateUser = () => {
-        axios.put(`http://localhost:3001/connect-admin/home/user/choiceUpdate/${selectedUser.idUser}`, selectedUser)
+        axios.put(`http://localhost:3001/connect-admin/home/user/readPost/${selectedUser.idFeed}`, selectedUser)
           .then((response) => {
             console.log('Utilisateur mis à jour avec succès');
           })
@@ -48,28 +48,29 @@ function UpdatePost() {
                 <div className='body'>
                     <label htmlFor="exampleInput" className="form-label">Pseudo</label>
                     <input type="text" className="form-control" id="pseudo"
-                    name="pseudoUser" autoComplete="off"/>
+                    name="pseudoUser" autoComplete="off"
+                    value={selectedUser.pseudoUser} disabled
+                    onChange={(e) => setSelectedUser({ ...selectedUser, pseudoUser: e.target.value })}/>
                     <label htmlFor="exampleInput" className="form-label">Contenu</label>
                     <textarea type="text" className="form-control mb-1" id="contenu" 
+                     value={selectedUser.contentFeed}
+                     onChange={(e) => setSelectedUser({ ...selectedUser, contentFeed: e.target.value })}
                     name="contenuUser" autoComplete="off"></textarea>
                 </div>
                 <div className='footer'>
-                    <Btnsm type="submit" className="btn" caracteristique="sm" text="Modifier"/>
+                    <Btnsm onClick={handleUpdateUser} type="submit" className="btn" caracteristique="sm" text="Modifier"/>
                 </div>
             </div>
             </div>
             )}
             <div className="grid-admin">
-            {data.map((user, key) => {
+            {data.map((feed, key) => {
                 return(
                 <div key={key} className="text-center search">
-                    <div className="searchAvatar">
-                        <img className="avatar border border-dark rounded" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
-                    </div>
-                    <p className="searchFirstname">{user.pseudoUser}</p>
-                    <p className="searchName">{user.mailUser}</p>
+                    <p className="searchFirstname">{feed.pseudoUser}</p>
+                    <p className="searchName">{feed.contentFeed}</p>
                     <div className="searchButton">
-                        <Btnsm onClick={() => handleSelectUser(user)} type="submit" className="btn" caracteristique="sm" text="Modifier"/>
+                        <Btnsm onClick={() => handleSelectUser(feed)} type="submit" className="btn" caracteristique="sm" text="Modifier"/>
                     </div>
                 </div>
             )})}

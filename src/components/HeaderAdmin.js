@@ -83,7 +83,7 @@ function HeaderAdmin() {
                 </ul>
                 </div>
                 <div className='btnDisconnect'>
-                    <p onClick={handleLogout} className="text-danger mt-1 mb-1"><strong>DECONNEXION</strong></p>
+                    <p onClick={handleLogout} className="text-danger mt-1 mb-1 btnDisc"><strong>DECONNEXION</strong></p>
                 </div>
                 <div className='burger'>
                     <div className='burger-menu' onClick={displayMenu}>

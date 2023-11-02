@@ -7,19 +7,19 @@ function DeletePost() {
     const [user, setUser] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/connect-admin/home/user/read')
+        axios.get('http://localhost:3001/connect-admin/home/user/readPost')
         .then(res => setData(res.data))
         .catch(err => console.log(err));
     }, [])
 
-    const deleteNews = (idUser) => {
-        fetch(`/connect-admin/home/user/delete/${idUser}`, {
+    const deleteNews = (idFeed) => {
+        fetch(`/connect-admin/home/user/deletePost/${idFeed}`, {
           method: 'DELETE',
         })
           .then((response) => response.json())
           .then((data) => {
             if (data.message === 'Actualité supprimée avec succès') {
-              setUser(user.filter((user) => user.idUser !== idUser));
+              setUser(user.filter((feed) => feed.idFeed !== idFeed));
             }
           });
       };
@@ -27,16 +27,13 @@ function DeletePost() {
     return (
     <section className="bg-admin">
         <div className="grid-admin">
-        {data.map((user, index) => {
+        {data.map((feed, index) => {
             return(
         <div key={index} className="text-center search">
-            <div className="searchAvatar">
-                <img className="avatar border border-dark rounded" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
-            </div>
-            <p className="searchFirstname">{user.pseudoUser}</p>
-            <p className="searchName">{user.mailUser}</p>
+            <p className="searchFirstname">{feed.pseudoUser}</p>
+            <p className="searchName">{feed.contentFeed}</p>
             <div className="searchButton">
-                <Btnsm onClick={() => deleteNews(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Supprimer"/>
+                <Btnsm onClick={() => deleteNews(feed.idFeed)} type="submit" className="btn" caracteristique="sm" text="Supprimer"/>
             </div> 
         </div>
         )})}
