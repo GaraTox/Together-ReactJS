@@ -62,7 +62,7 @@ function Parameter() {
     }
 
     return (
-        <section>
+        <section className="bg-user">
             {openModalModi && <ModalModifyUser closeModal={setOpenModalModi}/>}
             {openModalDel && <ModaleUserDelete closeModal={setOpenModalDel}/>}
             <div className="blocParametre">

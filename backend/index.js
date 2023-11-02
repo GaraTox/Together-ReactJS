@@ -171,22 +171,6 @@ app.post('/friendship', (req, res) => {
 	);
   });
 
-    // THE RELATIONSHIP EXIST ?
-	// app.get('/checkFollow/:idUser/:idFriend', (req, res) => {
-	// 	const { idUser, idFriend } = req.params;
-	  
-	// 	const query = 'SELECT COUNT(*) AS count FROM friend WHERE id_User= ? AND id_Friend = ?';
-	// 	connection.query(query, [idUser, idFriend], (error, results) => {
-	// 	  if (error) {
-	// 		console.error(error);
-	// 		res.status(500).json({ error: 'Erreur lors de la vérification de la relation.' });
-	// 	  } else {
-	// 		const isFollowing = results[0].count > 0;
-	// 		res.json({ isFollowing });
-	// 	  }
-	// 	});
-	//   });
-
 // CREER UN POST
 app.post('/addfeed', (req, res) => {
 	const { contentFeed, idUser } = req.body;
@@ -381,14 +365,7 @@ app.post('/connect-admin/home/user/create', (req, res) => {
 
 // MODIFIER UN COMPTE UTILISATEUR POUR ADMIN
 //LISTE DE TOUS LES UTILISATEURS
-// app.get('/connect-admin/home/user/choiceUpdate', (req, res) => {
-// 	const sql = "SELECT * FROM user";
-// 	db.query(sql,(err , result)=>{
-// 		if(err) return res.json({Message: "Erreur"});
-// 		return res.json(result);
-// 	})
-// })
-app.get('/connect-admin/home/user/choiceUpdate', (req, res) => {
+app.get('/connect-admin/home/user/choiceUpdate/read', (req, res) => {
 	db.query('SELECT * FROM user', (err, results) => {
 	  if (err) {
 		console.error('Erreur lors de la récupération des utilisateurs : ' + err);
@@ -399,21 +376,10 @@ app.get('/connect-admin/home/user/choiceUpdate', (req, res) => {
 	});
   });
 // CLIQUE SUR LE BOUTON MODIFIER
-// app.put('/connect-admin/home/user/update/:idUser', (req, res) => {
-// 	const idUser = req.params.idUser;
-// 	const pseudoUser = req.body.pseudoUser;
-// 	const mailUser = req.body.mailUser;
-// 	const sql = 'UPDATE user SET `pseudoUser` = ?, `mailUser` = ? WHERE idUser = ?';
-// 	db.query(sql, [pseudoUser, mailUser, idUser], (err, result) => {
-// 		if(err) return res.json({Message: "Erreur"});
-// 		return res.json(result);
-// 	})
-// })
 app.put('/connect-admin/home/user/choiceUpdate/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
-	const pseudoUser = req.body.pseudoUser;
-	const mailUser = req.body.mailUser;
-	const sql = 'UPDATE user SET `pseudoUser` = ?, `mailUser` = ? WHERE idUser = ?';
+	const { pseudoUser, mailUser } = req.body;
+	const sql = 'UPDATE user SET pseudoUser = ?, mailUser = ? WHERE idUser = ?';
 	db.query(sql, [pseudoUser, mailUser, idUser], (err, result) => {
 	  if (err) {
 		console.error('Erreur lors de la mise à jour de l\'utilisateur : ' + err);
@@ -426,28 +392,13 @@ app.put('/connect-admin/home/user/choiceUpdate/:idUser', (req, res) => {
   });
 
 // SUPPRIMER UN COMPTE UTILISATEUR POUR ADMIN
-// app.delete('/connect-admin/home/user/delete/:idUser', (req, res) => {
-// 	const sql = 'DELETE FROM user WHERE idUser=?' ;
-// 	const idUser = req.params.idUser;
-// 	db.query(sql, [idUser], (err, result) => {
-// 		if(err) return res.json({Message: "erreur"});
-// 		return res.json(result);
-// 	})
-// })
-
 app.delete('/connect-admin/home/user/delete/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
-	db.query('DELETE FROM user WHERE idUser = ?', [idUser], (err, result) => {
-		if (err){
-			console.error('Erreur lors de la suppression du compte : ' + err);
-			res.status(500).json({ error: 'Erreur lors de la suppression du compte' });
-		}else{
-			res.json({ message: 'Compte supprimé avec succès' });
-			// res.clearCookie('CookieTogether');
-	  		// res.redirect('/');
-		}
+	db.query('DELETE FROM user WHERE idUser =?', [idUser], (err, results) => {
+	  if (err) throw err;
+	  res.json(results);
 	});
-});
+  });
 
 // LIRE LES COMPTES UTILISATEUR POUR ADMIN
 app.get('/connect-admin/home/user/read', (req, res) => {

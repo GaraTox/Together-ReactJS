@@ -316,11 +316,13 @@
                 border-radius: 50%;
             }
             .pseudoComm{
+                width: 35%;
+                font-size: small;
                 margin-left: 10px;
             }
             .createComm{
                 font-size: small;
-                width: 100%;
+                width: 65%;
                 display: flex;
                 align-items: center;
                 justify-content: flex-end;

@@ -19,7 +19,7 @@ function Read() {
             return(
             <div key={key} className="text-center search">
                 <div className="searchAvatar">
-                    <img src={profil} className="avatar" alt="avatar"/>
+                    <img className="avatar border border-dark rounded" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
                 </div>
                 <p className="searchFirstname">{user.pseudoUser}</p>
                 <p className="searchName">{user.mailUser}</p>
