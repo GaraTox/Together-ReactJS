@@ -12,6 +12,10 @@ import create from './components/main/create';
 import choiceUpdate from './components/main/choiceUpdate';
 import deleted from './components/main/delete';
 import read from './components/main/read';
+import createPost from './components/main/createPost';
+import updatePost from './components/main/updatePost';
+import deletePost from './components/main/deletePost';
+import readPost from './components/main/readPost';
 import moderation from './components/main/moderation';
 import mentions from './components/main/mentions';
 import conditions from './components/main/conditions';
@@ -33,6 +37,10 @@ function LaRoute() {
         <Route path="/connect-admin/home/user/choiceUpdate" Component={choiceUpdate}/>
         <Route path="/connect-admin/home/user/delete" Component={deleted}/>
         <Route path="/connect-admin/home/user/read" Component={read}/>
+        <Route path="/connect-admin/home/user/createPost" Component={createPost}/>
+        <Route path="/connect-admin/home/user/updatePost" Component={updatePost}/>
+        <Route path="/connect-admin/home/user/deletePost" Component={deletePost}/>
+        <Route path="/connect-admin/home/user/readPost" Component={readPost}/>
         <Route path="/connect-admin/moderation" Component={moderation}/>
         <Route path="/myprofile/parameter/mentions" Component={mentions}/>
         <Route path="/conditions" Component={conditions}/>
