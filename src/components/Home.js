@@ -114,6 +114,16 @@ function Home() {
           console.error(error);
         });
     };
+
+    // CONDITIONS D'AFFICHAGE MODIFIER / SUPPRIMER SI C'EST MES POSTS
+    const userFeed = localStorage.getItem('idUser');
+    const [moddel, setModdel] = useState([]);
+  useEffect(() => {
+    fetch(`/moddel/${userFeed}`)
+      .then((response) => response.json())
+      .then((data) => setModdel(data))
+      .catch((error) => console.error('Erreur:', error));
+  }, [userFeed]);
     
     return (
     <section>
@@ -162,10 +172,12 @@ function Home() {
                 <div className="nomPubli">
                 <img className="imgProfil" src={post.avatarUser ? `http://localhost:3001/images/${post.avatarUser}` : ''} alt="photo de profil"/>
                     <p className="nameFirstname">{post.pseudoUser}</p>
-                    <div className="modifierSupprimer">
+                    {post.idUser === userFeed && (
+                      <div className="modifierSupprimer">
                         <img className="imgModifier" src={modifier} alt="modifier le commentaire"/>
                         <img className="imgSupprimer" src={supprimer} alt="supprimer le commentaire"/>
-                    </div>
+                      </div>
+                    )}
                 </div>
                 <div className="blocCommentaire">
                     <p>{post.contentFeed}</p>

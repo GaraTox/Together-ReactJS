@@ -228,28 +228,36 @@ app.get('/readfeed/:idUser', (req, res) => {
   });
 
 // AJOUTER UN LIKE AU FEED
-app.post('/feedlike/:idFeed/likes', async (req, res) => {
-	const idFeed = req.params.idFeed;
-	try {
-	  await db.query('UPDATE feed SET likes = likes + 1 WHERE idFeed = ?', [idFeed]);
-	  const [rows] = await db.query('SELECT likes FROM feed WHERE idFeed = ?', [idFeed]);
-	  if (rows.length === 1) {
-		const updatedLikes = rows[0].likes;
-		res.json({ message: 'Like added', likes: updatedLikes });
+app.post('/like', (req, res) => {
+	const { idFeed, idUser } = req.body;  
+	db.query('SELECT likes FROM feed WHERE idFeed = ? AND idUser = ?', [idFeed, idUser], (error, results) => {
+	  if (error) {
+		console.error(error);
+		res.status(500).send('Erreur lors de la vérification du like');
 	  } else {
-		res.status(404).json({ message: 'Publication non trouvée' });
+		if (results.length === 0) {
+		  db.query('INSERT INTO feed (idFeed, idUser, like) VALUES (?, ?, "like")', [postId, userId], (likeError) => {
+			if (likeError) {
+			  console.error(likeError);
+			  res.status(500).send('Erreur lors de la création du like');
+			} else {
+			  res.status(200).send('Like créé avec succès');
+			}
+		  });
+		} else {
+		  const currentType = results[0].type;
+		  const newType = currentType === 'like' ? 'dislike' : 'like';
+		  db.query('UPDATE likes SET type = ? WHERE post_id = ? AND user_id = ?', [newType, postId, userId], (updateError) => {
+			if (updateError) {
+			  console.error(updateError);
+			  res.status(500).send('Erreur lors de la mise à jour du like');
+			} else {
+			  res.status(200).send('Action de like/dislike mise à jour avec succès');
+			}
+		  });
+		}
 	  }
-	} catch (error) {
-	  console.error('Erreur lors de l\'ajout de like : ' + error);
-	  res.status(500).json({ message: 'Erreur lors de l\'ajout de like.' });
-	}
-  });
-
-// SUPPRIMER UN LIKE AU FEED
-app.delete('/feedlike/:idFeed/likes', async (req, res) => {
-	const idFeed = req.params.idFeed;
-	await db.query('UPDATE feed SET likes = likes - 1 WHERE idFeed = ?', [idFeed]);
-	res.json({ message: 'Like removed.' });
+	});
   });
 
   // CREER UN COMMENTAIRE DANS UN POST MODALE
@@ -276,6 +284,19 @@ app.delete('/feedlike/:idFeed/likes', async (req, res) => {
 		return res.status(500).send('Failed to fetch comments');
 	  }
 	  res.status(200).json(results);
+	});
+  });
+
+// AFFICHER LES ICONES MODIFIER ET SUPPRIMER SI C'EST MES POSTS
+app.get('/moddel/:idUser', (req, res) => {
+	const idUser = req.params.idUser;
+	db.query('SELECT * FROM feed WHERE idUser = ?', [idUser], (err, results) => {
+	  if (err) {
+		console.error(err);
+		res.status(500).send('Erreur serveur');
+		return;
+	  }
+	  res.json(results);
 	});
   });
 
