@@ -99,21 +99,21 @@ function Home() {
     }, [idUser]);
 
     // AJOUTER UN LIKE A UN FEED
-    const handleLike = (idFeed) => {
-      axios.post(`/feedlike/${idFeed}/likes`)
-        .then(() => {
-          const updatedPosts = posts.map(post => {
-            if (post.idFeed === idFeed) {
-              post.likes++;
-            }
-            return post;
-          });
-          setPosts(updatedPosts);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    };
+    // const handleLike = (idFeed) => {
+    //   axios.post(`/feedlike/${idFeed}/likes`)
+    //     .then(() => {
+    //       const updatedPosts = posts.map(post => {
+    //         if (post.idFeed === idFeed) {
+    //           post.likes++;
+    //         }
+    //         return post;
+    //       });
+    //       setPosts(updatedPosts);
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
+    // };
 
     // CONDITIONS D'AFFICHAGE MODIFIER / SUPPRIMER SI C'EST MES POSTS
     const userFeed = localStorage.getItem('idUser');
@@ -172,7 +172,7 @@ function Home() {
                 <div className="nomPubli">
                 <img className="imgProfil" src={post.avatarUser ? `http://localhost:3001/images/${post.avatarUser}` : ''} alt="photo de profil"/>
                     <p className="nameFirstname">{post.pseudoUser}</p>
-                    {post.idUser === userFeed && (
+                    {moddel.some((item) => item.idFeed === post.idFeed) && (
                       <div className="modifierSupprimer">
                         <img className="imgModifier" src={modifier} alt="modifier le commentaire"/>
                         <img className="imgSupprimer" src={supprimer} alt="supprimer le commentaire"/>
@@ -183,8 +183,8 @@ function Home() {
                     <p>{post.contentFeed}</p>
                 </div>
                 <div className="blocAimer">
-                    <button onClick={() => handleLike(post.idFeed)} type="submit" className="btnAime"><img className="imgAime" src={aimer} alt="j'aime"/>
-                    <p>{post.likes}</p>
+                    <button type="submit" className="btnAime"><img className="imgAime" src={aimer} alt="j'aime"/>
+                    <p>0</p>
                     </button>
                     <button onClick={() => openPostModal(post)} type="submit" className="btnComm"><img className="imgComm" src={commentaire} alt="commentaire"/></button>
                     <button type="submit" className="btnSignaler"><img className="imgSignaler" src={signaler} alt="signaler"/></button>

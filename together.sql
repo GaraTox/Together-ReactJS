@@ -38,7 +38,7 @@ CREATE TABLE `feed` (
 )
 ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `likes`
+DROP TABLE IF EXISTS `likes`;
 CREATE TABLE `likes` (
     `idLike` INT(255) NOT NULL AUTO_INCREMENT,
     `idFeed` INT(255) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `likes` (
     `type` ENUM('like', 'dislike') NOT NULL,
 
     PRIMARY KEY (`idLike`),
-    FOREIGN KEY (`idPost`) REFERENCES feed(`idFeed`) ON DELETE CASCADE,
+    FOREIGN KEY (`idFeed`) REFERENCES feed(`idFeed`) ON DELETE CASCADE,
     FOREIGN KEY (`idUser`) REFERENCES user(`idUser`) ON DELETE CASCADE
 )
 ENGINE = InnoDB;

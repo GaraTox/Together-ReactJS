@@ -197,9 +197,9 @@ app.post('/addfeed', (req, res) => {
 app.get('/readfeed/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
 	const query = `
-	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed, feed.likes FROM user INNER JOIN feed ON user.idUser = feed.idUser WHERE user.idUser = ?
+	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed FROM user INNER JOIN feed ON user.idUser = feed.idUser WHERE user.idUser = ?
 	  UNION 
-	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed, feed.likes FROM user INNER JOIN feed ON user.idUser = feed.idUser INNER JOIN friend ON user.idUser = friend.id_Friend WHERE friend.id_User = ? `;
+	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed FROM user INNER JOIN feed ON user.idUser = feed.idUser INNER JOIN friend ON user.idUser = friend.id_Friend WHERE friend.id_User = ? `;
 	db.query(query, [idUser, idUser], (err, results) => {
 	  if (err) {
 		console.error('Erreur lors de la récupération des publications : ' + err);
@@ -229,33 +229,26 @@ app.get('/readfeed/:idUser', (req, res) => {
 
 // AJOUTER UN LIKE AU FEED
 app.post('/like', (req, res) => {
-	const { idFeed, idUser } = req.body;  
-	db.query('SELECT likes FROM feed WHERE idFeed = ? AND idUser = ?', [idFeed, idUser], (error, results) => {
+	const { idFeed, idUser, type } = req.body;
+	if (type !== 'like' && type !== 'dislike') {
+	  return res.status(400).send('Type non valide');
+	}
+  	db.query('SELECT idLike FROM likes WHERE idFeed = ? AND idUser = ? AND type = ?', [idFeed, idUser, type], (error, results) => {
 	  if (error) {
 		console.error(error);
-		res.status(500).send('Erreur lors de la vérification du like');
+		return res.status(500).send('Erreur lors de la vérification du like');
+	  }
+	  if (results.length === 0) {
+		db.query('INSERT INTO likes (idFeed, idUser, type) VALUES (?, ?, ?)', [idFeed, idUser, type], (likeError) => {
+		  if (likeError) {
+			console.error(likeError);
+			res.status(500).send(`Erreur lors de la création du ${type}`);
+		  } else {
+			res.status(200).send(`${type} créé avec succès`);
+		  }
+		});
 	  } else {
-		if (results.length === 0) {
-		  db.query('INSERT INTO feed (idFeed, idUser, like) VALUES (?, ?, "like")', [postId, userId], (likeError) => {
-			if (likeError) {
-			  console.error(likeError);
-			  res.status(500).send('Erreur lors de la création du like');
-			} else {
-			  res.status(200).send('Like créé avec succès');
-			}
-		  });
-		} else {
-		  const currentType = results[0].type;
-		  const newType = currentType === 'like' ? 'dislike' : 'like';
-		  db.query('UPDATE likes SET type = ? WHERE post_id = ? AND user_id = ?', [newType, postId, userId], (updateError) => {
-			if (updateError) {
-			  console.error(updateError);
-			  res.status(500).send('Erreur lors de la mise à jour du like');
-			} else {
-			  res.status(200).send('Action de like/dislike mise à jour avec succès');
-			}
-		  });
-		}
+		res.status(200).send(`Vous avez déjà ${type} cette publication`);
 	  }
 	});
   });
