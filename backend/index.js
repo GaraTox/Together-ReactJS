@@ -293,6 +293,52 @@ app.get('/moddel/:idUser', (req, res) => {
 	});
   });
 
+// LIRE SON FEED ET LE MODIFIER
+app.get('/feedupdate', (req, res) => {
+	const sql = "SELECT * FROM feed";
+	db.query(sql,(err , result)=>{
+		if(err) return res.json({Message: "Erreur"});
+		return res.json(result);
+	})
+})
+app.get('/feedupdate/:idFeed', (req, res) => {
+	const sql = "SELECT * FROM feed WHERE idFeed = ?";
+	db.query(sql,(err , result)=>{
+		if(err) return res.json({Message: "Erreur"});
+		return res.json(result);
+	})
+})
+app.put('/feedupdate/:idFeed', (req, res) => {
+	const idFeed  = req.params.idFeed;
+	const contentFeed  = req.body.contentFeed;
+	const sql = 'UPDATE feed SET contentFeed = ? WHERE idFeed = ?';
+	db.query(sql, [idFeed, contentFeed], (err, result) => {
+	  if (err) {
+		console.error('Error updating feed item:', err);
+		res.status(500).json({ error: 'An error occurred while updating the feed item.' });
+	  } else {
+		console.log('Feed item updated:', result);
+		res.json({ message: 'Feed item updated successfully' });
+	  }
+	});
+  });
+
+// LIRE SON FEED ET LE SUPPRIMER
+app.get('/feedread', (req, res) => {
+	const sql = "SELECT * FROM feed";
+	db.query(sql,(err , result)=>{
+		if(err) return res.json({Message: "Erreur"});
+		return res.json(result);
+	})
+})
+app.delete('/feeddelete/:idFeed', (req, res) => {
+	const idFeed = req.params.idFeed;
+	db.query('DELETE FROM feed WHERE idFeed =?', [idFeed], (err, results) => {
+	  if (err) throw err;
+	  res.json(results);
+	});
+  });
+
 //////////////////////////////////////MESSAGERIE PRIVEE/////////////////////////////////////////////////////
 // GESTION DE CONNECTION SOCKET IO
 io.on("connection", (socket) => {

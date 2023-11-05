@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ModaleUpdateFeed from "./modales/ModaleUpdateFeed";
+import Btnsm from "./btn/Btnsm";
 import friend from '../assets/icons/people.svg';
 import send from '../assets/icons/send.png';
 import conversation from '../assets/icons/conversation.png';
@@ -54,7 +56,7 @@ function Home() {
         .catch(err => console.log(err));
     }, [])
 
-    // DISPLAY FRIEND
+    // AFFICHER SES AMIS
     const [followingUsers, setFollowingUsers] = useState([]);
 
     useEffect(() => {
@@ -124,10 +126,96 @@ function Home() {
       .then((data) => setModdel(data))
       .catch((error) => console.error('Erreur:', error));
   }, [userFeed]);
-    
+
+  // SUPPRIMER SON FEED
+  const [postIdToDelete, setPostIdToDelete] = useState(null);
+  useEffect(() => {
+    axios.get('http://localhost:3001/feedread')
+      .then((response) => {
+        setPosts(response.data);
+      })
+      .catch((error) => {
+        console.error('Erreur de récupération:', error);
+      });
+  }, []);
+  const handleDeleteClick = (idFeed) => {
+    setPostIdToDelete(idFeed);
+  };
+  const handleConfirmDelete = () => {
+    if (postIdToDelete) {
+      axios.delete(`http://localhost:3001/feeddelete/${postIdToDelete}`)
+        .then(() => {
+          setPosts(posts.filter((post) => post.idFeed !== postIdToDelete));
+          setPostIdToDelete(null);
+        })
+        .catch((error) => {
+          console.error('Error deleting feed item:', error);
+        });
+    }
+  };
+  const handleCancelDelete = () => {
+    setPostIdToDelete(null);
+  };
+
+  // MODIFIER UN POST
+  const [selectedPublication, setSelectedPublication] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/feedupdate')
+      .then((response) => {
+        setPosts(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching publications: ' + error);
+      });
+  }, []);
+
+  const handleEditClick = (post) => {
+    setSelectedPublication(post);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setSelectedPublication(null);
+    setIsModalOpen(false);
+  };
+
+  const handleSavePublication = (updatedPublication) => {
+    axios.put(`http://localhost:3001/feedupdate/${updatedPublication.idFeed}`, updatedPublication)
+      .then((response) => {
+        console.log('Publication updated: ' + response.data);
+        const updatedPublications = posts.map((post) =>
+          post.idFeed === updatedPublication.idFeed ? updatedPublication : post
+        );
+        setPosts(updatedPublications);
+        handleModalClose();
+      })
+      .catch((error) => {
+        console.error('Error updating publication: ' + error);
+      });
+  };
+
     return (
     <section>
-    {selectedPost && (<ModaleFeed post={selectedPost} idFeed={idFeedRecup} closeModal={closeModal} />)}    
+    {/* MODALE AFFICHER FEED */}
+    {selectedPost && (<ModaleFeed post={selectedPost} idFeed={idFeedRecup} closeModal={closeModal} />)}
+    {/* MODALE MODIFIER FEED */}
+    {isModalOpen && (<ModaleUpdateFeed post={selectedPublication} onSave={handleSavePublication} onClose={handleModalClose}/>)}
+    {/* MODALE SUPPRIMER SON FEED */}
+    {postIdToDelete && (
+      <section className='bg_modal_del'>
+        <div className='content_modal_del'>
+            <div className='titleDel'>
+              <h4 className='text-center'>Voulez-vous supprimer cette publication ?</h4>
+            </div>
+            <div className='bodyDel'>
+              <Btnsm onClick={handleConfirmDelete} className="btn" caracteristique="sm" text="OUI"/>
+              <Btnsm onClick={handleCancelDelete} className="btn" caracteristique="sm" text="NON"/>
+            </div>
+        </div>
+      </section>
+      )}
       <div className="contenuPrincipal">
         <div className="blocAmis">
             <button className="btn_friend" type="submit">
@@ -156,7 +244,7 @@ function Home() {
                     <div>
                         <img className="imgProfil" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
                         <form className="formPubli" method="#" action="#">
-                            <input type="text" placeholder="Publier un post ..." value={contentFeed}
+                            <input type="text" placeholder="Publier une publication ..." value={contentFeed}
                             onChange={(e) => setContentFeed(e.target.value)}/>
                             <button onClick={handlePost} type="submit"><img className="btnSend" src={send} alt="bouton de validation"/></button>
                         </form>
@@ -174,8 +262,8 @@ function Home() {
                     <p className="nameFirstname">{post.pseudoUser}</p>
                     {moddel.some((item) => item.idFeed === post.idFeed) && (
                       <div className="modifierSupprimer">
-                        <img className="imgModifier" src={modifier} alt="modifier le commentaire"/>
-                        <img className="imgSupprimer" src={supprimer} alt="supprimer le commentaire"/>
+                        <img onClick={() => handleEditClick(post)} className="imgModifier" src={modifier} alt="modifier le commentaire"/>
+                        <img onClick={() => handleDeleteClick(post.idFeed)} className="imgSupprimer" src={supprimer} alt="supprimer le commentaire"/>
                       </div>
                     )}
                 </div>
@@ -191,7 +279,6 @@ function Home() {
                 </div>
             </div>
             ))}
-            
         </div>
     </div>
     </section>
