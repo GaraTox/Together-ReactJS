@@ -309,10 +309,10 @@ app.get('/feedupdate/:idFeed', (req, res) => {
 	})
 })
 app.put('/feedupdate/:idFeed', (req, res) => {
-	const idFeed  = req.params.idFeed;
-	const contentFeed  = req.body.contentFeed;
+	const idFeed = req.params.idFeed;
+	const contentFeed = req.body.contentFeed;
 	const sql = 'UPDATE feed SET contentFeed = ? WHERE idFeed = ?';
-	db.query(sql, [idFeed, contentFeed], (err, result) => {
+	db.query(sql, [contentFeed, idFeed], (err, result) => {
 	  if (err) {
 		console.error('Error updating feed item:', err);
 		res.status(500).json({ error: 'An error occurred while updating the feed item.' });
@@ -321,7 +321,7 @@ app.put('/feedupdate/:idFeed', (req, res) => {
 		res.json({ message: 'Feed item updated successfully' });
 	  }
 	});
-  });
+});
 
 // LIRE SON FEED ET LE SUPPRIMER
 app.get('/feedread', (req, res) => {
