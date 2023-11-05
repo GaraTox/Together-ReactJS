@@ -228,29 +228,81 @@ app.get('/readfeed/:idUser', (req, res) => {
   });
 
 // AJOUTER UN LIKE AU FEED
-app.post('/like', (req, res) => {
+app.get('/getReaction/:idFeed/:idUser', (req, res) => {
+	const idFeed = req.params.idFeed;
+	const idUser = req.params.idUser;
+  
+	db.query(
+	  'SELECT type FROM likes WHERE idFeed = ? AND idUser = ?',
+	  [idFeed, idUser],
+	  (err, result) => {
+		if (err) {
+		  console.error(err);
+		  res.status(500).json({ error: 'Erreur lors de la récupération de la réaction.' });
+		} else if (result.length > 0) {
+		  const reactionData = result[0];
+		  res.json({ type: reactionData.type });
+		} else {
+		  res.json({ type: null });
+		}
+	  }
+	);
+  });
+app.post('/likes', (req, res) => {
 	const { idFeed, idUser, type } = req.body;
-	if (type !== 'like' && type !== 'dislike') {
-	  return res.status(400).send('Type non valide');
-	}
-  	db.query('SELECT idLike FROM likes WHERE idFeed = ? AND idUser = ? AND type = ?', [idFeed, idUser, type], (error, results) => {
-	  if (error) {
-		console.error(error);
-		return res.status(500).send('Erreur lors de la vérification du like');
+	
+	db.query(
+	  'SELECT * FROM likes WHERE idFeed = ? AND idUser = ?',
+	  [idFeed, idUser],
+	  (err, result) => {
+		if (err) {
+		  console.error(err);
+		  res.status(500).json({ error: 'Erreur lors de la recherche de la réaction existante.' });
+		} else if (result.length > 0) {
+		  // UTILISATEUR A DEJA REAGI
+		  const existingReaction = result[0];
+		  
+		  db.query(
+			'UPDATE likes SET type = ? WHERE idFeed = ? AND idUser = ?',
+			[type, idFeed, idUser],
+			(err) => {
+			  if (err) {
+				console.error(err);
+				res.status(500).json({ error: 'Erreur lors de la mise à jour de la réaction.' });
+			  } else {
+				// MET A JOUR LE NOMBRE DE LIKES
+				if (type === 'like' && existingReaction.type === 'dislike') {
+				  db.query('UPDATE feed SET likes = likes + 2 WHERE idFeed = ?', [idFeed]);
+				} else if (type === 'dislike' && existingReaction.type === 'like') {
+				  db.query('UPDATE feed SET likes = likes - 2 WHERE idFeed = ?', [idFeed]);
+				}
+				res.json({ message: 'Réaction mise à jour avec succès.' });
+			  }
+			}
+		  );
+		} else {
+		  // UTILISATEUR N'A PAS ENCORE REAGI
+		  db.query(
+			'INSERT INTO likes (idFeed, idUser, type) VALUES (?, ?, ?)',
+			[idFeed, idUser, type],
+			(err) => {
+			  if (err) {
+				console.error(err);
+				res.status(500).json({ error: 'Erreur lors de la création de la réaction.' });
+			  } else {
+				// MET A JOUR LE NOMBRE DE LIKE
+				if (type === 'like') {
+				  db.query('UPDATE feed SET likes = likes + 1 WHERE idFeed = ?', [idFeed]);
+				} else if (type === 'dislike') {
+				  db.query('UPDATE feed SET likes = likes - 1 WHERE idFeed = ?', [idFeed]);
+				}
+				res.json({ message: 'Réaction ajoutée avec succès.' });
+			  }
+			}
+		  );
+		}
 	  }
-	  if (results.length === 0) {
-		db.query('INSERT INTO likes (idFeed, idUser, type) VALUES (?, ?, ?)', [idFeed, idUser, type], (likeError) => {
-		  if (likeError) {
-			console.error(likeError);
-			res.status(500).send(`Erreur lors de la création du ${type}`);
-		  } else {
-			res.status(200).send(`${type} créé avec succès`);
-		  }
-		});
-	  } else {
-		res.status(200).send(`Vous avez déjà ${type} cette publication`);
-	  }
-	});
+	);
   });
 
   // CREER UN COMMENTAIRE DANS UN POST MODALE

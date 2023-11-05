@@ -13,7 +13,7 @@ import commentaire from '../assets/icons/commentaire.png';
 import signaler from '../assets/icons/signaler.png';
 import ModaleFeed from "./modales/ModaleFeed";
 
-function Home() {
+function Home({post}) {
     // MODALE
     const [selectedPost, setSelectedPost] = useState(null);
     const [idFeedRecup, setIdFeedRecup] = useState();
@@ -101,16 +101,28 @@ function Home() {
     }, [idUser]);
 
     // AJOUTER UN LIKE A UN FEED
-    // const handleLike = (idFeed) => {
-    //   axios.post(`/feedlike/${idFeed}/likes`)
-    //     .then(() => {
-    //       const updatedPosts = posts.map(post => {
-    //         if (post.idFeed === idFeed) {
-    //           post.likes++;
-    //         }
-    //         return post;
-    //       });
-    //       setPosts(updatedPosts);
+    // const [type, setType] = useState(null);
+
+    // useEffect(() => {
+    //   const idUser = localStorage.getItem('idUser');
+    //   axios.get(`/getReaction?idFeed=${post.idFeed}&idUser=${idUser}`)
+    //     .then((response) => {
+    //       const reactionData = response.data;
+    //       if (reactionData) {
+    //         setPosts(reactionData.reactionType);
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
+    // }, [post.idFeed]);
+
+    // const handleReaction = (type) => {
+    //   const idUser = localStorage.getItem('idUser');
+    //   // Envoyer la réaction au backend
+    //   axios.post('/likes', { idFeed: post.idFeed, idUser: idUser, type })
+    //     .then((response) => {
+    //       setType(type);
     //     })
     //     .catch((error) => {
     //       console.error(error);
@@ -271,9 +283,10 @@ function Home() {
                     <p>{post.contentFeed}</p>
                 </div>
                 <div className="blocAimer">
-                    <button type="submit" className="btnAime"><img className="imgAime" src={aimer} alt="j'aime"/>
-                    <p>0</p>
-                    </button>
+                <button type="submit" className="btnAime">
+                  <img className="imgAime" src={aimer} alt="j'aime" />
+                  {post.likes}
+                </button>
                     <button onClick={() => openPostModal(post)} type="submit" className="btnComm"><img className="imgComm" src={commentaire} alt="commentaire"/></button>
                     <button type="submit" className="btnSignaler"><img className="imgSignaler" src={signaler} alt="signaler"/></button>
                 </div>
