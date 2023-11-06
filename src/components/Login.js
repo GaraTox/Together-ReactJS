@@ -43,7 +43,7 @@ const handleSubmit = async (e) => {
     const response = await axios.post('http://localhost:3001/', { mailUser, passwordUser });
     console.log("response data", response.data);
     localStorage.setItem('idUser', response.data);
-    navigate(`/myprofile/${user}`)
+    navigate(`/myprofile/${response.data}`)
   } 
   catch (error) {
     console.error(error);

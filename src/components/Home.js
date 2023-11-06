@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ModaleUpdateFeed from "./modales/ModaleUpdateFeed";
+import ModaleReport from "./modales/ModaleReport";
 import Btnsm from "./btn/Btnsm";
 import friend from '../assets/icons/people.svg';
 import send from '../assets/icons/send.png';
@@ -13,21 +14,24 @@ import commentaire from '../assets/icons/commentaire.png';
 import signaler from '../assets/icons/signaler.png';
 import ModaleFeed from "./modales/ModaleFeed";
 
-function Home({post}) {
+function Home() {
     // MODALE
+    const [isModaleFeedOpen, setIsModaleFeedOpen] = useState(false);
+const [isModaleReportOpen, setIsModaleReportOpen] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
     const [idFeedRecup, setIdFeedRecup] = useState();
 
     const openPostModal = (post) => {
-        setSelectedPost(post);
-        console.log(post);
-        setIdFeedRecup(post.idFeed);
-        console.log(post.idFeed);
-      };
+      setSelectedPost(post);
+      setIsModaleFeedOpen(true);
+      console.log(post);
+      setIdFeedRecup(post.idFeed);
+      console.log(post.idFeed);
+    };
     
-      const closeModal = () => {
-        setSelectedPost(null);
-      };
+    const closeModaleFeed = () => {
+      setIsModaleFeedOpen(false);
+    };
 
     // AFFICHER LES DONNEES DE L'UTILISATEUR
     const [user, setUser] = useState('');
@@ -100,34 +104,18 @@ function Home({post}) {
       fetchPosts();
     }, [idUser]);
 
-    // AJOUTER UN LIKE A UN FEED
-    // const [type, setType] = useState(null);
+// SIGNALER UNE PUBLICATION
+const openReportModal = (post) => {
+  setSelectedPost(post);
+  setIsModaleReportOpen(true);
+  console.log(post);
+  setIdFeedRecup(post.idFeed);
+  console.log(post.idFeed);
+};
 
-    // useEffect(() => {
-    //   const idUser = localStorage.getItem('idUser');
-    //   axios.get(`/getReaction?idFeed=${post.idFeed}&idUser=${idUser}`)
-    //     .then((response) => {
-    //       const reactionData = response.data;
-    //       if (reactionData) {
-    //         setPosts(reactionData.reactionType);
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
-    // }, [post.idFeed]);
-
-    // const handleReaction = (type) => {
-    //   const idUser = localStorage.getItem('idUser');
-    //   // Envoyer la réaction au backend
-    //   axios.post('/likes', { idFeed: post.idFeed, idUser: idUser, type })
-    //     .then((response) => {
-    //       setType(type);
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
-    // };
+const closeModaleReport = () => {
+  setIsModaleReportOpen(false);
+};
 
     // CONDITIONS D'AFFICHAGE MODIFIER / SUPPRIMER SI C'EST MES POSTS
     const userFeed = localStorage.getItem('idUser');
@@ -211,7 +199,9 @@ function Home({post}) {
     return (
     <section>
     {/* MODALE AFFICHER FEED */}
-    {selectedPost && (<ModaleFeed post={selectedPost} idFeed={idFeedRecup} closeModal={closeModal} />)}
+    {isModaleFeedOpen && <ModaleFeed post={selectedPost} idFeed={idFeedRecup} closeModal={closeModaleFeed} />}
+    {/* MODALE SIGNALER UN FEED */}
+    {isModaleReportOpen && <ModaleReport post={selectedPost} idFeed={idFeedRecup} closeModal={closeModaleReport} />}
     {/* MODALE MODIFIER FEED */}
     {isModalOpen && (<ModaleUpdateFeed post={selectedPublication} onSave={handleSavePublication} onClose={handleModalClose}/>)}
     {/* MODALE SUPPRIMER SON FEED */}
@@ -288,7 +278,7 @@ function Home({post}) {
                   {post.likes}
                 </button>
                     <button onClick={() => openPostModal(post)} type="submit" className="btnComm"><img className="imgComm" src={commentaire} alt="commentaire"/></button>
-                    <button type="submit" className="btnSignaler"><img className="imgSignaler" src={signaler} alt="signaler"/></button>
+                    <button onClick={() => openReportModal(post)} type="submit" className="btnSignaler"><img className="imgSignaler" src={signaler} alt="signaler"/></button>
                 </div>
             </div>
             ))}

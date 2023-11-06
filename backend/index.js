@@ -332,6 +332,46 @@ app.post('/likes', (req, res) => {
 	});
   });
 
+// AFFICHER LE CONTENU DE LA FEED
+app.get('/reportfeed', (req, res) => {
+	const sql = "SELECT * FROM feed";
+	db.query(sql, (err, feed) => {
+	  if (err) {
+		console.error(err);
+		return res.status(500).json({ message: "Erreur lors de la récupération du feed" });
+	  }
+	  res.json(feed);
+	});
+  });
+// ENVOYER LE SIGNALEMENT
+app.post('/sendreport', (req, res) => {
+	const { idUser, idFeed, contentReport } = req.body;
+	const sql = "INSERT INTO report (idUser, idFeed, contentReport) VALUES (?, ?, ?)";
+	const values = [idUser, idFeed, contentReport];
+	db.query(sql, values, (err, result) => {
+	if (err) {
+		console.error(err);
+		return res.status(500).json({ message: "Erreur lors du signalement" });
+	}
+	res.json({ message: "Signalement soumis avec succès" });
+	});
+});
+
+// AFFICHER LES SIGNALEMENT
+app.get('/recupreport', (req, res) => {
+    const sql ="SELECT report.idReport, report.contentReport, feed.contentFeed FROM report INNER JOIN feed ON report.idFeed = feed.idFeed"	
+	db.query(sql, (err, feed) => {
+	  if (err) {
+		console.error(err);
+		return res.status(500).json({ message: "Erreur lors de la récupération du feed" });
+	  }
+	  res.json(feed);
+	});
+  });
+
+// SUPPRIMER LE SIGNALEMENT
+
+
 // AFFICHER LES ICONES MODIFIER ET SUPPRIMER SI C'EST MES POSTS
 app.get('/moddel/:idUser', (req, res) => {
 	const idUser = req.params.idUser;

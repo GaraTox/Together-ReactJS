@@ -82,17 +82,13 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `report`;
 CREATE TABLE `report` (
     `idReport` INT(255) NOT NULL AUTO_INCREMENT,
+    `contentReport` VARCHAR(255) NOT NULL,
+    `timeReport` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     `idUser` INT(255) NOT NULL,
     `idFeed` INT(255) NOT NULL,
-    `idFeedCommentary` INT(255) NOT NULL,
-    `idMessage` INT(255) NOT NULL,
-    `contentReport` VARCHAR(255) NOT NULL,
-    `timeReport` DATETIME NOT NULL,
 
     PRIMARY KEY (`idReport`),
     FOREIGN KEY(`idUser`) REFERENCES user(`idUser`) ON DELETE CASCADE,
-    FOREIGN KEY (`idFeed`) REFERENCES feed(`idFeed`) ON DELETE CASCADE,
-    FOREIGN KEY (`idFeedCommentary`) REFERENCES feedCommentary(`idFeedCommentary`) ON DELETE CASCADE,
-    FOREIGN KEY (`idMessage`) REFERENCES message(`idMessage`) ON DELETE CASCADE
+    FOREIGN KEY (`idFeed`) REFERENCES feed(`idFeed`) ON DELETE CASCADE
 )
 ENGINE = InnoDB;
