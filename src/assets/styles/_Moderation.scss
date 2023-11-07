@@ -17,13 +17,28 @@
         grid-template-columns: repeat(5, 1fr);
         padding: 10px;
         .signalement{
-            width: 176px;
-            height: 201px;
+            width: max-content;
+            height: max-content;
             padding: 10px;
             margin: 10px;
             background-color: rgba(255, 255, 255);
             border: 2px solid rgba(0, 0, 0,);
             border-radius: 5px;
+        }
+        .publiSignalee{
+            font-size: large;
+            color: grey;
+            text-decoration: underline;
+        }
+        .motifSignale{
+            font-size: large;
+            color: grey;
+            text-decoration: underline;
+        }
+        .btnGerer{
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
         }
     }
 }
@@ -58,12 +73,27 @@
         border-radius: .5em;
         padding: 10px;
         .signalement{
-            width: 176px;
-            height: 201px;
+            width: max-content;
+            height: max-content;
             padding: 10px;
             margin: 10px;
             background-color: rgba(255, 255, 255);
             border: 2px solid rgba(0, 0, 0,);
+        }
+        .publiSignalee{
+            font-size: large;
+            color: grey;
+            text-decoration: underline;
+        }
+        .motifSignale{
+            text-decoration: underline;
+            font-size: large;
+            color: grey;
+        }
+        .btnGerer{
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
         }
     }
 }
@@ -91,12 +121,27 @@
         border-radius: .5em;
         padding: 10px;
         .signalement{
-            width: 176px;
-            height: 201px;
+            width: max-content;
+            height: max-content;
             padding: 10px;
             margin: 10px;
             background-color: rgba(255, 255, 255);
             border: 2px solid rgba(0, 0, 0,);
+        }
+        .publiSignalee{
+            font-size: large;
+            color: grey;
+            text-decoration: underline;
+        }
+        .motifSignale{
+            font-size: large;
+            text-decoration: underline;
+            color: grey;
+        }
+        .btnGerer{
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
         }
     }
 }

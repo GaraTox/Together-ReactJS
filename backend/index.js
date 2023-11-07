@@ -359,7 +359,7 @@ app.post('/sendreport', (req, res) => {
 
 // AFFICHER LES SIGNALEMENT
 app.get('/recupreport', (req, res) => {
-    const sql ="SELECT report.idReport, report.contentReport, feed.contentFeed FROM report INNER JOIN feed ON report.idFeed = feed.idFeed"	
+    const sql ="SELECT report.idReport, report.contentReport, feed.idFeed, feed.contentFeed FROM report INNER JOIN feed ON report.idFeed = feed.idFeed"	
 	db.query(sql, (err, feed) => {
 	  if (err) {
 		console.error(err);
@@ -370,7 +370,13 @@ app.get('/recupreport', (req, res) => {
   });
 
 // SUPPRIMER LE SIGNALEMENT
-
+app.delete('/reportdelete/:idReport', (req, res) => {
+	const idReport = req.params.idReport;
+	db.query('DELETE FROM report WHERE idReport =?', [idReport], (err, results) => {
+	  if (err) throw err;
+	  res.json(results);
+	});
+  });
 
 // AFFICHER LES ICONES MODIFIER ET SUPPRIMER SI C'EST MES POSTS
 app.get('/moddel/:idUser', (req, res) => {

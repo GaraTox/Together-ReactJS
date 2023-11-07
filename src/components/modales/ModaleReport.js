@@ -36,7 +36,7 @@ function ModaleReport({post, closeModal}){
                     <h4 className='text-center'>Signaler cette publication</h4>
                 </div>
                 <div className='body'>
-                    <p>{post.contentFeed}</p>
+                    <p className='border border-secondary p-2 rounded mb-2'>{post.contentFeed}</p>
                     <textarea placeholder="Raison du signalement" value={contentReport}
                     onChange={(e) => setContentReport(e.target.value)}/>
                 </div>
