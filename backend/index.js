@@ -345,6 +345,7 @@ app.get('/reportfeed', (req, res) => {
 	  res.json(feed);
 	});
   });
+
 // ENVOYER LE SIGNALEMENT
 app.post('/sendreport', (req, res) => {
 	const { idUser, idFeed, contentReport } = req.body;
@@ -357,6 +358,22 @@ app.post('/sendreport', (req, res) => {
 	}
 	res.json({ message: "Signalement soumis avec succès" });
 	});
+	const mailOptions = {
+		from: process.env.EMAIL_USER,
+		to: process.env.EMAIL_USER,
+		subject: 'Signalement de publication',
+		text: `L'utilisateur ${idUser} a signalé la publication ${idFeed} pour la raison suivante : ${contentReport}`,
+	  };
+	
+	  transporter.sendMail(mailOptions, (error, info) => {
+		if (error) {
+		  console.error('Erreur lors de l\'envoi de l\'e-mail :', error);
+		  res.status(500).json({ message: 'Erreur lors de l\'envoi de l\'e-mail' });
+		} else {
+		  console.log('E-mail envoyé :', info.response);
+		  res.json({ message: 'Signalement soumis avec succès' });
+		}
+	  });
 });
 
 // AFFICHER LES SIGNALEMENT
