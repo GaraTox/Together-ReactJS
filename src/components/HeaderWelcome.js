@@ -157,6 +157,7 @@ const handleUnfollow = (id_Friend) => {
                 <div className='btnDisconnect'>
                     <Link><p onClick={handleLogout} className="text-danger pt-1"><strong>DECONNEXION</strong></p></Link>
                 </div>
+
                 <div className='burger'>
                     <div className='burger-menu' onClick={displayMenu}>
                         <div className={burgerLogo}></div>
@@ -165,6 +166,7 @@ const handleUnfollow = (id_Friend) => {
                     </div>
                 </div>
             </nav>
+            
             <div className={menuClass}>
                 <form className="formBurger" method='GET' action='#'>
                   <input className='inputSearch border-light' type='search' placeholder="Rechercher un ami..."

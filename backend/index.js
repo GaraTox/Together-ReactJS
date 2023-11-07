@@ -5,6 +5,8 @@ const dotenv = require("dotenv");
 const http = require("http");
 // CORS PERMET DE GERER LES PROBLEMES DE SECURITE
 const cors = require("cors");
+const transporter = require("./transporter");
+const jwt = require("jsonwebtoken");
 const app = express();
 // AVATAR
 const multer = require('multer');
@@ -492,6 +494,40 @@ app.post('/register', (req, res) => {
 		);
 	});
 });
+
+// MOT DE PASSE OUBLIE
+app.post('/sendMail', (req, res) => {
+	const { mailUser } = req.body;
+	db.query("SELECT idUser FROM user WHERE mailUser = ?", [mailUser], (err, result) => {
+	  if (err) {
+		console.error(err);
+		return res.status(500).json({ message: 'Erreur lors de la récupération du profil' });
+	  }else{
+		if(result.length === 0){
+			res.status(200).send('Aucune adresse identifiée');
+		}else{
+			const idUser = result[0].idUser;
+			const token = jwt.sign({idUser: idUser}, 'secret_key', {expiresIn : '1h'});
+			const mailOptions = {
+				from: process.env.EMAIL_USER,
+				to: mailUser,
+				subject: 'Réinitialisation de mot de passe',
+				text: `Cliquez sur ce lien pour réinitialiser votre mot de passe : http://localhost:3000/resetPassword/${token}`,
+			  };
+			  transporter.sendMail(mailOptions, (error, info) => {
+				if (error) {
+				  console.error(error);
+				  return res.status(500).json({ message: "Erreur lors de l'envoi de l'e-mail de réinitialisation" });
+				}
+				console.log(`E-mail de réinitialisation envoyé à ${mailUser}`);
+				res.status(200).json({ message: 'E-mail de réinitialisation envoyé avec succès' });
+			  });
+		}
+	  }
+
+	});
+  });
+  
 
 // CREER UN COMPTE POUR ADMIN
 app.post('/connect-admin/home/user/create', (req, res) => {
