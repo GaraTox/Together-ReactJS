@@ -527,7 +527,40 @@ app.post('/sendMail', (req, res) => {
 
 	});
   });
-  
+
+// VERIFIER LE TOKEN DE L'UTILISATEUR POUR LE MOT DE PASSE OUBLIE
+function verifyToken(req, res, next) {
+	const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+	if (!token) {
+		return res.status(200).send('Token non fourni');
+	}
+	jwt.verify(token, 'secret_key', (err, decoded) => {
+		if (err) {
+			return res.status(200).send(false);
+		}
+		req.idUser = decoded.idUser;
+		next();
+	});
+}
+app.get('/verify-token', verifyToken, (req, res) => {
+	res.json({ idUser: req.idUser, message: 'Token valide' });
+});
+
+// METTRE A JOUR LE NOUVEAU MOT DE PASSE
+app.post('/reset', (req, res) => {
+	const idUser = req.body.idUser;
+	const mdp = req.body.hashed;
+	const updateSql = "UPDATE user SET passwordUser = ? WHERE idUser = ?";
+	db.query(updateSql, [mdp, idUser], (err, result) => {
+		if (err) {
+			console.error("Erreur lors de la mise à jour du mot de passe:", err);
+
+			res.status(500).json({ message: "Erreur lors de la mise à jour du mot de passe" });
+		}
+		res.status(200).send("Mot de passe mis à jour avec succès");
+	}
+	);
+})
 
 // CREER UN COMPTE POUR ADMIN
 app.post('/connect-admin/home/user/create', (req, res) => {

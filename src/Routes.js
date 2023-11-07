@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route,Routes } from 'react-router-dom';
 import seConnecter from './components/main/login';
+import resetPassword from './components/main/resetPassword';
 import sinscrire from './components/main/register';
 import home from './components/main/home';
 import message from './components/main/message';
@@ -26,6 +27,7 @@ function LaRoute() {
     <Router>
       <Routes>
         <Route path="/" Component={seConnecter}/>
+        <Route path="/resetPassword/:token" Component={resetPassword}/>
         <Route path="/register" Component={sinscrire}/>
         <Route path="/myprofile/:idUser" Component={home}/>
         <Route path="/myprofile/message/:idUser" Component={message}/>

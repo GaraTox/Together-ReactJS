@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.1",
+    "bcryptjs-react": "^2.4.6",
     "bootstrap": "^5.3.0",
     "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",
