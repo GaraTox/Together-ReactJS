@@ -199,9 +199,9 @@ app.post('/addfeed', (req, res) => {
 app.get('/readfeed/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
 	const query = `
-	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed, feed.likes FROM user INNER JOIN feed ON user.idUser = feed.idUser WHERE user.idUser = ?
+	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed FROM user INNER JOIN feed ON user.idUser = feed.idUser WHERE user.idUser = ?
 	  UNION 
-	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed, feed.likes FROM user INNER JOIN feed ON user.idUser = feed.idUser INNER JOIN friend ON user.idUser = friend.id_Friend WHERE friend.id_User = ? `;
+	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed FROM user INNER JOIN feed ON user.idUser = feed.idUser INNER JOIN friend ON user.idUser = friend.id_Friend WHERE friend.id_User = ? `;
 	db.query(query, [idUser, idUser], (err, results) => {
 	  if (err) {
 		console.error('Erreur lors de la récupération des publications : ' + err);
