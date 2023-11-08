@@ -196,6 +196,24 @@ const closeModaleReport = () => {
       });
   };
 
+  // LIKE OU DISLIKE
+  // const handleLikeDislike = async (idFeed) => {
+  //   const idUser = localStorage.getItem('idUser');
+  //   try {
+  //     const existingLike = likes.find((like) => like.idFeed === idFeed);
+  //     if (existingLike) {
+  //       // L'utilisateur a déjà aimé la publication, nous supprimons le like (dislike)
+  //       await axios.post('/like', { idFeed, idUser: idUser });
+  //     } else {
+  //       // L'utilisateur n'a pas encore aimé la publication, nous ajoutons le like (dislike)
+  //       await axios.post('/like', { idFeed, idUser: idUser });
+  //     }
+  //     fetchPosts();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
     return (
     <section>
     {/* MODALE AFFICHER FEED */}
@@ -276,7 +294,7 @@ const closeModaleReport = () => {
                 <button type="submit" className="btnAime">
                   <img className="imgAime" src={aimer} alt="j'aime" />
                   {post.likes}
-                </button>
+                </button>                
                     <button onClick={() => openPostModal(post)} type="submit" className="btnComm"><img className="imgComm" src={commentaire} alt="commentaire"/></button>
                     <button onClick={() => openReportModal(post)} type="submit" className="btnSignaler"><img className="imgSignaler" src={signaler} alt="signaler"/></button>
                 </div>

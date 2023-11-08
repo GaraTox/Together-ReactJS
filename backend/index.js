@@ -230,78 +230,44 @@ app.get('/readfeed/:idUser', (req, res) => {
   });
 
 // AJOUTER UN LIKE AU FEED
-app.get('/getReaction/:idFeed/:idUser', (req, res) => {
-	const idFeed = req.params.idFeed;
-	const idUser = req.params.idUser;
-  
-	db.query(
-	  'SELECT type FROM likes WHERE idFeed = ? AND idUser = ?',
-	  [idFeed, idUser],
-	  (err, result) => {
-		if (err) {
-		  console.error(err);
-		  res.status(500).json({ error: 'Erreur lors de la récupération de la réaction.' });
-		} else if (result.length > 0) {
-		  const reactionData = result[0];
-		  res.json({ type: reactionData.type });
-		} else {
-		  res.json({ type: null });
-		}
-	  }
-	);
-  });
-app.post('/likes', (req, res) => {
-	const { idFeed, idUser, type } = req.body;
-	
+app.post('/like', (req, res) => {
+	const { idFeed, idUser } = req.body;
+	const type = 'like';
 	db.query(
 	  'SELECT * FROM likes WHERE idFeed = ? AND idUser = ?',
 	  [idFeed, idUser],
-	  (err, result) => {
+	  (err, results) => {
 		if (err) {
-		  console.error(err);
-		  res.status(500).json({ error: 'Erreur lors de la recherche de la réaction existante.' });
-		} else if (result.length > 0) {
-		  // UTILISATEUR A DEJA REAGI
-		  const existingReaction = result[0];
-		  
-		  db.query(
-			'UPDATE likes SET type = ? WHERE idFeed = ? AND idUser = ?',
-			[type, idFeed, idUser],
-			(err) => {
-			  if (err) {
-				console.error(err);
-				res.status(500).json({ error: 'Erreur lors de la mise à jour de la réaction.' });
-			  } else {
-				// MET A JOUR LE NOMBRE DE LIKES
-				if (type === 'like' && existingReaction.type === 'dislike') {
-				  db.query('UPDATE feed SET likes = likes + 2 WHERE idFeed = ?', [idFeed]);
-				} else if (type === 'dislike' && existingReaction.type === 'like') {
-				  db.query('UPDATE feed SET likes = likes - 2 WHERE idFeed = ?', [idFeed]);
-				}
-				res.json({ message: 'Réaction mise à jour avec succès.' });
-			  }
-			}
-		  );
+		  console.error('Erreur lors de la récupération du like/dislike existant:', err);
+		  res.status(500).json({ message: 'Erreur lors de la récupération du like/dislike existant' });
 		} else {
-		  // UTILISATEUR N'A PAS ENCORE REAGI
-		  db.query(
-			'INSERT INTO likes (idFeed, idUser, type) VALUES (?, ?, ?)',
-			[idFeed, idUser, type],
-			(err) => {
-			  if (err) {
-				console.error(err);
-				res.status(500).json({ error: 'Erreur lors de la création de la réaction.' });
-			  } else {
-				// MET A JOUR LE NOMBRE DE LIKE
-				if (type === 'like') {
-				  db.query('UPDATE feed SET likes = likes + 1 WHERE idFeed = ?', [idFeed]);
-				} else if (type === 'dislike') {
-				  db.query('UPDATE feed SET likes = likes - 1 WHERE idFeed = ?', [idFeed]);
+		  if (results.length > 0) {
+			db.query(
+			  'DELETE FROM likes WHERE idFeed = ? AND idUser = ?',
+			  [idFeed, idUser],
+			  (err) => {
+				if (err) {
+				  console.error('Erreur lors de la suppression du like/dislike:', err);
+				  res.status(500).json({ message: 'Erreur lors de la suppression du like/dislike' });
+				} else {
+				  res.status(200).json({ message: 'Like/dislike supprimé avec succès' });
 				}
-				res.json({ message: 'Réaction ajoutée avec succès.' });
 			  }
-			}
-		  );
+			);
+		  } else {
+			db.query(
+			  'INSERT INTO likes (idFeed, idUser, type) VALUES (?, ?, ?)',
+			  [idFeed, idUser, type],
+			  (err) => {
+				if (err) {
+				  console.error('Erreur lors de l\'ajout du like/dislike:', err);
+				  res.status(500).json({ message: 'Erreur lors de l\'ajout du like/dislike' });
+				} else {
+				  res.status(201).json({ message: 'Like/dislike ajouté avec succès' });
+				}
+			  }
+			);
+		  }
 		}
 	  }
 	);
