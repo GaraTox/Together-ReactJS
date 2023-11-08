@@ -272,6 +272,15 @@ app.post('/like', (req, res) => {
 	);
   });
 
+  app.get('/getLikes', (req, res) => {
+	db.query("SELECT idLike, idUser, idFeed FROM likes", function (err, result) {
+		if (err) throw err;
+		//console.log(result);
+		res.status(200).json(result);
+
+	});
+});
+
   // CREER UN COMMENTAIRE DANS UN POST MODALE
   app.post('/modale/comment', (req, res) => {
 	const { commentary, idFeed, idUser } = req.body;

@@ -32,7 +32,6 @@ CREATE TABLE `feed` (
     `idFeed` INT(255) NOT NULL AUTO_INCREMENT,
     `contentFeed` VARCHAR(255) NOT NULL,
     `idUser` INT(255) NOT NULL,
-    `likes` INT(255) DEFAULT 0,
 
     PRIMARY KEY (`idFeed`),
     FOREIGN KEY(`idUser`) REFERENCES user(`idUser`) ON DELETE CASCADE

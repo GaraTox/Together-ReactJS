@@ -95,14 +95,61 @@ function Home({post, onLike, onDislike}) {
     useEffect(() => {
       const fetchPosts = async () => {
         try {
-          const response = await axios.get(`/readfeed/${idUser}`);
-          setPosts(response.data);
+          const [feedResponse, likesResponse] = await Promise.all([
+            axios.get(`/readfeed/${idUser}`),
+            axios.get('/getLikes'),
+        ]);
+        
+        const feeds = feedResponse.data;
+        const likes = likesResponse.data;
+
+        const combinedData = feeds.map((feed) => ({
+          ...feed,
+          likes: likes.filter((like) => like.idFeed === feed.idFeed),
+      }));
+
+      const combinedDataWithCount = combinedData.map((item) => ({
+        ...item,
+        numberOfLikes: item.likes.length,
+        liked: item.likes.some((like) => like.idUser === parseInt(idUser))
+    }));
+
+          setPosts(combinedDataWithCount);
+          // console.log()
         } catch (error) {
           console.error('Erreur lors de la récupération des publications : ' + error);
         }
       };
       fetchPosts();
     }, [idUser]);
+
+    const fetchPosts = async () => {
+      try {
+        const [feedResponse, likesResponse] = await Promise.all([
+          axios.get(`/readfeed/${idUser}`),
+          axios.get('/getLikes'),
+      ]);
+      
+      const feeds = feedResponse.data;
+      const likes = likesResponse.data;
+
+      const combinedData = feeds.map((feed) => ({
+        ...feed,
+        likes: likes.filter((like) => like.idFeed === feed.idFeed),
+    }));
+
+    const combinedDataWithCount = combinedData.map((item) => ({
+      ...item,
+      numberOfLikes: item.likes.length,
+      liked: item.likes.some((like) => like.idUser === parseInt(idUser))
+  }));
+
+        setPosts(combinedDataWithCount);
+        // console.log()
+      } catch (error) {
+        console.error('Erreur lors de la récupération des publications : ' + error);
+      }
+    };
 
 // SIGNALER UNE PUBLICATION
 const openReportModal = (post) => {
@@ -198,22 +245,24 @@ const closeModaleReport = () => {
 
   // LIKE OU DISLIKE
   const [liked, setLiked] = useState(false);
-  const handleLikeClick = () => {
+  const handleLikeClick = (idFeed) => {
     if (liked) {
-      axios.post('/like', { idFeed: post.idFeed, idUser: idUser })
+      axios.post('/like', { idFeed: idFeed, idUser: idUser })
         .then((response) => {
           if (response.status === 200) {
             setLiked(false);
+            fetchPosts();
           }
         })
         .catch((error) => {
           console.error('Erreur lors du dislike:', error);
         });
     } else {
-      axios.post('/like', { idFeed: post.idFeed, idUser: idUser })
+      axios.post('/like', { idFeed: idFeed, idUser: idUser })
         .then((response) => {
           if (response.status === 201) {
             setLiked(true);
+            fetchPosts();
           }
         })
         .catch((error) => {
@@ -299,9 +348,9 @@ const closeModaleReport = () => {
                 </div>
                 <div className="blocAimer">
                 <button onClick={() => handleLikeClick(post.idFeed)} type="submit" className="btnAime">
-                  <img className="imgAime" src={liked ? like : dislike} alt={liked ? "Je n'aime plus" : "J'aime"} />
-                  {post.likes}
-                </button>       
+                  <img className="imgAime" src={post.liked ? like : dislike} alt={liked ? "Je n'aime plus" : "J'aime"} />
+                  {post.numberOfLikes}
+                </button>
                 <button onClick={() => openPostModal(post)} type="submit" className="btnComm"><img className="imgComm" src={commentaire} alt="commentaire"/></button>
                 <button onClick={() => openReportModal(post)} type="submit" className="btnSignaler"><img className="imgSignaler" src={signaler} alt="signaler"/></button>
                 </div>
