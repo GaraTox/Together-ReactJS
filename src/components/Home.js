@@ -9,15 +9,16 @@ import send from '../assets/icons/send.png';
 import conversation from '../assets/icons/conversation.png';
 import modifier from '../assets/icons/modifier.png';
 import supprimer from '../assets/icons/supprimer.png';
-import aimer from '../assets/icons/aimer.png';
+import dislike from '../assets/icons/dislike.png';
+import like from '../assets/icons/aimer.png';
 import commentaire from '../assets/icons/commentaire.png';
 import signaler from '../assets/icons/signaler.png';
 import ModaleFeed from "./modales/ModaleFeed";
 
-function Home() {
+function Home({post, onLike, onDislike}) {
     // MODALE
     const [isModaleFeedOpen, setIsModaleFeedOpen] = useState(false);
-const [isModaleReportOpen, setIsModaleReportOpen] = useState(false);
+    const [isModaleReportOpen, setIsModaleReportOpen] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
     const [idFeedRecup, setIdFeedRecup] = useState();
 
@@ -62,7 +63,6 @@ const [isModaleReportOpen, setIsModaleReportOpen] = useState(false);
 
     // AFFICHER SES AMIS
     const [followingUsers, setFollowingUsers] = useState([]);
-
     useEffect(() => {
         getFollowingUsers();
     }, []);
@@ -197,23 +197,30 @@ const closeModaleReport = () => {
   };
 
   // LIKE OU DISLIKE
-  // const handleLikeDislike = async (idFeed) => {
-  //   const idUser = localStorage.getItem('idUser');
-  //   try {
-  //     const existingLike = likes.find((like) => like.idFeed === idFeed);
-  //     if (existingLike) {
-  //       // L'utilisateur a déjà aimé la publication, nous supprimons le like (dislike)
-  //       await axios.post('/like', { idFeed, idUser: idUser });
-  //     } else {
-  //       // L'utilisateur n'a pas encore aimé la publication, nous ajoutons le like (dislike)
-  //       await axios.post('/like', { idFeed, idUser: idUser });
-  //     }
-  //     fetchPosts();
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
+  const [liked, setLiked] = useState(false);
+  const handleLikeClick = () => {
+    if (liked) {
+      axios.post('/like', { idFeed: post.idFeed, idUser: idUser })
+        .then((response) => {
+          if (response.status === 200) {
+            setLiked(false);
+          }
+        })
+        .catch((error) => {
+          console.error('Erreur lors du dislike:', error);
+        });
+    } else {
+      axios.post('/like', { idFeed: post.idFeed, idUser: idUser })
+        .then((response) => {
+          if (response.status === 201) {
+            setLiked(true);
+          }
+        })
+        .catch((error) => {
+          console.error('Erreur lors du like:', error);
+        });
+    }
+  };
     return (
     <section>
     {/* MODALE AFFICHER FEED */}
@@ -291,12 +298,12 @@ const closeModaleReport = () => {
                     <p>{post.contentFeed}</p>
                 </div>
                 <div className="blocAimer">
-                <button type="submit" className="btnAime">
-                  <img className="imgAime" src={aimer} alt="j'aime" />
+                <button onClick={() => handleLikeClick(post.idFeed)} type="submit" className="btnAime">
+                  <img className="imgAime" src={liked ? like : dislike} alt={liked ? "Je n'aime plus" : "J'aime"} />
                   {post.likes}
-                </button>                
-                    <button onClick={() => openPostModal(post)} type="submit" className="btnComm"><img className="imgComm" src={commentaire} alt="commentaire"/></button>
-                    <button onClick={() => openReportModal(post)} type="submit" className="btnSignaler"><img className="imgSignaler" src={signaler} alt="signaler"/></button>
+                </button>       
+                <button onClick={() => openPostModal(post)} type="submit" className="btnComm"><img className="imgComm" src={commentaire} alt="commentaire"/></button>
+                <button onClick={() => openReportModal(post)} type="submit" className="btnSignaler"><img className="imgSignaler" src={signaler} alt="signaler"/></button>
                 </div>
             </div>
             ))}

@@ -11,7 +11,7 @@
     .content_modal_feed{
     width: 40%;
     height: max-content;
-    margin-top: 100px;
+    margin-top: 50px;
     border-radius: 12px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -75,7 +75,9 @@
     }
     .blocAllComm{
         padding: 5px;
+        overflow-y: scroll;
         .blocFeedComm{
+        margin-bottom: 5px;
         padding: 10px;
         border: solid 1px rgb(197, 197, 197);
         border-radius: 10px;
@@ -104,7 +106,14 @@
         }
     } 
     }
-
+    .blocAllComm::-webkit-scrollbar{
+        background-color: rgb(248, 249, 250);
+        width: 10px;
+    }
+    .blocAllComm::-webkit-scrollbar-thumb{
+        background-color: rgb(33, 37, 41);
+        border-radius: 50px;
+    }
 
 }
 }

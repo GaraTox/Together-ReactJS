@@ -3,7 +3,8 @@ import axios from 'axios';
 import Btnsm from '../btn/Btnsm';
 
 function ModalModifyUser({closeModal}){
-    const [user, setUser] = useState({});
+  const [message, setMessage] = useState('');
+  const [user, setUser] = useState({});
   const [pseudoUser, setPseudoUser] = useState('');
   const [mailUser, setMailUser] = useState('');
 
@@ -23,6 +24,7 @@ function ModalModifyUser({closeModal}){
     const user = localStorage.getItem('idUser');
     axios.put(`/utilisateur/${user}`, { pseudoUser: pseudoUser, mailUser: mailUser })
       .then(response => console.log(response.data))
+      .then(setMessage('Compte modifié avec succès'))
       .catch(error => console.error(error));
   };
 
@@ -46,6 +48,7 @@ function ModalModifyUser({closeModal}){
                 <div className='footer'>
                     <Btnsm onClick={handleUpdateUser} type="submit" className="btn" caracteristique="sm" text="Confirmer"/>
                 </div>
+                {message && <p className="text-success">{message}</p>}
             </div>
         </section>
     )

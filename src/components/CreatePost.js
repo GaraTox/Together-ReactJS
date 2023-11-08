@@ -26,6 +26,9 @@ function CreatePost() {
       console.log(response.data.message);
       setIdUser('');
       setContentFeed('');
+      setMessage('Publication ajoutée avec succès');
+
+
     } catch (error) {
       console.error('Erreur lors de la création du post : ' + error.response.data.error);
     }

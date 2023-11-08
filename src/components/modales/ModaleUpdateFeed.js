@@ -3,9 +3,11 @@ import Btnsm from '../btn/Btnsm';
 
 function ModaleUpdateFeed({post, onSave, onClose}){
     const [editedPublication, setEditedPublication] = useState(post);
+    const [message, setMessage] = useState('');
 
     const handleSave = () => {
       onSave(editedPublication);
+      setMessage('Publication modifiée avec succès');
     };
 
     return(
@@ -25,6 +27,7 @@ function ModaleUpdateFeed({post, onSave, onClose}){
                 </div>
                 <div className='footer mt-2'>
                     <Btnsm onClick={handleSave} type="submit" className="btn" caracteristique="sm" text="Modifier"/>
+                    {message && <p className="text-success">{message}</p>}
                 </div>
             </div>
         </section>

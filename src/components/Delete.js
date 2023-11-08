@@ -3,6 +3,7 @@ import Btnsm from '../components/btn/Btnsm';
 import axios from "axios";
 
 function Delete() {
+    const [message, setMessage] = useState('');
     const [data, setData] = useState([]);
     const [user, setUser] = useState([]);
 
@@ -20,6 +21,7 @@ function Delete() {
           .then((data) => {
             if (data.message === 'Actualité supprimée avec succès') {
               setUser(user.filter((user) => user.idUser !== idUser));
+              setMessage('Compte supprimé avec succès');
             }
           });
       };
@@ -37,6 +39,7 @@ function Delete() {
             <p className="searchName">{user.mailUser}</p>
             <div className="searchButton">
                 <Btnsm onClick={() => deleteNews(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Supprimer"/>
+                {message && <p className="text-success">{message}</p>}
             </div> 
         </div>
         )})}

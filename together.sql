@@ -44,7 +44,6 @@ CREATE TABLE `likes` (
     `idLike` INT(255) NOT NULL AUTO_INCREMENT,
     `idFeed` INT(255) NOT NULL,
     `idUser` INT(255) NOT NULL,
-    `type` ENUM('like', 'dislike') NOT NULL,
 
     PRIMARY KEY (`idLike`),
     FOREIGN KEY (`idFeed`) REFERENCES feed(`idFeed`) ON DELETE CASCADE,

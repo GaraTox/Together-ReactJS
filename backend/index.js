@@ -199,9 +199,9 @@ app.post('/addfeed', (req, res) => {
 app.get('/readfeed/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
 	const query = `
-	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed FROM user INNER JOIN feed ON user.idUser = feed.idUser WHERE user.idUser = ?
+	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed, feed.likes FROM user INNER JOIN feed ON user.idUser = feed.idUser WHERE user.idUser = ?
 	  UNION 
-	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed FROM user INNER JOIN feed ON user.idUser = feed.idUser INNER JOIN friend ON user.idUser = friend.id_Friend WHERE friend.id_User = ? `;
+	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed, feed.likes FROM user INNER JOIN feed ON user.idUser = feed.idUser INNER JOIN friend ON user.idUser = friend.id_Friend WHERE friend.id_User = ? `;
 	db.query(query, [idUser, idUser], (err, results) => {
 	  if (err) {
 		console.error('Erreur lors de la récupération des publications : ' + err);
@@ -232,14 +232,13 @@ app.get('/readfeed/:idUser', (req, res) => {
 // AJOUTER UN LIKE AU FEED
 app.post('/like', (req, res) => {
 	const { idFeed, idUser } = req.body;
-	const type = 'like';
 	db.query(
 	  'SELECT * FROM likes WHERE idFeed = ? AND idUser = ?',
 	  [idFeed, idUser],
 	  (err, results) => {
 		if (err) {
-		  console.error('Erreur lors de la récupération du like/dislike existant:', err);
-		  res.status(500).json({ message: 'Erreur lors de la récupération du like/dislike existant' });
+		  console.error("Erreur lors de la récupération du like/dislike existant:", err);
+		  res.status(500).json({ message: "Erreur lors de la récupération du like/dislike existant" });
 		} else {
 		  if (results.length > 0) {
 			db.query(
@@ -247,23 +246,23 @@ app.post('/like', (req, res) => {
 			  [idFeed, idUser],
 			  (err) => {
 				if (err) {
-				  console.error('Erreur lors de la suppression du like/dislike:', err);
-				  res.status(500).json({ message: 'Erreur lors de la suppression du like/dislike' });
+				  console.error("Erreur lors de la suppression du like/dislike:", err);
+				  res.status(500).json({ message: "Erreur lors de la suppression du like/dislike" });
 				} else {
-				  res.status(200).json({ message: 'Like/dislike supprimé avec succès' });
+				  res.status(200).json({ message: "Like/dislike supprimé avec succès" });
 				}
 			  }
 			);
 		  } else {
 			db.query(
-			  'INSERT INTO likes (idFeed, idUser, type) VALUES (?, ?, ?)',
-			  [idFeed, idUser, type],
+			  'INSERT INTO likes (idFeed, idUser) VALUES (?, ?)',
+			  [idFeed, idUser],
 			  (err) => {
 				if (err) {
-				  console.error('Erreur lors de l\'ajout du like/dislike:', err);
-				  res.status(500).json({ message: 'Erreur lors de l\'ajout du like/dislike' });
+				  console.error("Erreur lors de l'ajout du like/dislike:", err);
+				  res.status(500).json({ message: "Erreur lors de l'ajout du like/dislike" });
 				} else {
-				  res.status(201).json({ message: 'Like/dislike ajouté avec succès' });
+				  res.status(201).json({ message: "Like/dislike ajouté avec succès" });
 				}
 			  }
 			);

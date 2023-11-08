@@ -3,6 +3,7 @@ import Btnsm from '../components/btn/Btnsm';
 import axios from "axios";
 
 function DeletePost() {
+  const [message, setMessage] = useState('');
     const [data, setData] = useState([]);
     const [user, setUser] = useState([]);
 
@@ -20,6 +21,7 @@ function DeletePost() {
           .then((data) => {
             if (data.message === 'Actualité supprimée avec succès') {
               setUser(user.filter((feed) => feed.idFeed !== idFeed));
+              setMessage('Publication supprimée avec succès');
             }
           });
       };
@@ -37,6 +39,7 @@ function DeletePost() {
             </div> 
         </div>
         )})}
+        {message && <p className="text-success">{message}</p>}
         </div>
     </section>
     );
