@@ -462,7 +462,8 @@ app.delete('/feeddelete/:idFeed', (req, res) => {
 // });
 
 // CONFIGURER LE SOCKET
-const user = {}; // OBJET VIDE
+const user = {};
+const message = {}; // OBJET VIDE
 io.on('connection', socket => {
 	socket.on('join', idUser => {
 	  // ENREGISTRE L'UTILISATEUR
@@ -511,7 +512,11 @@ io.on('connection', socket => {
 		if (err) {
 		  console.error("Erreur d'insertion dans la base de donnée " + err.message);
 		}else{
-		  console.log("Message inséré dans la base de donnée");
+			if (!message[idUser]) {
+				message[idUser] = [];
+			}
+			message[idUser].push(newMessage);
+		  	console.log("Message inséré dans la base de donnée");
 		}
 	  });
 	});

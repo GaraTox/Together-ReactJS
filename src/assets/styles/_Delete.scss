@@ -37,7 +37,8 @@
         .search{
             width: 100%;
             display: inline-flex;
-            justify-content: center;
+            justify-content: space-around;
+            align-items: center;
             .searchAvatar{
                 width: 20%;
                 .avatar{

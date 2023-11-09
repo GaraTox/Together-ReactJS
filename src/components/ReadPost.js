@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
-import Btnsm from '../components/btn/Btnsm';
 import axios from "axios";
+import Btnsm from '../components/btn/Btnsm';
 
 function ReadPost() {
     const [data, setData] = useState([])

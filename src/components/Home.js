@@ -328,7 +328,7 @@ const closeModaleReport = () => {
                     </div>
                     <Link className="blocConversation" to={`/myprofile/message/${users}`}>
                         <img className="messageConv" src={conversation} alt="messagerie privée"/>
-                        <p className="mess">Messages</p>
+                        <p className="mess">Messagerie privée</p>
                     </Link>
                 </div>
             </div>

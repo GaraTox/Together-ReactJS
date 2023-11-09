@@ -8,57 +8,32 @@ import io from 'socket.io-client';
 const socket = io('http://localhost:3001');
 
 function Message(id_Friend) {
-    // // DISPLAY FRIEND
-    // const [followingUsers, setFollowingUsers] = useState([]);
-    // // SELECT FRIEND
-    // const [seletedFriend, setSelectedFriend] = useState(null);
-    // const [data, setData] = useState([]);
-    // useEffect(() => {
-    //     const user = localStorage.getItem('idUser');
-    //     axios.get(`http://localhost:3001/avatar/${user}`)
-    //     .then(res => {
-    //         setData(res.data[0])
-    //     })
-    //     .catch(err => console.log(err));
-    // }, [])
-
-    // // DISPLAY FRIEND
-    // useEffect(() => {
-    //      getFollowingUsers();
-    // }, []);
-    // const getFollowingUsers = () => {
-    // const idUser = localStorage.getItem('idUser');
-    //     axios.get(`/follow/${idUser}`)
-    //     .then(response => {
-    //         setFollowingUsers(response.data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error fetching following users:', error);
-    //     });
-    // };
-
-    // // AMI SELECTIONNE
-    // const handleFriendClick = (friend) => {
-    //     setSelectedFriend(friend);
-    //   };
-
     const idUser = localStorage.getItem('idUser');
+    // RECUPERER ET AFFICHER LES AMIS
     const [friends, setFriends] = useState([]);
-    const [messages, setMessages] = useState([]);
     const [selectedFriend, setSelectedFriend] = useState(null);
+    // RECUPERER ET AFFICHER LES MESSAGES
+    const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
 
     useEffect(() => {
-        socket.emit('join', { idUser: idUser });
-        socket.on('join', ({ friend }) => {
-            setFriends(friend);
+        // RECUPERE LES AMIS AVEC UN SUIVI MUTUEL
+        socket.emit('join', idUser);
+        socket.on('follow', ({ friend }) => {
+          setFriends(friend);
         });
-    }, [idUser]);
+        return () => {
+            socket.off('join');
+        };
+      }, [idUser]);
 
+    // DEMARRE UNE CONVERSATION EN APPUYANT SUR SON AMI
     const startChat = id_Friend => {
         setSelectedFriend(id_Friend);
-      };
-      const sendMessage = () => {
+    };
+
+    // ENVOI LE MESSAGE
+    const sendMessage = () => {
         if (messageInput.trim() !== '' && selectedFriend) {
           socket.emit('message', {
             idUser: idUser,
@@ -111,7 +86,7 @@ function Message(id_Friend) {
                     <div key={index} className="w-100">
                         <div className='message-meta'>
                             <p id="author">{message.idSender}</p>
-                            <p id="time">{message.contentMessage}</p>
+                            <p id="time">{message.timeMessage}</p>
                         </div>
                         <div className='message-content'>
                             <p>{message.contentMessage}</p>
