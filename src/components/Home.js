@@ -307,7 +307,7 @@ const closeModaleReport = () => {
             <ul className="text-center mt-2">
                 {followingUsers.map(user => (
                     <li key={user.idUser}>
-                        <img src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : profil} alt="photo de profil"/>
+                        <img className="border border-dark" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : profil} alt="photo de profil"/>
                         {user.pseudoUser}
                         <hr/>
                     </li>

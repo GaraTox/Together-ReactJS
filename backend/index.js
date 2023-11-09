@@ -467,14 +467,17 @@ io.on('connection', socket => {
 	  // ENREGISTRE L'UTILISATEUR
 	  user[idUser] = socket.id;
 	});
+	// VERIFIE SI LA RELATION DE SUIVI
 	socket.on('follow', ({ id_User, id_Friend }) => {
-		db.query('INSERT INTO friend (id_User, id_Friend) VALUES (?, ?)', [id_User, id_Friend], (err, result) => {
-		  if (err) {
-			console.error('Erreur lors de la mise à jour des relations de suivi : ' + err.message);
-		  } else {
-			console.log("Le relation de suivi existe entre" + id_User + ' ' + id_Friend);
-		  }
-		});
+		db.query('SELECT id, id_User, id_Friend FROM friend WHERE id_User = ? AND id_Friend = ?',[id_User, id_Friend],(err, results) => {
+			  if (err) {
+				console.error("Erreur de vérification " + err.message);
+			  } else if (results.length > 0){
+				console.log(`La relation de suivi existe entre ${id_User} et ${id_Friend}`);
+			  }else{
+				console.log(`La relation de suivi n'existe pas entre ${id_User} et ${id_Friend}`)
+			  }
+			});
 	  });
 	socket.on('message', ({ idUser, idSender, contentMessage }) => {
 	  const newMessage = {
@@ -482,8 +485,14 @@ io.on('connection', socket => {
 		idSender: idSender,
 		contentMessage: contentMessage,
 	  };
-  
-	  // Insérez le message dans la base de données et envoyez-le au destinataire
+	// INSERER LE MESSAGE DANS LA BASE DE DONNEE
+	db.query("INSERT INTO message (idUser, idSender, contentMessage) VALUES (?, ?, ?)",[newMessage.idUser, newMessage.idSender, newMessage.contentMessage],(err, results) => {
+		if (err) {
+		  console.error("Erreur d'insertion dans la base de donnée " + err.message);
+		}else{
+		  console.log("Message inséré dans la base de donnée");
+		}
+	  });
 	});
   });
 

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
+import profil from '../assets/icons/person-fill.svg';
 import friend from '../assets/icons/people.svg';
 import message from '../assets/icons/envelope.svg';
 import send from '../assets/icons/send.png';
@@ -48,7 +49,7 @@ function Message() {
             <ul className="text-center">
                 {followingUsers.map(user => (
                     <li className="listFriendMess" key={user.idUser} onClick={() => handleFriendClick(user)}>
-                        <img src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
+                        <img className="border border-dark" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : profil} alt="photo de profil"/>
                         {user.pseudoUser}
                         <hr/>
                     </li>
