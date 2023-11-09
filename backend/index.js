@@ -34,12 +34,12 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 // MESSAGERIE SOCKET
 const {Server} = require('socket.io');
-app.use(cors());
 const server = http.createServer(app);
 // CONFIGURER LE .ENV
 dotenv.config({path: './.env'})
 
 app.use(express.json());
+app.use(cors());
 const io = new Server(server, {
 	cors: {
 		origin: ["http://localhost:3000"],
@@ -462,10 +462,11 @@ app.delete('/feeddelete/:idFeed', (req, res) => {
 // });
 
 // CONFIGURER LE SOCKET
+const user = {}; // OBJET VIDE
 io.on('connection', socket => {
 	socket.on('join', idUser => {
 	  // ENREGISTRE L'UTILISATEUR
-	  user[idUser] = socket.id;
+	  user[idUser] = socket;
 	});
 	// VERIFIE SI LA RELATION DE SUIVI
 	socket.on('follow', ({ id_User, id_Friend }) => {
@@ -514,7 +515,8 @@ io.on('connection', socket => {
 		}
 	  });
 	});
-  });
+});
+
 
 //////////////////////////////////////////ADMIN/////////////////////////////////////////////////////////////
 // CREER UN COMPTE POUR UTILISATEUR
