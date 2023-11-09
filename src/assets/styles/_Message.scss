@@ -22,7 +22,7 @@
             .message-content{
                 display: flex;
                 border: solid 1px rgb(182, 182, 182);
-                max-width: 300px;
+                width: max-content;
                 max-height: 300px;
                 padding: 5px;
                 padding-left: 20px;
@@ -193,7 +193,7 @@
                 .message-content{
                     display: flex;
                     border: solid 1px rgb(182, 182, 182);
-                    max-width: 300px;
+                    width: max-content;
                     max-height: 300px;
                     padding: 5px;
                     padding-left: 20px;

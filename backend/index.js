@@ -432,34 +432,60 @@ app.delete('/feeddelete/:idFeed', (req, res) => {
 
 //////////////////////////////////////MESSAGERIE PRIVEE/////////////////////////////////////////////////////
 // GESTION DE CONNECTION SOCKET IO
-io.on("connection", (socket) => {
-	console.log(`User connected: ${socket.id}`);
-	socket.on("join_room", (data) => {
-	  socket.join(data);
-	  console.log(`User with ID: ${socket.id} joined room: ${data}`);
+// io.on("connection", (socket) => {
+// 	console.log(`User connected: ${socket.id}`);
+// 	socket.on("join_room", (data) => {
+// 	  socket.join(data);
+// 	  console.log(`User with ID: ${socket.id} joined room: ${data}`);
+// 	});
+// 	// GESTON D'ENVOI DE MESSAGE
+// 	socket.on("send_message", (data) => {
+//     	// INSERER DANS LA BASE DONNEE
+//     	const { idUser, idSender, contentMessage } = data;
+//     	const sql = 'INSERT INTO message (idUser, idSender, contentMessage) VALUES (?, ?, ?)';
+//     		connection.query(sql, [idUser, idSender, contentMessage], (err, result) => {
+//       			if (err) {
+//         			console.error("Erreur lors de l'insertion du message :", err);
+//       			} else {
+//         		console.log("Message inséré dans la base de données");
+//         		// EMET UN EVENEMENT D'ENVOI DE MESSAGE
+//         		io.to(idUser).emit("send_message", {idUser, idSender, contentMessage});
+// 				io.to(idSender).emit("send_message", {idUser, idSender, contentMessage})
+//       		}
+//     	});
+//     	// socket.to(data.room).emit("receive_message", data);
+//   	});
+//     // GESTION DE DECONNEXION
+// 	socket.on("disconnect", () => {
+// 		console.log("User disconnected", socket.id);
+// 	});
+// });
+
+// CONFIGURER LE SOCKET
+io.on('connection', socket => {
+	socket.on('join', idUser => {
+	  // ENREGISTRE L'UTILISATEUR
+	  user[idUser] = socket.id;
 	});
-	// GESTON D'ENVOI DE MESSAGE
-	socket.on("send_message", (data) => {
-    	// INSERER DANS LA BASE DONNEE
-    	const { idUser, idSender, contentMessage } = data;
-    	const sql = 'INSERT INTO message (idUser, idSender, contentMessage) VALUES (?, ?, ?)';
-    		connection.query(sql, [idUser, idSender, contentMessage], (err, result) => {
-      			if (err) {
-        			console.error("Erreur lors de l'insertion du message :", err);
-      			} else {
-        		console.log("Message inséré dans la base de données");
-        		// EMET UN EVENEMENT D'ENVOI DE MESSAGE
-        		io.to(idUser).emit("send_message", {idUser, idSender, contentMessage});
-				io.to(idSender).emit("send_message", {idUser, idSender, contentMessage})
-      		}
-    	});
-    	// socket.to(data.room).emit("receive_message", data);
-  	});
-    // GESTION DE DECONNEXION
-	socket.on("disconnect", () => {
-		console.log("User disconnected", socket.id);
+	socket.on('follow', ({ id_User, id_Friend }) => {
+		db.query('INSERT INTO friend (id_User, id_Friend) VALUES (?, ?)', [id_User, id_Friend], (err, result) => {
+		  if (err) {
+			console.error('Erreur lors de la mise à jour des relations de suivi : ' + err.message);
+		  } else {
+			console.log("Le relation de suivi existe entre" + id_User + ' ' + id_Friend);
+		  }
+		});
+	  });
+	socket.on('message', ({ idUser, idSender, contentMessage }) => {
+	  const newMessage = {
+		idUser : idUser,
+		idSender: idSender,
+		contentMessage: contentMessage,
+	  };
+  
+	  // Insérez le message dans la base de données et envoyez-le au destinataire
 	});
-});
+  });
 
 //////////////////////////////////////////ADMIN/////////////////////////////////////////////////////////////
 // CREER UN COMPTE POUR UTILISATEUR

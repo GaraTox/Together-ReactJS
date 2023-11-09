@@ -48,6 +48,10 @@
                 display: inline-flex;
                 align-items: center;
                 justify-content: space-around;
+                .imgPhoto{
+                    width: 25px;
+                    height: 25px;
+                }
             }
         }
     }
@@ -172,6 +176,34 @@
         margin-left: 30%;
         margin-right: 30%;
         background-color: white;
+        .results{
+            position: absolute;
+            z-index: 2;
+            width: 70%;
+
+        }
+       .ulsearch{
+            padding-left: 0;
+            padding-bottom: 0;
+            padding-top: 1px;
+        }
+        .ulsearch .lisearch{
+            margin: 0;
+            padding: 0;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            background-color: white;
+            border: solid 1px rgb(194, 194, 194);
+            border-radius: 10px;
+            color: black;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-around;
+            .imgPhoto{
+                width: 25px;
+                height: 25px;
+            }
+        }
     }
 
     .btn_disconnect_burger{
@@ -262,6 +294,10 @@
             display: inline-flex;
             align-items: center;
             justify-content: space-around;
+            .imgPhoto{
+                width: 25px;
+                height: 25px;
+            }
         }
     }
 

@@ -73,7 +73,8 @@ CREATE TABLE `message` (
     `timeMessage` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (`idMessage`),
-    FOREIGN KEY(`idUser`) REFERENCES user(`idUser`) ON DELETE CASCADE
+    FOREIGN KEY(`idUser`) REFERENCES user(`idUser`) ON DELETE CASCADE,
+    FOREIGN KEY(`idSender`) REFERENCES user(`idUser`) ON DELETE CASCADE
 )
 ENGINE = InnoDB;
 

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import profil from '../assets/icons/person-fill.svg';
 import ModaleUpdateFeed from "./modales/ModaleUpdateFeed";
 import ModaleReport from "./modales/ModaleReport";
 import Btnsm from "./btn/Btnsm";
@@ -15,7 +16,7 @@ import commentaire from '../assets/icons/commentaire.png';
 import signaler from '../assets/icons/signaler.png';
 import ModaleFeed from "./modales/ModaleFeed";
 
-function Home({post, onLike, onDislike}) {
+function Home() {
     // MODALE
     const [isModaleFeedOpen, setIsModaleFeedOpen] = useState(false);
     const [isModaleReportOpen, setIsModaleReportOpen] = useState(false);
@@ -41,7 +42,7 @@ function Home({post, onLike, onDislike}) {
 
     useEffect(() => {
         const user = localStorage.getItem('idUser');
-        console.log("user =>" + user);
+        // console.log("user =>" + user);
         axios.get(`http://localhost:3001/myprofile/${user}`)
         .then((response) => {
             setUser(response.data);
@@ -306,7 +307,7 @@ const closeModaleReport = () => {
             <ul className="text-center mt-2">
                 {followingUsers.map(user => (
                     <li key={user.idUser}>
-                        <img src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
+                        <img src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : profil} alt="photo de profil"/>
                         {user.pseudoUser}
                         <hr/>
                     </li>
@@ -318,7 +319,7 @@ const closeModaleReport = () => {
             <div className="blocInputComm">
                 <div className="w-100">
                     <div>
-                        <img className="imgProfil" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : ''} alt="photo de profil"/>
+                        <img className="imgProfil" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : profil} alt="photo de profil"/>
                         <form className="formPubli" method="#" action="#">
                             <input type="text" placeholder="Publier une publication ..." value={contentFeed}
                             onChange={(e) => setContentFeed(e.target.value)}/>

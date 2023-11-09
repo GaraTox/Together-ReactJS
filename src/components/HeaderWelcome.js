@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
+import profil from '../assets/icons/person-fill.svg';
 import searchimg from '../assets/icons/search.svg';
 import logo from '../assets/icons/logo.png';
 import { Link, useNavigate } from "react-router-dom";
@@ -22,7 +23,7 @@ useEffect(() => {
     const resp = response.data;
       if(resp!==""){
         setTab(resp)
-        console.log(tab)
+        // console.log(tab)
       }
   })
 }, [inputVal])
@@ -101,7 +102,7 @@ const handleUnfollow = (id_Friend) => {
     const users = localStorage.getItem('idUser');
     useEffect(() => {
       const user = localStorage.getItem('idUser');
-      console.log("user =>" + user);
+      // console.log("user =>" + user);
       axios.get(`http://localhost:3001/myprofile/${user}`)
       .then((response) => {
           setUser(response.data);
@@ -141,6 +142,7 @@ const handleUnfollow = (id_Friend) => {
                     {tab.map((user) => {
                         return(
                           <li className="lisearch" key={user.idUser}>
+                            <img className="imgPhoto rounded-circle" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : profil} alt=""/>
                             {user.pseudoUser}
                             {followed ? (
                               <Btnsm onClick={() => handleUnfollow(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Suivi(e)"/>
@@ -179,6 +181,7 @@ const handleUnfollow = (id_Friend) => {
                     {tab.map((user) => {
                         return(
                           <li className="lisearch" key={user.idUser}>
+                           <img className="imgPhoto rounded-circle" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : profil} alt=""/>
                             {user.pseudoUser}
                             {followed ? (
                               <Btnsm onClick={() => handleUnfollow(user.idUser)} type="submit" className="btn" caracteristique="sm" text="Suivi(e)"/>

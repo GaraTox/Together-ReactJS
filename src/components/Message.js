@@ -19,7 +19,7 @@ function Message() {
         .catch(err => console.log(err));
     }, [])
 
-
+    // DISPLAY FRIEND
     useEffect(() => {
          getFollowingUsers();
     }, []);
