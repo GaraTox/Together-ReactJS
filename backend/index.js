@@ -469,15 +469,35 @@ io.on('connection', socket => {
 	});
 	// VERIFIE SI LA RELATION DE SUIVI
 	socket.on('follow', ({ id_User, id_Friend }) => {
-		db.query('SELECT id, id_User, id_Friend FROM friend WHERE id_User = ? AND id_Friend = ?',[id_User, id_Friend],(err, results) => {
-			  if (err) {
-				console.error("Erreur de vérification " + err.message);
-			  } else if (results.length > 0){
-				console.log(`La relation de suivi existe entre ${id_User} et ${id_Friend}`);
-			  }else{
-				console.log(`La relation de suivi n'existe pas entre ${id_User} et ${id_Friend}`)
-			  }
-			});
+		// UTILISATEUR SUIT AMI
+		db.query(
+		  'SELECT id, id_User, id_Friend FROM friend WHERE id_User = ? AND id_Friend = ?',
+		  [id_User, id_Friend],
+		  (err, results) => {
+			if (err) {
+			  console.error('Erreur de vérification : ' + err.message);
+			} else if (results.length > 0) {
+			  // AMI SUIT L'UTILISATEUR
+			  db.query(
+				'SELECT id, id_User, id_Friend FROM friend WHERE id_User = ? AND id_Friend = ?',
+				[id_Friend, id_User],
+				(err2, results2) => {
+				  if (err2) {
+					console.error('Erreur de vérification : ' + err2.message);
+				  } else if (results2.length > 0) {
+					// LA RELATION DE SUIVI EST MUTUELLE
+					console.log(`La relation de suivi est mutuelle entre ${id_User} et ${id_Friend}`);
+				  } else {
+					// LA RELATION DE SUIVI N'EST PAS MUTUELLE
+					console.log(`L'utilisateur suit ${id_Friend}, mais ${id_Friend} ne le suit pas en retour.`);
+				  }
+				}
+			  );
+			} else {
+			  console.log(`L'utilisateur ne suit pas ${id_Friend}.`);
+			}
+		  }
+		);
 	  });
 	socket.on('message', ({ idUser, idSender, contentMessage }) => {
 	  const newMessage = {
