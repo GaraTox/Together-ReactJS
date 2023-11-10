@@ -31,13 +31,17 @@
         .chat-body{            
             margin-left: 10px;
             padding-right: 10px;
-            overflow-y: scroll;
-            height: 86vh;
-            padding-bottom:180px;
             .convWith{
+                background-color: rgb(248, 249, 250);
                 border-bottom: 1px solid rgb(204, 204, 204);
                 width: 100%;
+                text-align: center;
             }
+            .message{
+                overflow-y: scroll;
+                height: 86vh;
+                padding-bottom:120px;
+                padding-right: 10px;
             .message-content{
                 display: flex;
                 border: solid 1px rgb(182, 182, 182);
@@ -50,21 +54,33 @@
                 margin-bottom: 5px;
     
             }
-            // #you{
-            //     display: flex;
-            //     justify-content: flex-end;
-            // }
-            // #you .mesage-content{
-            //     display: flex;
-            //     justify-content: flex-end;
-            // }
-    
-            // #you .message-meta{
-            //     justify-content: flex-end;
-            //     margin-left: 5px;
-            // }
+            #you{
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                align-items: flex-end;
+                margin-top: 5px;
+            }
+            #you .message-content{
+                justify-content: flex-end;
+                color: rgb(33, 37, 41);
+                background-color: rgb(248, 249, 250);
+                margin-top: 5px;
+            }
+            #you .message-meta{
+                justify-content: flex-end;
+                margin-right: 5px;
+            }
             .message-meta{
                 display: inline-flex;
+                .imgProfilConv{
+                    background-color: rgb(248, 249, 250);
+                    width: 25px;
+                    height: 25px;
+                    border: solid 1px rgb(33, 37, 41);
+                    border-radius: 50%;
+                    margin-right: 5px;
+                }
                 #author{
                     font-size: medium;
                 }
@@ -83,18 +99,32 @@
             }
             #other{
                 display: flex;
+                flex-direction: column;
                 justify-content: flex-start;
+                margin-top: 5px;
             }
             #other .message-content{
                 justify-content: flex-start;
-                background-color: rgb(192, 192, 192);
+                background-color: rgb(33, 37, 41);
+                color: rgb(248, 249, 250);
+                margin-top: 5px;
             }
             #other .message-meta{
                 justify-content: flex-start;
                 margin-right: 5px;
             }
+            }
+            .message::-webkit-scrollbar{
+                background-color: rgb(248, 249, 250);
+                width: 10px;
+            }
+            .message::-webkit-scrollbar-thumb{
+                background-color: rgb(33, 37, 41);
+                border-radius: 50px;
+            }
         }
         .chat-footer{
+        background-color: rgb(248, 249, 250);
         border-top: solid 1px rgb(211, 211, 211);
         width: 100%;
         margin-bottom: 25px;
@@ -408,6 +438,8 @@
                         border-bottom: 1px solid rgb(204, 204, 204);
                         width: 100%;
                     }
+                    .message{
+                        overflow-y: scroll;
                     .message-content{
                         width: max-content;
                         max-width: 200px;
@@ -422,19 +454,31 @@
                     }
                     #you{
                         display: flex;
+                        flex-direction: column;
                         justify-content: flex-end;
+                        align-items: flex-end;
+                        margin-top: 5px;
                     }
-                    #you .mesage-content{
-                        display: flex;
+                    #you .message-content{
                         justify-content: flex-end;
+                        color: rgb(33, 37, 41);
+                        background-color: rgb(248, 249, 250);
+                        margin-top: 5px;
                     }
-            
                     #you .message-meta{
                         justify-content: flex-end;
-                        margin-left: 5px;
+                        margin-right: 5px;
                     }
                     .message-meta{
                         display: inline-flex;
+                        .imgProfilConv{
+                            background-color: rgb(248, 249, 250);
+                            width: 25px;
+                            height: 25px;
+                            border: solid 1px rgb(33, 37, 41);
+                            border-radius: 50%;
+                            margin-right: 5px;
+                        }
                         #author{
                             font-size: medium;
                         }
@@ -453,16 +497,21 @@
                     }
                     #other{
                         display: flex;
+                        flex-direction: column;
                         justify-content: flex-start;
+                        margin-top: 5px;
                     }
                     #other .message-content{
                         justify-content: flex-start;
-                        background-color: rgb(192, 192, 192);
+                        background-color: rgb(33, 37, 41);
+                        color: rgb(248, 249, 250);
+                        margin-top: 5px;
                     }
                     #other .message-meta{
                         justify-content: flex-start;
                         margin-right: 5px;
                     }
+                }
                 }
                 .chat-footer{
                     height: 12vh;
@@ -471,6 +520,7 @@
                     position: fixed;
                     bottom: 0;
                     border-top: solid 1px rgb(211, 211, 211);
+                    background-color: rgb(248, 249, 250);
                     #form{
                         width: 100%;
                         display: flex;

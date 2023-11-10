@@ -431,36 +431,6 @@ app.delete('/feeddelete/:idFeed', (req, res) => {
   });
 
 //////////////////////////////////////MESSAGERIE PRIVEE/////////////////////////////////////////////////////
-// GESTION DE CONNECTION SOCKET IO
-// io.on("connection", (socket) => {
-// 	console.log(`User connected: ${socket.id}`);
-// 	socket.on("join_room", (data) => {
-// 	  socket.join(data);
-// 	  console.log(`User with ID: ${socket.id} joined room: ${data}`);
-// 	});
-// 	// GESTON D'ENVOI DE MESSAGE
-// 	socket.on("send_message", (data) => {
-//     	// INSERER DANS LA BASE DONNEE
-//     	const { idUser, idSender, contentMessage } = data;
-//     	const sql = 'INSERT INTO message (idUser, idSender, contentMessage) VALUES (?, ?, ?)';
-//     		connection.query(sql, [idUser, idSender, contentMessage], (err, result) => {
-//       			if (err) {
-//         			console.error("Erreur lors de l'insertion du message :", err);
-//       			} else {
-//         		console.log("Message inséré dans la base de données");
-//         		// EMET UN EVENEMENT D'ENVOI DE MESSAGE
-//         		io.to(idUser).emit("send_message", {idUser, idSender, contentMessage});
-// 				io.to(idSender).emit("send_message", {idUser, idSender, contentMessage})
-//       		}
-//     	});
-//     	// socket.to(data.room).emit("receive_message", data);
-//   	});
-//     // GESTION DE DECONNEXION
-// 	socket.on("disconnect", () => {
-// 		console.log("User disconnected", socket.id);
-// 	});
-// });
-
 // CONFIGURER LE SOCKET
 const user = {};
 const message = {}; // OBJET VIDE
@@ -528,23 +498,25 @@ io.on('connection', socket => {
 			}
 			message[idUser].push(newMessage);
 		  	console.log("Message inséré dans la base de donnée");
+			// Émettre un événement pour informer les clients du nouveau message
+			io.emit('newMessage', newMessage);
 		}
 	  });
 	});
 	// RECUPERER LES MESSAGES ENTRE AMIS
 	socket.on('getConversation', ({ idUser, id_Friend }) => {
 		db.query(
-		  'SELECT * FROM message WHERE (idUser = ? AND idSender = ?) OR (idUser = ? AND idSender = ?) '
-		  [idUser, id_Friend, id_Friend, idUser],
-		  (err, results) => {
-			if (err) {
-			  console.error('Erreur lors de la récupération de la conversation : ' + err.message);
-			} else {
-			  socket.emit('conversation', { messages: results });
+			'SELECT message.*, user.avatarUser, user.pseudoUser FROM message JOIN user ON message.idUser = user.idUser WHERE (message.idUser = ? AND message.idSender = ?) OR (message.idUser = ? AND message.idSender = ?)',
+			[idUser, id_Friend, id_Friend, idUser],
+			(err, results) => {
+				if (err) {
+					console.error('Erreur lors de la récupération de la conversation : ' + err.message);
+				} else {
+					socket.emit('conversation', { messages: results });
+				}
 			}
-		  }
 		);
-	  });
+	});
 });
 
 

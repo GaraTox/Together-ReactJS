@@ -7,7 +7,7 @@ import send from '../assets/icons/send.png';
 import io from 'socket.io-client';
 const socket = io('http://localhost:3001');
 
-function Message(id_Friend) {
+function Message() {
     const idUser = localStorage.getItem('idUser');
     // RECUPERER LES AMIS AVEC UN SUIVI MUTUEL
     const [friends, setFriends] = useState([]);
@@ -33,26 +33,43 @@ function Message(id_Friend) {
         setSelectedFriend(id_Friend);
     };
 
-    // ENVOI LE MESSAGE
-    const sendMessage = () => {
-        if (messageInput.trim() !== '' && selectedFriend) {
-          socket.emit('message', {
-            idUser: idUser,
-            idSender: selectedFriend,
-            contentMessage: messageInput,
-          });
-          setMessageInput('');
-        }
-      };
-
       // RECUPERER LA CONVERSATION AVEC L'AMI
       useEffect(() => {
         // HISTORIQUE DES MESSAGES
+        if (selectedFriend) {
         socket.emit('getConversation', { idUser, id_Friend: selectedFriend });
         socket.on('conversation', ({ messages }) => {
           setMessages(messages);
         });
-      }, [idUser, id_Friend]);
+        }
+      }, [idUser, selectedFriend]);
+
+      // RECEVOIR UN NOUVEAU EN TEMPS REEL
+      useEffect(() => {
+        const handleNewMessage = (newMessage) => {
+            // MET A JOUR L'ETAT DES MESSAGES
+            setMessages(prevMessages => [...prevMessages, newMessage]);
+        };
+        // ECOUTE LES NOUVEAUX MESSAGES
+        socket.on('newMessage', handleNewMessage);
+        // NETTOYER L'EMETTEUR
+        return () => {
+            socket.off('newMessage', handleNewMessage);
+        };
+    }, [socket]);
+
+        // ENVOI LE MESSAGE
+        const sendMessage = (e) => {
+            e.preventDefault();
+            if (messageInput.trim() !== '' && selectedFriend) {
+              socket.emit('message', {
+                idUser: idUser,
+                idSender: selectedFriend,
+                contentMessage: messageInput,
+              });
+              setMessageInput('');
+            }
+          };
 
     return (
     <section>
@@ -87,17 +104,18 @@ function Message(id_Friend) {
                 <div className='chat-body'>
                 <p className="text-center convWith">Conversation avec ({selectedFriend})</p>
                 <div className='message'>
-                {messages.map((message, index) => {
-                    <div key={index} className="w-100">
+                {messages.map((message, index) => (
+                    <div key={index} className="w-100" id={message.idUser === idUser ? 'you' : 'other'}>
                         <div className='message-meta'>
-                            <p id="author">{message.idSender}</p>
+                            <img className="imgProfilConv" src={message.avatarUser ? `http://localhost:3001/images/${message.avatarUser}` : profil} alt="photo de profil"/>
+                            <p id="author">{message.pseudoUser}</p>
                             <p id="time">{message.timeMessage}</p>
                         </div>
                         <div className='message-content'>
                             <p>{message.contentMessage}</p>
                         </div>
                     </div>
-                })}
+                ))}
                 </div>
             </div>
             <div className='chat-footer'>
