@@ -468,6 +468,7 @@ io.on('connection', socket => {
 	socket.on('join', idUser => {
 	  // ENREGISTRE L'UTILISATEUR
 	  user[idUser] = socket;
+	  // RECUPERER LES AMIS AVEC UN SUIVI MUTUEL
 	  db.query(
 		'SELECT user.idUser, user.pseudoUser, user.avatarUser FROM friend ' +
 		'JOIN user ON friend.id_Friend = user.idUser ' +
@@ -478,7 +479,7 @@ io.on('connection', socket => {
 		  if (err) {
 			console.error('Erreur lors de la récupération des amis : ' + err.message);
 		  } else {
-			// Envoie les amis avec un suivi mutuel au client
+			// ENVOIE LES AMIS AVEC UN SUIVI MUTUEL AU CLIENT
 			socket.emit('friends', { friends: results });
 		  }
 		}
@@ -530,6 +531,20 @@ io.on('connection', socket => {
 		}
 	  });
 	});
+	// RECUPERER LES MESSAGES ENTRE AMIS
+	socket.on('getConversation', ({ idUser, id_Friend }) => {
+		db.query(
+		  'SELECT * FROM message WHERE (idUser = ? AND idSender = ?) OR (idUser = ? AND idSender = ?) '
+		  [idUser, id_Friend, id_Friend, idUser],
+		  (err, results) => {
+			if (err) {
+			  console.error('Erreur lors de la récupération de la conversation : ' + err.message);
+			} else {
+			  socket.emit('conversation', { messages: results });
+			}
+		  }
+		);
+	  });
 });
 
 

@@ -13,12 +13,31 @@
             border-top: solid 1px rgb(236, 236, 236);
             border-left: solid 1px rgb(236, 236, 236);
         }
+        .choiceFriend{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+            margin-left: 25%;
+            margin-right: 25%;
+            height: 50px;
+            border: solid 1px black;
+            border-radius: 5px;
+            margin-top: 20%;
+            p{
+                font-size: larger;
+            }
+        }
         .chat-body{            
             margin-left: 10px;
             padding-right: 10px;
             overflow-y: scroll;
             height: 86vh;
             padding-bottom:180px;
+            .convWith{
+                border-bottom: 1px solid rgb(204, 204, 204);
+                width: 100%;
+            }
             .message-content{
                 display: flex;
                 border: solid 1px rgb(182, 182, 182);
@@ -184,12 +203,31 @@
             .titremessage{
                 border-left: solid 1px rgb(236, 236, 236);
             }
+            .choiceFriend{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 70%;
+                margin-left: 15%;
+                margin-right: 15%;
+                height: 50px;
+                border: solid 1px black;
+                border-radius: 5px;
+                margin-top: 40%;
+                p{
+                    font-size: larger;
+                }
+            }
             .chat-body{            
                 margin-left: 10px;
                 padding-right: 10px;
                 overflow-y: scroll;
                 height: 86vh;
                 padding-bottom:100px;
+                .convWith{
+                    border-bottom: 1px solid rgb(204, 204, 204);
+                    width: 100%;
+                }
                 .message-content{
                     display: flex;
                     border: solid 1px rgb(182, 182, 182);
@@ -345,12 +383,31 @@
             height: 100%;
             .blocMessage{
                 width: 100%;
+                .choiceFriend{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 70%;
+                    margin-left: 15%;
+                    margin-right: 15%;
+                    height: 50px;
+                    border: solid 1px black;
+                    border-radius: 5px;
+                    margin-top: 40%;
+                    p{
+                        font-size: medium;
+                    }
+                }
                 .chat-body{            
                     margin-left: 10px;
                     padding-right: 10px;
                     overflow-y: scroll;
                     height: max-content;
                     padding-bottom:100px;
+                    .convWith{
+                        border-bottom: 1px solid rgb(204, 204, 204);
+                        width: 100%;
+                    }
                     .message-content{
                         width: max-content;
                         max-width: 200px;

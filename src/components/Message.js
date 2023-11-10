@@ -11,7 +11,7 @@ function Message(id_Friend) {
     const idUser = localStorage.getItem('idUser');
     // RECUPERER LES AMIS AVEC UN SUIVI MUTUEL
     const [friends, setFriends] = useState([]);
-    const [selectedFriend, setSelectedFriend] = useState(null);
+    const [selectedFriend, setSelectedFriend] = useState(false);
     // RECUPERER LES MESSAGES
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
@@ -48,7 +48,7 @@ function Message(id_Friend) {
       // RECUPERER LA CONVERSATION AVEC L'AMI
       useEffect(() => {
         // HISTORIQUE DES MESSAGES
-        socket.emit('getConversation', { idUser, id_Friend });
+        socket.emit('getConversation', { idUser, id_Friend: selectedFriend });
         socket.on('conversation', ({ messages }) => {
           setMessages(messages);
         });
@@ -78,10 +78,14 @@ function Message(id_Friend) {
                 </p>
             </div>
             {/*BODY*/}
-            {selectedFriend && (
+            {!selectedFriend ? (
+                <div className="choiceFriend">
+                    <p>Choisissez un ami pour discuter</p>
+                </div>
+            ) : (
             <section>
                 <div className='chat-body'>
-                <h3>Conversation avec ({selectedFriend})</h3>
+                <p className="text-center convWith">Conversation avec ({selectedFriend})</p>
                 <div className='message'>
                 {messages.map((message, index) => {
                     <div key={index} className="w-100">
