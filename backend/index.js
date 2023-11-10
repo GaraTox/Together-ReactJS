@@ -493,20 +493,30 @@ io.on('connection', socket => {
 		if (err) {
 		  console.error("Erreur d'insertion dans la base de donnée " + err.message);
 		}else{
-			if (!message[idUser]) {
-				message[idUser] = [];
-			}
-			message[idUser].push(newMessage);
-		  	console.log("Message inséré dans la base de donnée");
-			// Émettre un événement pour informer les clients du nouveau message
-			io.emit('newMessage', newMessage);
+			db.query("SELECT avatarUser, pseudoUser FROM user WHERE idUser = ?", [idUser], (err, userResults) => {
+                if (err) {
+                    console.error("Erreur lors de la récupération des informations de l'utilisateur : " + err.message);
+                } else {
+                    newMessage.avatarUser = userResults[0].avatarUser;
+                    newMessage.pseudoUser = userResults[0].pseudoUser;
+
+                    if (!message[idUser]) {
+                        message[idUser] = [];
+                    }
+                    message[idUser].push(newMessage);
+                    console.log("Message inséré dans la base de donnée");
+
+                    // Émettre un événement pour informer les clients du nouveau message avec toutes les informations nécessaires
+                    io.emit('newMessage', newMessage);
+                }
+            });
 		}
 	  });
 	});
 	// RECUPERER LES MESSAGES ENTRE AMIS
 	socket.on('getConversation', ({ idUser, id_Friend }) => {
 		db.query(
-			'SELECT message.*, user.avatarUser, user.pseudoUser FROM message JOIN user ON message.idUser = user.idUser WHERE (message.idUser = ? AND message.idSender = ?) OR (message.idUser = ? AND message.idSender = ?)',
+			'SELECT message.*, user.idUser, user.avatarUser, user.pseudoUser FROM message JOIN user ON message.idUser = user.idUser WHERE (message.idUser = ? AND message.idSender = ?) OR (message.idUser = ? AND message.idSender = ?)',
 			[idUser, id_Friend, id_Friend, idUser],
 			(err, results) => {
 				if (err) {

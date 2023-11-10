@@ -40,7 +40,7 @@
             .message{
                 overflow-y: scroll;
                 height: 86vh;
-                padding-bottom:120px;
+                padding-bottom:80px;
                 padding-right: 10px;
             .message-content{
                 display: flex;
@@ -272,19 +272,31 @@
                 }
                 #you{
                     display: flex;
+                    flex-direction: column;
                     justify-content: flex-end;
+                    align-items: flex-end;
+                    margin-top: 5px;
                 }
-                #you .mesage-content{
-                    display: flex;
+                #you .message-content{
                     justify-content: flex-end;
+                    color: rgb(33, 37, 41);
+                    background-color: rgb(248, 249, 250);
+                    margin-top: 5px;
                 }
-        
                 #you .message-meta{
                     justify-content: flex-end;
-                    margin-left: 5px;
+                    margin-right: 5px;
                 }
                 .message-meta{
                     display: inline-flex;
+                    .imgProfilConv{
+                        background-color: rgb(248, 249, 250);
+                        width: 25px;
+                        height: 25px;
+                        border: solid 1px rgb(33, 37, 41);
+                        border-radius: 50%;
+                        margin-right: 5px;
+                    }
                     #author{
                         font-size: medium;
                     }
@@ -303,9 +315,12 @@
                 }
                 #other{
                     display: flex;
+                    flex-direction: column;
                     justify-content: flex-start;
+                    margin-top: 5px;
                 }
                 #other .message-content{
+                    margin-top: 5px;
                     justify-content: flex-start;
                     background-color: rgb(192, 192, 192);
                 }
@@ -315,6 +330,7 @@
                 }
             }
             .chat-footer{
+                background-color: rgb(248, 249, 250);
                 border-top: solid 1px rgb(211, 211, 211);
                 height: 8vh;
                 width: 70%;
@@ -432,6 +448,7 @@
                     margin-left: 10px;
                     padding-right: 10px;
                     overflow-y: scroll;
+                    height: 84vh;
                     height: max-content;
                     padding-bottom:100px;
                     .convWith{
@@ -439,7 +456,9 @@
                         width: 100%;
                     }
                     .message{
-                        overflow-y: scroll;
+                        overflow-y: auto;
+                        height: 84vh;
+                        // position: relative;
                     .message-content{
                         width: max-content;
                         max-width: 200px;
@@ -514,7 +533,7 @@
                 }
                 }
                 .chat-footer{
-                    height: 12vh;
+                    height: 14vh;
                     width: 100%;
                     display: block;
                     position: fixed;

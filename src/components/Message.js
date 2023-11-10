@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from "react";
-import axios from "axios";
+import React, {useState, useEffect, useRef} from "react";
 import profil from '../assets/icons/person-fill.svg';
 import friend from '../assets/icons/people.svg';
 import message from '../assets/icons/envelope.svg';
@@ -15,6 +14,15 @@ function Message() {
     // RECUPERER LES MESSAGES
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
+    // CONVERSATION COMMENCE PAR LE BAS
+    const messagesContainerRef = useRef();
+
+    useEffect(() => {
+        // Faire défiler vers le bas lorsque les messages changent
+        if (messagesContainerRef.current) {
+            messagesContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+    }, [messages]);
 
     useEffect(() => {
         // RECUPERE LES AMIS AVEC UN SUIVI MUTUEL
@@ -102,10 +110,10 @@ function Message() {
             ) : (
             <section>
                 <div className='chat-body'>
-                <p className="text-center convWith">Conversation avec ({selectedFriend})</p>
-                <div className='message'>
+                <p className="text-center convWith">Conversation avec {friends.find(friend => friend.idUser === selectedFriend)?.pseudoUser}</p>
+                <div className='message' ref={messagesContainerRef}>
                 {messages.map((message, index) => (
-                    <div key={index} className="w-100" id={message.idUser === idUser ? 'you' : 'other'}>
+                    <div key={index} className="w-100" id={selectedFriend === message.idSender ? 'you' : 'other'}>
                         <div className='message-meta'>
                             <img className="imgProfilConv" src={message.avatarUser ? `http://localhost:3001/images/${message.avatarUser}` : profil} alt="photo de profil"/>
                             <p id="author">{message.pseudoUser}</p>
