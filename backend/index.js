@@ -858,20 +858,24 @@ app.put('/utilisateur/:idUser', (req, res) => {
 })
 
 // L'UTILISATEUR SUPPRIME SON COMPTE
-app.delete('/delete/:idUser', (req, res) => {
+app.delete('/deleteAccount/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
-	db.query('DELETE FROM user WHERE idUser = ?', [idUser], (err, result) => {
-		if (err){
+	db.query('DELETE FROM friend WHERE id_Friend = ?', [idUser], (err, result) => {
+	  if (err) {
+		console.error('Erreur lors de la suppression des amis');
+		res.status(500).json({ error: 'Erreur lors de la suppression des amis' });
+	  } else {
+		db.query('DELETE FROM user WHERE idUser = ?', [idUser], (err, result) => {
+		  if (err) {
 			console.error('Erreur lors de la suppression du compte : ' + err);
 			res.status(500).json({ error: 'Erreur lors de la suppression du compte' });
-		}else{
+		  } else {
 			res.json({ message: 'Compte supprimé avec succès' });
-			// res.clearCookie('CookieTogether');
-	  		// res.redirect('/');
-		}
+		  }
+		});
+	  }
 	});
-});
-
+  });
 // AFFICHAGE SELON LE ROLE DE L'UTILISATEUR
 app.get('/roleUser/:idUser', (req, res) => {
 	const idUser = req.params.idUser;

@@ -32,6 +32,7 @@ CREATE TABLE `feed` (
     `idFeed` INT(255) NOT NULL AUTO_INCREMENT,
     `contentFeed` VARCHAR(255) NOT NULL,
     `idUser` INT(255) NOT NULL,
+    `create` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (`idFeed`),
     FOREIGN KEY(`idUser`) REFERENCES user(`idUser`) ON DELETE CASCADE
