@@ -468,10 +468,23 @@ io.on('connection', socket => {
 	socket.on('join', idUser => {
 	  // ENREGISTRE L'UTILISATEUR
 	  user[idUser] = socket;
+	  db.query(
+		'SELECT user.idUser, user.pseudoUser, user.avatarUser FROM friend ' +
+		'JOIN user ON friend.id_Friend = user.idUser ' +
+		'WHERE friend.id_User = ? ' +
+		'AND friend.id_Friend IN (SELECT id_User FROM friend WHERE id_Friend = ?)',
+		[idUser, idUser],
+		(err, results) => {
+		  if (err) {
+			console.error('Erreur lors de la récupération des amis : ' + err.message);
+		  } else {
+			// Envoie les amis avec un suivi mutuel au client
+			socket.emit('friends', { friends: results });
+		  }
+		}
+	  )
 	});
-	// VERIFIE SI LA RELATION DE SUIVI
 	socket.on('follow', ({ id_User, id_Friend }) => {
-		// UTILISATEUR SUIT AMI
 		db.query(
 		  'SELECT id, id_User, id_Friend FROM friend WHERE id_User = ? AND id_Friend = ?',
 		  [id_User, id_Friend],
@@ -479,7 +492,6 @@ io.on('connection', socket => {
 			if (err) {
 			  console.error('Erreur de vérification : ' + err.message);
 			} else if (results.length > 0) {
-			  // AMI SUIT L'UTILISATEUR
 			  db.query(
 				'SELECT id, id_User, id_Friend FROM friend WHERE id_User = ? AND id_Friend = ?',
 				[id_Friend, id_User],
@@ -487,10 +499,8 @@ io.on('connection', socket => {
 				  if (err2) {
 					console.error('Erreur de vérification : ' + err2.message);
 				  } else if (results2.length > 0) {
-					// LA RELATION DE SUIVI EST MUTUELLE
 					console.log(`La relation de suivi est mutuelle entre ${id_User} et ${id_Friend}`);
 				  } else {
-					// LA RELATION DE SUIVI N'EST PAS MUTUELLE
 					console.log(`L'utilisateur suit ${id_Friend}, mais ${id_Friend} ne le suit pas en retour.`);
 				  }
 				}

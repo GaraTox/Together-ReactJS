@@ -9,18 +9,19 @@ const socket = io('http://localhost:3001');
 
 function Message(id_Friend) {
     const idUser = localStorage.getItem('idUser');
-    // RECUPERER ET AFFICHER LES AMIS
+    // RECUPERER LES AMIS AVEC UN SUIVI MUTUEL
     const [friends, setFriends] = useState([]);
     const [selectedFriend, setSelectedFriend] = useState(null);
-    // RECUPERER ET AFFICHER LES MESSAGES
+    // RECUPERER LES MESSAGES
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
 
     useEffect(() => {
         // RECUPERE LES AMIS AVEC UN SUIVI MUTUEL
         socket.emit('join', idUser);
-        socket.on('follow', ({ friend }) => {
-          setFriends(friend);
+        socket.on('friends', ({ friends }) => {
+          console.log('Friends with mutual follow:', friends);
+          setFriends(friends);
         });
         return () => {
             socket.off('join');
