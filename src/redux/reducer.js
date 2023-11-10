@@ -1,22 +1,16 @@
 const initialState = {
-  followingUsers: [],
+  isAuthenticated: false,
 };
 
-const followingReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_FOLLOWING_USER':
-      return {
-        ...state,
-        followingUsers: [...state.followingUsers, action.user],
-      };
-    case 'REMOVE_FOLLOWING_USER':
-      return {
-        ...state,
-        followingUsers: state.followingUsers.filter(user => user.id !== action.userId),
-      };
+    case 'LOGIN':
+      return { isAuthenticated: true, };
+    case 'LOGOUT':
+      return initialState;
     default:
       return state;
   }
 };
 
-export default followingReducer;
+export default authReducer;

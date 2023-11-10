@@ -53,7 +53,7 @@ app.use(session({
 	key: "CookieTogether",
 	secret: "Together",
 	resave: false,
-	saveUninitialized: false,
+	saveUninitialized: true,
 	cookie:{
 		expires: 3600000 //millisecondes 	// EXPIRE AU BOUT D'UNE HEURE
 	},

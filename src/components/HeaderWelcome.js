@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
+import { useDispatch } from 'react-redux';
 import profil from '../assets/icons/person-fill.svg';
 import searchimg from '../assets/icons/search.svg';
 import logo from '../assets/icons/logo.png';
@@ -79,23 +80,17 @@ const handleUnfollow = (id_Friend) => {
     }
 
     // DECONNEXION
+    const dispatch = useDispatch();
+
     const handleLogout = async () => {
-        try {
-          const response = await fetch('/logout', {
-            method: 'GET',
-            credentials: 'include', // Inclut les cookies dans la requête
-          });
-    
-          if (response.status === 200) {
-            window.location.href = '/'; // Redirection vers la page de connexion
-            localStorage.clear();
-          } else {
-            console.error('Erreur lors de la déconnexion');
-          }
-        } catch (error) {
-          console.error('Erreur lors de la déconnexion :', error);
-        }
-      };
+      try {
+        await axios.get('/logout'); // ENVOIE LA REQUETE
+        dispatch({ type: 'LOGOUT' }); // MET A JOUR LE STORE
+        window.location.href = '/'; // REDIRECTION VERS LA PAGE DE CONNEXION
+      } catch (error) {
+        console.error('Erreur lors de la déconnexion :', error);
+      }
+    };
 
     const [user, setUser] = useState('');
     const [data, setData] = useState([]);

@@ -1,10 +1,7 @@
-import { legacy_createStore, combineReducers } from 'redux';
-import followingReducer from './reducer';
+import { legacy_createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import authReducer from '../redux/reducer';
 
-const rootReducer = combineReducers({
-  following: followingReducer,
-});
-
-const store = legacy_createStore(rootReducer);
+const store = legacy_createStore(authReducer, applyMiddleware(thunk));
 
 export default store;
