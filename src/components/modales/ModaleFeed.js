@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import send from '../../assets/icons/send.png';
-// import { useParams } from 'react-router-dom';
+import profil from '../../assets/icons/person-fill.svg';
 
 function ModaleFeed({post, closeModal, idFeed}){
     const [commentary, setCommentary] = useState('');
@@ -50,7 +50,7 @@ function ModaleFeed({post, closeModal, idFeed}){
                 <div className='body'>
                 <div key={post.idFeed} className="blocPubli">
                     <div className="nomPubli">
-                        <img className="imgProfil" src={post.avatarUser ? `http://localhost:3001/images/${post.avatarUser}` : ''} alt="photo de profil"/>
+                        <img className="imgProfil" src={post.avatarUser ? `http://localhost:3001/images/${post.avatarUser}` : profil} alt="photo de profil"/>
                         <p className="nameFirstname">{post.pseudoUser}</p>
                     </div>
                     <div className="blocCommentaire">
@@ -68,7 +68,7 @@ function ModaleFeed({post, closeModal, idFeed}){
                     {comments.map((comment) => (
                     <div className='blocFeedComm' key={comment.idFeedCommentary}>
                         <div className='blocCommModale'>
-                            <img className="imgProfilModale" src={comment.avatarUser ? `http://localhost:3001/images/${comment.avatarUser}` : ''} alt="photo de profil"/>
+                            <img className="imgProfilModale" src={comment.avatarUser ? `http://localhost:3001/images/${comment.avatarUser}` : profil} alt="photo de profil"/>
                             <p className='pseudoComm'>{comment.pseudoUser}</p>
                             <p className='createComm'>{comment.create}</p>
                         </div>
