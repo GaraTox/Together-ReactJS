@@ -337,7 +337,6 @@ const closeModaleReport = () => {
                 <div className="nomPubli">
                 <img className="imgProfil" src={post.avatarUser ? `http://localhost:3001/images/${post.avatarUser}` : profil} alt="photo de profil"/>
                     <p className="nameFirstname">{post.pseudoUser}</p>
-                    <p className="createAt">{post.create}</p>
                     {moddel.some((item) => item.idFeed === post.idFeed) && (
                       <div className="modifierSupprimer">
                         <img onClick={() => handleEditClick(post)} className="imgModifier" src={modifier} alt="modifier le commentaire"/>

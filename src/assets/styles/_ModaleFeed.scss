@@ -311,10 +311,13 @@
     }
     .blocAllComm{
         padding: 10px;
+        overflow-y: scroll;
+        height: max-content;
         .blocFeedComm{
         padding: 10px;
         border: solid 1px rgb(197, 197, 197);
         border-radius: 10px;
+        margin-top: 5px;
         .blocCommModale{
             display: inline-flex;
             width: 100%;
@@ -326,6 +329,8 @@
                 border-radius: 50%;
             }
             .pseudoComm{
+                display: flex;
+                align-items: center;
                 width: 35%;
                 font-size: small;
                 margin-left: 10px;

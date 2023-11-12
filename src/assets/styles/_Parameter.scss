@@ -39,6 +39,29 @@ body{
             justify-content: center;
         }
    }
+   .weather{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 40px;
+    padding-bottom: 100px;
+    label{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .inputWeather{
+            border: solid 1px rgb(209, 209, 209);
+            border-radius: 10px;
+            margin-bottom: 5px;
+        }
+    }
+    p{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
 }
 }
 .bg-user::-webkit-scrollbar{
@@ -79,6 +102,29 @@ body{
                 margin-top: 50px;
              }
         }
+        .weather{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: 40px;
+            padding-bottom: 100px;
+            label{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                .inputWeather{
+                    border: solid 1px rgb(209, 209, 209);
+                    border-radius: 10px;
+                    margin-bottom: 5px;
+                }
+            }
+            p{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
      }
 }
 }
@@ -91,9 +137,10 @@ body{
         margin-left: 10%;
         margin-right: 10%;
         margin-top: 7%;
-        height: 100%;
+        height: 100vh;
         font-size: medium;
         font-weight: bold;
+        margin-bottom: 200px;
         .blocInfo{
              width: 100%;
              .blocProfil{
@@ -114,6 +161,29 @@ body{
                  font-size: larger;
             }
         }
-     }
-}
+        .weather{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: 40px;
+            padding-bottom: 100px;
+            label{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                .inputWeather{
+                    border: solid 1px rgb(209, 209, 209);
+                    border-radius: 10px;
+                    margin-bottom: 5px;
+                }
+            }
+            p{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    }
+    }
 }

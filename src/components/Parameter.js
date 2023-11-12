@@ -6,7 +6,7 @@ import ModalModifyUser from "./modales/ModaleModifyUser";
 import ModaleUserDelete from "./modales/ModaleUserDelete";
 import Btnmd from "./btn/Btnmd";
 
-function Parameter() {
+function Parameter(props) {
     // NETTOYER REACT DEVTOOL
     // useEffect(() => {
     //     localStorage.clear();
@@ -62,6 +62,42 @@ function Parameter() {
         .catch(err => console.log(err))
     }
 
+    // WEATHER
+    const [state, setState] = useState({ icon: null });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [city, setCity] = useState('');
+  
+    useEffect(() => {
+      if (city) {
+        updateWeather();
+      }
+    }, [city]);
+  
+    const updateWeather = () => {
+      const APIKEY = "19efad4825a8fc6b7271f1f4c07ede57";
+  
+      setLoading(true);
+      setError(null);
+  
+      axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKEY}`)
+        .then((response) => {
+          setState({
+            icon: response.data.weather[0].icon
+          });
+        })
+        .catch((err) => {
+          if (err.response && err.response.status === 404) {
+            setError("Ville non trouvée. Veuillez vérifier le nom de la ville.");
+          } else {
+            setError("Erreur lors de la récupération des données météorologiques.");
+          }
+          console.error("Erreur", err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    };
     return (
         <section className="bg-user">
             {openModalModi && <ModalModifyUser closeModal={setOpenModalModi}/>}
@@ -89,6 +125,24 @@ function Parameter() {
                 <div className="btnDelete">
                     <Btnlg onClick={() => {setOpenModalModi(true)}}  className="btn" caracteristique="lg" text="Modifier votre profil"/>
                     <Btnlg onClick={() => {setOpenModalDel(true)}} className="btn" caracteristique="lg mt-3" text="Supprimer ce compte"/>
+                </div>
+                <div className="weather">
+                    <label>Entrez le nom de la ville :
+                        <input className="inputWeather" type="text" value={city} onChange={(e) => setCity(e.target.value)}/>
+                    </label>
+                    <p>{city && `A ${city}, il fait :`}
+                    {loading ? (
+                        <span>Loading...</span>
+                    ) : (
+                    <>
+                    {state.icon && (
+                        <img src={`https://openweathermap.org/img/w/${state.icon}.png`} alt="weather" />
+                    )}
+                    <button onClick={updateWeather}>Mettre à jour</button>
+                    {error && city && <div style={{ color: 'red' }}>{error}</div>}
+                    </>
+                    )}
+                    </p>
                 </div>
             </div>
             </div>

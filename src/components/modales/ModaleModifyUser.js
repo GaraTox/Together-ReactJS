@@ -45,8 +45,8 @@ function ModalModifyUser({closeModal}){
                     <input type="mail" className="form-control" id="mail" value={mailUser}
                     onChange={e => setMailUser(e.target.value)} name="mailUser" autoComplete="off"/>
                 </div>
-                <div className='footer'>
-                    <Btnsm onClick={handleUpdateUser} type="submit" className="btn" caracteristique="sm" text="Confirmer"/>
+                <div className='footer mt-2'>
+                    <Btnsm onClick={handleUpdateUser} type="submit" className="btn" caracteristique="sm" text="Modifier"/>
                 </div>
                 {message && <p className="text-success">{message}</p>}
             </div>
