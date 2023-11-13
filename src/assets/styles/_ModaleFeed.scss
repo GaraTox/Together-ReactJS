@@ -10,7 +10,7 @@
     justify-content: center;
     .content_modal_feed{
     width: 40%;
-    height: max-content;
+    height: 450px;
     margin-top: 50px;
     border-radius: 12px;
     background-color: white;
@@ -76,6 +76,7 @@
     .blocAllComm{
         padding: 5px;
         overflow-y: scroll;
+        height: 250px;
         .blocFeedComm{
         margin-bottom: 5px;
         padding: 10px;
@@ -131,7 +132,7 @@
         justify-content: center;
         .content_modal_feed{
         width: 60%;
-        height: max-content;
+        height: 600px;
         margin-top: 100px;
         border-radius: 12px;
         background-color: white;
@@ -198,10 +199,13 @@
     }
     .blocAllComm{
         padding: 10px;
+        overflow-y: scroll;
+        height: 400px;
         .blocFeedComm{
         padding: 10px;
         border: solid 1px rgb(197, 197, 197);
         border-radius: 10px;
+        margin-top: 5px;
         .blocCommModale{
             display: inline-flex;
             width: 100%;
@@ -243,8 +247,7 @@
         justify-content: center;
         .content_modal_feed{
         width: 90%;
-        height: max-content;
-        margin-top: 70px;
+        height: 550px;
         border-radius: 12px;
         background-color: white;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -312,7 +315,7 @@
     .blocAllComm{
         padding: 10px;
         overflow-y: scroll;
-        height: max-content;
+        height: 300px;
         .blocFeedComm{
         padding: 10px;
         border: solid 1px rgb(197, 197, 197);
