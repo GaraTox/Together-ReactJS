@@ -73,7 +73,7 @@ const db = mysql.createConnection({
 //////////////////////////////////////PAGE HOME/////////////////////////////////////////////////////
 app.get('/myprofile/:user', (req, res) => {
 	const idUser = req.params.user;
-	db.query('SELECT * FROM user WHERE idUser = ' + idUser, (err, results) => {
+	db.query('SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user WHERE idUser = ' + idUser, (err, results) => {
 	  if (err) {
 		console.error('Erreur lors de la récupération des données utilisateur :', err);
 		res.status(500).json({ error: 'Erreur lors de la récupération des données utilisateur' });
@@ -89,7 +89,7 @@ app.get('/myprofile/:user', (req, res) => {
 
   app.get('/myprofile/message/:user', (req, res) => {
 	const idUser = req.params.user;
-	db.query('SELECT * FROM user WHERE idUser = ' + idUser, (err, results) => {
+	db.query('SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user WHERE idUser = ' + idUser, (err, results) => {
 	  if (err) {
 		console.error('Erreur lors de la récupération des données utilisateur :', err);
 		res.status(500).json({ error: 'Erreur lors de la récupération des données utilisateur' });
@@ -107,7 +107,7 @@ app.get('/myprofile/:user', (req, res) => {
   app.post('/data', (req, res) => {
 	const pseudoUser = req.body.pseudoUser;
 	if(pseudoUser!==""){
-		db.query('SELECT * FROM user WHERE pseudoUser LIKE ?', ["%"+pseudoUser+"%"], (err, result) => {
+		db.query('SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user WHERE pseudoUser LIKE ?', ["%"+pseudoUser+"%"], (err, result) => {
 			if(result!==""){
 				console.log(result);
 				res.send(result)
@@ -124,7 +124,7 @@ app.post('/friendship', (req, res) => {
 	if (id_User === id_Friend) {
 	  return res.status(400).json({ error: 'Vous ne pouvez pas vous suivre vous-même.' });
 	}
-	db.query('SELECT * FROM friend WHERE id_User = ? AND id_Friend= ?', [id_User, id_Friend], (err, results) => {
+	db.query('SELECT id, id_User, id_Friend FROM friend WHERE id_User = ? AND id_Friend= ?', [id_User, id_Friend], (err, results) => {
 	  if (err) {
 		console.error(err);
 		return res.status(500).json({ error: 'Erreur de suivi' });
@@ -160,7 +160,7 @@ app.post('/friendship', (req, res) => {
   app.get('/follow/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
 	db.query(
-	  'SELECT * FROM user JOIN friend ON user.idUser = friend.id_Friend WHERE friend.id_User = ?',
+	  'SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser id, id_User, id_Friend FROM user JOIN friend ON user.idUser = friend.id_Friend WHERE friend.id_User = ?',
 	  [idUser],
 	  (err, results) => {
 		if (err) {
@@ -215,7 +215,7 @@ app.get('/readfeed/:idUser', (req, res) => {
   // LIRE UN POST DANS UNE MODALE
   app.get('/modalefeed/:idFeed', (req, res) => {
 	const idFeed = req.params.idFeed;
-	db.query('SELECT * FROM feed WHERE idFeed = ?', [idFeed], (err, results) => {
+	db.query('SELECT idFeed, contentFeed, idUser, create FROM feed WHERE idFeed = ?', [idFeed], (err, results) => {
 	  if (err) {
 		console.error('Erreur lors de la récupération du feed : ' + err);
 		res.status(500).json({ error: 'Erreur serveur' });
@@ -233,7 +233,7 @@ app.get('/readfeed/:idUser', (req, res) => {
 app.post('/like', (req, res) => {
 	const { idFeed, idUser } = req.body;
 	db.query(
-	  'SELECT * FROM likes WHERE idFeed = ? AND idUser = ?',
+	  'SELECT idLike, idFeed, idUser FROM likes WHERE idFeed = ? AND idUser = ?',
 	  [idFeed, idUser],
 	  (err, results) => {
 		if (err) {
@@ -275,9 +275,7 @@ app.post('/like', (req, res) => {
   app.get('/getLikes', (req, res) => {
 	db.query("SELECT idLike, idUser, idFeed FROM likes", function (err, result) {
 		if (err) throw err;
-		//console.log(result);
 		res.status(200).json(result);
-
 	});
 });
 
@@ -287,10 +285,10 @@ app.post('/like', (req, res) => {
 	const query = 'INSERT INTO feedcommentary (commentary, idFeed, idUser) VALUES (?, ?, ?)';
 	db.query(query, [commentary, idFeed, idUser], (err, result) => {
 	  if (err) {
-		console.error('Erreur lors de l\'ajout du commentaire : ' + err);
-		res.status(500).send('Erreur lors de l\'ajout du commentaire');
+		console.error("Erreur lors de l'ajout du commentaire : " + err);
+		res.status(500).send("Erreur lors de l'ajout du commentaire");
 	  } else {
-		res.status(201).send('Commentaire ajouté avec succès');
+		res.status(201).send("Commentaire ajouté avec succès");
 	  }
 	});	
   });
@@ -298,11 +296,11 @@ app.post('/like', (req, res) => {
 // AFFICHER LE COMMENTAIRE DANS LA MODALE
   app.get('/modale/getComment/:idFeed', (req, res) => {
 	const idFeed = req.params.idFeed;
-	const query = 'SELECT feedcommentary.*, user.pseudoUser, user.avatarUser FROM feedcommentary INNER JOIN user ON feedcommentary.idUser = user.idUser WHERE feedcommentary.idFeed = ?';
+	const query = 'SELECT feedcommentary.idFeedCommentary, feedcommentary.commentary, feedcommentary.idFeed, feedcommentary.idUser, feedcommentary.create, user.pseudoUser, user.avatarUser FROM feedcommentary INNER JOIN user ON feedcommentary.idUser = user.idUser WHERE feedcommentary.idFeed = ?';
 	db.query(query, [idFeed], (err, results) => {
 	  if (err) {
 		console.error(err);
-		return res.status(500).send('Failed to fetch comments');
+		return res.status(500).send("Erreur de récupération du commentaire");
 	  }
 	  res.status(200).json(results);
 	});
@@ -310,7 +308,7 @@ app.post('/like', (req, res) => {
 
 // AFFICHER LE CONTENU DE LA FEED
 app.get('/reportfeed', (req, res) => {
-	const sql = "SELECT * FROM feed";
+	const sql = "SELECT idFeed, contentFeed, idUser FROM feed";
 	db.query(sql, (err, feed) => {
 	  if (err) {
 		console.error(err);
@@ -341,11 +339,11 @@ app.post('/sendreport', (req, res) => {
 	
 	  transporter.sendMail(mailOptions, (error, info) => {
 		if (error) {
-		  console.error('Erreur lors de l\'envoi de l\'e-mail :', error);
-		  res.status(500).json({ message: 'Erreur lors de l\'envoi de l\'e-mail' });
+		  console.error("Erreur lors de l'envoi de l'e-mail :", error);
+		  res.status(500).json({ message: "Erreur lors de l'envoi de l'e-mail" });
 		} else {
-		  console.log('E-mail envoyé :', info.response);
-		  res.json({ message: 'Signalement soumis avec succès' });
+		  console.log("E-mail envoyé :", info.response);
+		  res.json({ message: "Signalement soumis avec succès" });
 		}
 	  });
 });
@@ -374,10 +372,10 @@ app.delete('/reportdelete/:idReport', (req, res) => {
 // AFFICHER LES ICONES MODIFIER ET SUPPRIMER SI C'EST MES POSTS
 app.get('/moddel/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
-	db.query('SELECT * FROM feed WHERE idUser = ?', [idUser], (err, results) => {
+	db.query('SELECT idFeed, contentFeed, idUser FROM feed WHERE idUser = ?', [idUser], (err, results) => {
 	  if (err) {
 		console.error(err);
-		res.status(500).send('Erreur serveur');
+		res.status(500).send('Erreur de récupération des données utilisateur');
 		return;
 	  }
 	  res.json(results);
@@ -386,14 +384,14 @@ app.get('/moddel/:idUser', (req, res) => {
 
 // LIRE SON FEED ET LE MODIFIER
 app.get('/feedupdate', (req, res) => {
-	const sql = "SELECT * FROM feed";
+	const sql = "SELECT idFeed, contentFeed, idUser FROM feed";
 	db.query(sql,(err , result)=>{
 		if(err) return res.json({Message: "Erreur"});
 		return res.json(result);
 	})
 })
 app.get('/feedupdate/:idFeed', (req, res) => {
-	const sql = "SELECT * FROM feed WHERE idFeed = ?";
+	const sql = "SELECT idFeed, contentFeed, idUser FROM feed WHERE idFeed = ?";
 	db.query(sql,(err , result)=>{
 		if(err) return res.json({Message: "Erreur"});
 		return res.json(result);
@@ -405,18 +403,18 @@ app.put('/feedupdate/:idFeed', (req, res) => {
 	const sql = 'UPDATE feed SET contentFeed = ? WHERE idFeed = ?';
 	db.query(sql, [contentFeed, idFeed], (err, result) => {
 	  if (err) {
-		console.error('Error updating feed item:', err);
-		res.status(500).json({ error: 'An error occurred while updating the feed item.' });
+		console.error('Erreur dans la modification de la publication', err);
+		res.status(500).json({ error: 'Erreur de modification' });
 	  } else {
-		console.log('Feed item updated:', result);
-		res.json({ message: 'Feed item updated successfully' });
+		console.log('Publication modifiée:', result);
+		res.json({ message: 'Modification réussie' });
 	  }
 	});
 });
 
 // LIRE SON FEED ET LE SUPPRIMER
 app.get('/feedread', (req, res) => {
-	const sql = "SELECT * FROM feed";
+	const sql = "SELECT idFeed, contentFeed, idUser FROM feed";
 	db.query(sql,(err , result)=>{
 		if(err) return res.json({Message: "Erreur"});
 		return res.json(result);
@@ -516,7 +514,7 @@ io.on('connection', socket => {
 	// RECUPERER LES MESSAGES ENTRE AMIS
 	socket.on('getConversation', ({ idUser, id_Friend }) => {
 		db.query(
-			'SELECT message.*, user.idUser, user.avatarUser, user.pseudoUser FROM message JOIN user ON message.idUser = user.idUser WHERE (message.idUser = ? AND message.idSender = ?) OR (message.idUser = ? AND message.idSender = ?)',
+			'SELECT message.idMessage, message.idUser, message.idSender, message.contentMessage, message.timeMessage, user.idUser, user.avatarUser, user.pseudoUser FROM message JOIN user ON message.idUser = user.idUser WHERE (message.idUser = ? AND message.idSender = ?) OR (message.idUser = ? AND message.idSender = ?)',
 			[idUser, id_Friend, id_Friend, idUser],
 			(err, results) => {
 				if (err) {
@@ -653,10 +651,10 @@ app.post('/connect-admin/home/user/create', (req, res) => {
 // MODIFIER UN COMPTE UTILISATEUR POUR ADMIN
 //LISTE DE TOUS LES UTILISATEURS
 app.get('/connect-admin/home/user/choiceUpdate/read', (req, res) => {
-	db.query('SELECT * FROM user', (err, results) => {
+	db.query('SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user', (err, results) => {
 	  if (err) {
-		console.error('Erreur lors de la récupération des utilisateurs : ' + err);
-		res.status(500).send('Erreur lors de la récupération des utilisateurs');
+		console.error("Erreur lors de la récupération des utilisateurs : " + err);
+		res.status(500).send("Erreur lors de la récupération des utilisateurs");
 	  } else {
 		res.json(results);
 	  }
@@ -669,11 +667,11 @@ app.put('/connect-admin/home/user/choiceUpdate/:idUser', (req, res) => {
 	const sql = 'UPDATE user SET pseudoUser = ?, mailUser = ? WHERE idUser = ?';
 	db.query(sql, [pseudoUser, mailUser, idUser], (err, result) => {
 	  if (err) {
-		console.error('Erreur lors de la mise à jour de l\'utilisateur : ' + err);
-		res.status(500).send('Erreur lors de la mise à jour de l\'utilisateur');
+		console.error("Erreur lors de la mise à jour de l'utilisateur : " + err);
+		res.status(500).send("Erreur lors de la mise à jour de l'utilisateur");
 	  } else {
-		console.log('Utilisateur mis à jour avec succès');
-		res.status(200).send('Utilisateur mis à jour avec succès');
+		console.log("Utilisateur mis à jour avec succès");
+		res.status(200).send("Utilisateur mis à jour avec succès");
 	  }
 	});
   });
@@ -690,7 +688,7 @@ app.delete('/connect-admin/home/user/delete/:idUser', (req, res) => {
 // LIRE LES COMPTES UTILISATEUR POUR ADMIN
 app.get('/connect-admin/home/user/read', (req, res) => {
 	const idUser = req.params.idUser;
-	const sql = "SELECT * FROM user";
+	const sql = "SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user";
 	db.query(sql,(err , result)=>{
 		if(err) return res.json({Message: "Erreur"});
 		return res.json(result);
@@ -702,8 +700,8 @@ app.get('/users', (req, res) => {
 	const query = 'SELECT idUser, pseudoUser FROM user';
 	db.query(query, (err, results) => {
 	  if (err) {
-		console.error('Erreur lors de la récupération des utilisateurs : ' + err.message);
-		res.status(500).json({ error: 'Erreur lors de la récupération des utilisateurs' });
+		console.error("Erreur lors de la récupération des utilisateurs : " + err.message);
+		res.status(500).json({ error: "Erreur lors de la récupération des utilisateurs" });
 	  } else {
 		res.json(results);
 	  }
@@ -714,10 +712,10 @@ app.post('/connect-admin/home/user/createPost', (req, res) => {
 	const query = 'INSERT INTO feed (idUser, contentFeed) VALUES (?, ?)';
 	db.query(query, [idUser, contentFeed], (err, results) => {
 	  if (err) {
-		console.error('Erreur lors de la création du post : ' + err.message);
-		res.status(500).json({ error: 'Erreur lors de la création du post' });
+		console.error("Erreur lors de la création du post : " + err.message);
+		res.status(500).json({ error: "Erreur lors de la création du post" });
 	  } else {
-		res.status(201).json({ message: 'Post créé avec succès' });
+		res.status(201).json({ message: "Post créé avec succès" });
 	  }
 	});
   });
@@ -727,8 +725,8 @@ app.post('/connect-admin/home/user/createPost', (req, res) => {
 app.get('/connect-admin/home/user/choiceUpdate/readPost', (req, res) => {
 	db.query("SELECT feed.idFeed, user.pseudoUser, feed.contentFeed FROM feed INNER JOIN user ON feed.idUser = user.idUser", (err, results) => {
 	  if (err) {
-		console.error('Erreur lors de la récupération des utilisateurs : ' + err);
-		res.status(500).send('Erreur lors de la récupération des utilisateurs');
+		console.error("Erreur lors de la récupération des utilisateurs : " + err);
+		res.status(500).send("Erreur lors de la récupération des utilisateurs");
 	  } else {
 		res.json(results);
 	  }
@@ -741,11 +739,11 @@ app.put('/connect-admin/home/user/readPost/:idUser', (req, res) => {
 	const sql = 'UPDATE feed SET contentFeed = ? WHERE idFeed = ?';
 	db.query(sql, [contentFeed, idUser], (err, result) => {
 	  if (err) {
-		console.error('Erreur lors de la mise à jour de l\'utilisateur : ' + err);
-		res.status(500).send('Erreur lors de la mise à jour de l\'utilisateur');
+		console.error("Erreur lors de la mise à jour de l'utilisateur : " + err);
+		res.status(500).send("Erreur lors de la mise à jour de l'utilisateur");
 	  } else {
-		console.log('Utilisateur mis à jour avec succès');
-		res.status(200).send('Utilisateur mis à jour avec succès');
+		console.log("Utilisateur mis à jour avec succès");
+		res.status(200).send("Utilisateur mis à jour avec succès");
 	  }
 	});
   });
@@ -774,7 +772,7 @@ app.post('/', (req, res) => {
 	const passwordUser = req.body.passwordUser;
 	// REQUETE
 	db.query(
-		"SELECT * FROM user WHERE mailUser = ?",
+		"SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user WHERE mailUser = ?",
 		mailUser,
 		(err, data) => {
 			if(err) return console.log("erreur de login");
@@ -811,9 +809,9 @@ app.post('/upload/:idUser', upload.single('image'), (req, res) => {
 
 app.get('/avatar/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
-	const sql = 'SELECT * FROM user WHERE idUser = ?';
+	const sql = 'SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user WHERE idUser = ?';
 	db.query(sql, [idUser], (err, result) => {
-		if(err) return res.status(500).json("Error L211");
+		if(err) return res.status(500).json("Erreur de récupération de l'avatar");
 		return res.json(result);
 	})
 })
@@ -821,15 +819,15 @@ app.get('/avatar/:idUser', (req, res) => {
 // RECUPERATION DES DONNEES DE PROFIL
 app.get('/myprofile/parameter/:user', (req, res) => {
 	const idUser = req.params.user;
-	db.query('SELECT * FROM user WHERE idUser = ' + idUser, (err, results) => {
+	db.query('SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user WHERE idUser = ' + idUser, (err, results) => {
 	  if (err) {
-		console.error('Erreur lors de la récupération des données utilisateur :', err);
-		res.status(500).json({ error: 'Erreur lors de la récupération des données utilisateur' });
+		console.error("Erreur lors de la récupération des données utilisateur :", err);
+		res.status(500).json({ error: "Erreur lors de la récupération des données utilisateur" });
 	  } else {
 		if (results.length === 1) {
 		  res.json(results[0]);
 		} else {
-		  res.status(404).json({ error: 'Utilisateur non trouvé' });
+		  res.status(404).json({ error: "Utilisateur non trouvé" });
 		}
 	  }
 	});
@@ -839,7 +837,7 @@ app.get('/myprofile/parameter/:user', (req, res) => {
 //LISTE DES INFORMATIONS DE UTILISATEUR
 app.get('/utilisateur/:idUser', (req, res) => {
 	const idUser = req.params.idUser
-	const sql = "SELECT * FROM user WHERE idUser = ?";
+	const sql = "SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user WHERE idUser = ?";
 	db.query(sql, idUser, (err , result)=>{
 		if(err) return res.json({Message: "Erreur"});
 		return res.json(result[0]);
@@ -862,15 +860,15 @@ app.delete('/deleteAccount/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
 	db.query('DELETE FROM friend WHERE id_Friend = ?', [idUser], (err, result) => {
 	  if (err) {
-		console.error('Erreur lors de la suppression des amis');
-		res.status(500).json({ error: 'Erreur lors de la suppression des amis' });
+		console.error("Erreur lors de la suppression des amis");
+		res.status(500).json({ error: "Erreur lors de la suppression des amis" });
 	  } else {
 		db.query('DELETE FROM user WHERE idUser = ?', [idUser], (err, result) => {
 		  if (err) {
-			console.error('Erreur lors de la suppression du compte : ' + err);
-			res.status(500).json({ error: 'Erreur lors de la suppression du compte' });
+			console.error("Erreur lors de la suppression du compte : " + err);
+			res.status(500).json({ error: "Erreur lors de la suppression du compte" });
 		  } else {
-			res.json({ message: 'Compte supprimé avec succès' });
+			res.json({ message: "Compte supprimé avec succès" });
 		  }
 		});
 	  }
@@ -881,12 +879,12 @@ app.get('/roleUser/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
 	db.query('SELECT roleUser FROM user WHERE idUser = ?', [idUser], (err, results) => {
 		if(err){
-			console.log("erreur du role de l'utilisateur", err);
-			res.status(500).json({error: 'Erreur serveur'});
+			console.log("Erreur du role de l'utilisateur", err);
+			res.status(500).json({error: "Erreur serveur"});
 			return;
 		}
 		if(results.length === 0){
-			res.status(404).json({error: 'utilisateur non trouvé'});
+			res.status(404).json({error: "Utilisateur non trouvé"});
 		}else{
 			const roleUser = results[0].roleUser;
 			res.json({roleUser: roleUser});
@@ -898,8 +896,8 @@ app.get('/roleUser/:idUser', (req, res) => {
 app.get('/logout', (req, res) => {
 	req.session.destroy((err) => {
 	  if (err) {
-		console.error('Erreur lors de la déconnexion :', err);
-		return res.status(500).send('Erreur lors de la déconnexion');
+		console.error("Erreur lors de la déconnexion :", err);
+		return res.status(500).send("Erreur lors de la déconnexion");
 	  }
 	  res.clearCookie('CookieTogether');
 	  res.redirect('/');
