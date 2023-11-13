@@ -29,8 +29,8 @@ ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `feed`;
 CREATE TABLE `feed` (
-    `idFeed` INT(255) NOT NULL AUTO_INCREMENT,
-    `contentFeed` VARCHAR(255) NOT NULL,
+    `idFeed` INT(255) NOT NULL AUTO_INCREMENT, 
+    `contentFeed` VARCHAR(255),
     `idUser` INT(255) NOT NULL,
     `create` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
