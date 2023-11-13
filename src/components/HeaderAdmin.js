@@ -71,7 +71,7 @@ function HeaderAdmin() {
   return (
     <section>
         <div className='header'>
-            <nav>
+            <nav className="navAdmin">
                   <div className='logo'>
                     <Link to={`/myprofile/${users}`}><img className='logoTogether' src={logo} alt='logo together'/></Link>
                     <p className="together">Together</p>

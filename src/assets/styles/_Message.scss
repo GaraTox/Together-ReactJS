@@ -1,6 +1,4 @@
 @media screen and (min-width: 781px) {
-.bg-user{
-    background-color: rgb(248, 249, 250);
 .contenuPrincipal{
     width: 100%;
     height: 100%;
@@ -215,12 +213,10 @@
     }
 }
 }
-}
 
 
-@media screen and (min-width: 568px) and (max-width: 780px) {   
-    .bg-user{
-        background-color: rgb(248, 249, 250);
+
+@media screen and (min-width: 568px) and (max-width: 780px) {
     .contenuPrincipal{
         width: 100%;
         height: 100%;
@@ -419,11 +415,8 @@
             }
         }
     }
-    }
 }
     @media screen and (max-width: 567px) {  
-        .bg-user{
-            background-color: rgb(248, 249, 250);
         .contenuPrincipal{
             width: 100%;
             height: 100%;
@@ -609,5 +602,4 @@
                 }
             }
         }
-    }
 }

@@ -1,11 +1,17 @@
-.logoInscription{
+.navInscription{
+    padding: 0;
+    margin: 0;
+    background-color: rgb(33, 37, 41);
+    height: 80px;
     display: flex;
-    justify-content: center;
-    width: 100%;
-    align-items: center;
-    .logoTogetherIns{
-        width: 60px;
-        height: 60px;
+    .logoInscription{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        align-items: center;
+        .logoTogetherIns{
+            width: 60px;
+            height: 60px;
+        }
     }
-
 }

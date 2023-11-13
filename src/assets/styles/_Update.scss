@@ -1,7 +1,4 @@
 @media screen and (min-width: 781px) {
-    .bg-admin{
-        height: 100vh;
-        background-color: #b4b4b4;
     .blocUpdate{
         display: flex;
         margin: 0 auto;
@@ -10,14 +7,10 @@
             width: 300px;
         }
     }
-    }
 }
     
     /*TABLETTE*/
     @media screen and (min-width: 568px) and (max-width: 780px) {
-        .bg-admin{
-            height: 100vh;
-            background-color: #b4b4b4;
         .blocUpdate{
             display: flex;
             margin: 0 auto;
@@ -26,14 +19,10 @@
                 width: 300px;
             }
         }
-    }
 }
     
     /* SMARTPHONE */
     @media screen and (max-width: 567px) {
-        .bg-admin{
-            height: 100vh;
-            background-color: #b4b4b4;
         .blocUpdate{
             display: flex;
             margin: 0 auto;
@@ -42,5 +31,4 @@
                 width: 300px;
             }
         }
-    }
     }

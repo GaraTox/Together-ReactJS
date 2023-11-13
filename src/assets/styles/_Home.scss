@@ -1,7 +1,5 @@
 /* COMPUTER */
 @media screen and (min-width: 781px) {
-.bg-user{
-    background-color: rgb(248, 249, 250);
 .blocPublication{
     overflow-y: scroll;
     width: 80%;
@@ -171,12 +169,9 @@
 }
 }
 
-}
 
 /*TABLETTE*/
 @media screen and (min-width: 568px) and (max-width: 780px) {
-    .bg-user{
-        background-color: rgb(248, 249, 250);
     .blocPublication{
         width: 80%;
         height: 100vh;
@@ -335,13 +330,11 @@
             }
         }
     }
-}
+
 }
 
 /* SMARTPHONE */
 @media screen and (max-width: 567px) {
-    .bg-user{
-        background-color: rgb(248, 249, 250);
     .blocPublication{
         width: 100%;
         height: 100vh;
@@ -499,5 +492,4 @@
             }
         }
     }
-}
 }

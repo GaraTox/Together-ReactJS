@@ -2,10 +2,6 @@
 @media screen and (min-width: 781px) {
 body{
     overflow: hidden;
-    .bg-user{
-    background-color: rgb(248, 249, 250);
-    overflow-y: scroll;
-    height: 100vh;
 .blocParametre{
     width: 50%;
    margin-left: 25%;
@@ -73,12 +69,8 @@ body{
     border-radius: 50px;
 }
 }
-
-}
 /*TABLETTE*/
 @media screen and (min-width: 568px) and (max-width: 780px) {
-    .bg-user{
-        background-color: rgb(248, 249, 250);
     .blocParametre{
         width: 100%;
         margin-top: 10%;
@@ -127,20 +119,17 @@ body{
         }
      }
 }
-}
 /* SMARTPHONE */
 @media screen and (max-width: 567px) {
-    .bg-user{
-        background-color: rgb(248, 249, 250);
     .blocParametre{
-        width: 80%;
-        margin-left: 10%;
-        margin-right: 10%;
+        padding-left: 10%;
+        padding-right: 10%;
         margin-top: 7%;
+        overflow-y: scroll;
         height: 100vh;
         font-size: medium;
         font-weight: bold;
-        margin-bottom: 200px;
+        padding-bottom: 100px;
         .blocInfo{
              width: 100%;
              .blocProfil{
@@ -184,6 +173,5 @@ body{
                 align-items: center;
             }
         }
-    }
     }
 }

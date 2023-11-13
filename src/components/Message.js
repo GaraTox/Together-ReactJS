@@ -14,15 +14,15 @@ function Message() {
     // RECUPERER LES MESSAGES
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
-    // CONVERSATION COMMENCE PAR LE BAS
-    const messagesContainerRef = useRef();
+    // // CONVERSATION COMMENCE PAR LE BAS
+    // const messagesContainerRef = useRef();
 
-    useEffect(() => {
-        // Faire défiler vers le bas lorsque les messages changent
-        if (messagesContainerRef.current) {
-            messagesContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-        }
-    }, [messages]);
+    // useEffect(() => {
+    //     // Faire défiler vers le bas lorsque les messages changent
+    //     if (messagesContainerRef.current) {
+    //         messagesContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    //     }
+    // }, [messages]);
 
     useEffect(() => {
         // RECUPERE LES AMIS AVEC UN SUIVI MUTUEL
@@ -111,7 +111,7 @@ function Message() {
             <section>
                 <div className='chat-body'>
                 <p className="text-center convWith">Conversation avec {friends.find(friend => friend.idUser === selectedFriend)?.pseudoUser}</p>
-                <div className='message' ref={messagesContainerRef}>
+                <div className='message'>
                 {messages.map((message, index) => (
                     <div key={index} className="w-100" id={selectedFriend === message.idSender ? 'you' : 'other'}>
                         <div className='message-meta'>
