@@ -48,7 +48,7 @@ function ModalModifyUser({closeModal}){
                 <div className='footer mt-2'>
                     <Btnsm onClick={handleUpdateUser} type="submit" className="btn" caracteristique="sm" text="Modifier"/>
                 </div>
-                {message && <p className="text-success">{message}</p>}
+                {message && <p className="text-center text-success">{message}</p>}
             </div>
         </section>
     )

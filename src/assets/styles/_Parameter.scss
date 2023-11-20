@@ -2,13 +2,15 @@
 @media screen and (min-width: 781px) {
 body{
     overflow: hidden;
+.bg-user{
+ overflow-y: scroll;
+ height: 100vh;
 .blocParametre{
-    width: 50%;
+   width: 50%;
    margin-left: 25%;
    margin-right: 25%;
    margin-bottom: 1%;
    margin-top: 5%;
-   height: 100%;
    font-size: larger;
    font-weight: bold;
    .blocInfo{
@@ -69,6 +71,8 @@ body{
     border-radius: 50px;
 }
 }
+}
+
 /*TABLETTE*/
 @media screen and (min-width: 568px) and (max-width: 780px) {
     .blocParametre{

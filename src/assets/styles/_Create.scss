@@ -45,6 +45,8 @@
 @media screen and (max-width: 567px) {
     .bg-admin{
         height: 100vh;
+        overflow-y: scroll;
+        padding-bottom: 100px;
         background-color: #b4b4b4;
     .blocCreate{
         display: flex;

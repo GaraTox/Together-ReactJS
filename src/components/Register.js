@@ -57,28 +57,28 @@ const navigate = useNavigate();
             <label htmlFor="exampleInput" className="form-label">Pseudo</label>
             <input onChange={(e) => {setPseudoUser(e.target.value);}} type="text" 
             value={pseudoUser} onBlur={handleBlur}
-            className="form-control" id="pseudo" name="pseudoUser" autoComplete="off"/>
+            className="form-control" id="pseudo" name="pseudoUser" autoComplete="off" required/>
             {errors.pseudoUser && <small>{errors.pseudoUser}</small>}
           </div>
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Adresse mail</label>
             <input onChange={(e) => {setMailUser(e.target.value);}} type="mail" 
             value={mailUser} onBlur={handleBlur}
-            className="form-control" id="mail" name="mailUser" autoComplete="off"/>
+            className="form-control" id="mail" name="mailUser" autoComplete="off" required/>
             {errors.mailUser && <small>{errors.mailUser}</small>}
           </div>
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Date de naissance</label>
             <input onChange={(e) => {setBirthdayUser(e.target.value);}} type="date" 
             value={birthdayUser} onBlur={handleBlur}
-            className="form-control" id="birthday" name="birthdayUser" autoComplete="off" title="âge requis : 13 ans minimum" max="2010-12-01"/>
+            className="form-control" id="birthday" name="birthdayUser" autoComplete="off" title="âge requis : 13 ans minimum" max="2010-12-01" required/>
             {errors.birthdayUser && <small>{errors.birthdayUser}</small>}
           </div>
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Mot de passe</label>
             <input onChange={(e) => {setPasswordUser(e.target.value);}} type="password" 
             value={passwordUser} onBlur={handleBlur}
-            className="form-control" id="passw" name="passwordUser" autoComplete="off"/>
+            className="form-control" id="passw" name="passwordUser" autoComplete="off" required/>
             {errors.passwordUser && <small>{errors.passwordUser}</small>}
           </div>
           <div className="mb-1">

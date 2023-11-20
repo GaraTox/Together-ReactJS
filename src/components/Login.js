@@ -31,6 +31,8 @@ function Connect() {
 
   const navigate = useNavigate();
 
+  const [message, setMessage] = useState('');
+
 // axios.defaults.withCredentials = true;
 
 // console.log("L38 => ", localStorage.getItem('idUser'))
@@ -46,6 +48,7 @@ const handleSubmit = async (e) => {
     navigate(`/myprofile/${response.data}`)
   } 
   catch (error) {
+    setMessage('Identifiants incorrects');
     console.error(error);
   }
 }
@@ -53,7 +56,7 @@ const handleSubmit = async (e) => {
     return (
         <section className="loginPage">
         {openModal && <ModalPassword closeModal={setOpenModal}/>}
-        <h1 className="titrePresentation">Bienvenue sur Together, <br/> le nouveau réseau social gratuit.</h1>
+        <h1 className="titrePresentation">Bienvenue sur Together, <br/> le nouveau réseau social.</h1>
         <div className="blocForm">
         <Formik initialValues={initialValues} validationSchema={Validation}>
         <form onSubmit={handleSubmit} className="formConnect rounded" method="POST">
@@ -63,7 +66,7 @@ const handleSubmit = async (e) => {
               <label htmlFor="exampleInput" className="form-label">Adresse Mail</label>
               <input onChange={(e) => {setMailUser(e.target.value);}} type="mail" 
               value={mailUser} onBlur={handleBlur}
-              className="form-control" id="mail" name="mailUser" autoComplete="off"/>
+              className="form-control" id="mail" name="mailUser" autoComplete="off" required/>
             {errors.mailUser && <small>{errors.mailUser}</small>}
             </div>
 
@@ -71,7 +74,7 @@ const handleSubmit = async (e) => {
               <label htmlFor="exampleInput" className="form-label">Mot de passe</label>
               <input onChange={(e) => {setPasswordUser(e.target.value);}} type="password" 
               value={passwordUser} onBlur={handleBlur}
-              className="form-control" id="passw" name="passwordUser" autoComplete="off"/>
+              className="form-control" id="passw" name="passwordUser" autoComplete="off" required/>
             {errors.passwordUser && <small>{errors.passwordUser}</small>}
             </div>
 
@@ -80,6 +83,7 @@ const handleSubmit = async (e) => {
           </form>
           </Formik>
         </div>
+        {message && <p className="text-center text-danger">{message}</p>}
           <div className="noAccount">
             <p>Pas de compte ? <Link to="/register" className="inscrivezVous">Inscrivez-vous !</Link></p>
           </div>

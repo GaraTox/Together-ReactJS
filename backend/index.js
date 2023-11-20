@@ -324,33 +324,33 @@ app.post('/sendreport', (req, res) => {
 	const sql = "INSERT INTO report (idUser, idFeed, contentReport) VALUES (?, ?, ?)";
 	const values = [idUser, idFeed, contentReport];
 	db.query(sql, values, (err, result) => {
-	if (err) {
-		console.error(err);
-		return res.status(500).json({ message: "Erreur lors du signalement" });
-	}
-	res.json({ message: "Signalement soumis avec succès" });
-	});
-	const mailOptions = {
-		from: process.env.EMAIL_USER,
-		to: process.env.EMAIL_USER,
-		subject: 'Signalement de publication',
-		text: `L'utilisateur ${idUser} a signalé la publication ${idFeed} pour la raison suivante : ${contentReport}`,
-	  };
-	
-	  transporter.sendMail(mailOptions, (error, info) => {
-		if (error) {
-		  console.error("Erreur lors de l'envoi de l'e-mail :", error);
-		  res.status(500).json({ message: "Erreur lors de l'envoi de l'e-mail" });
-		} else {
-		  console.log("E-mail envoyé :", info.response);
-		  res.json({ message: "Signalement soumis avec succès" });
+		if (err) {
+			console.error(err);
+			return res.status(500).json({ message: "Erreur lors du signalement" });
 		}
-	  });
+		res.json({ message: "Signalement soumis avec succès" });
+		});
+		const mailOptions = {
+			from: process.env.EMAIL_USER,
+			to: process.env.EMAIL_USER,
+			subject: 'Signalement de publication',
+			text: `L'utilisateur ${idUser} a signalé la publication ${idFeed} pour la raison suivante : ${contentReport}`,
+	  	};
+	
+	  	transporter.sendMail(mailOptions, (error, info) => {
+			if (error) {
+		  		console.error("Erreur lors de l'envoi de l'e-mail :", error);
+		  		res.status(500).json({ message: "Erreur lors de l'envoi de l'e-mail" });
+			} else {
+		  		console.log("E-mail envoyé :", info.response);
+		  		res.json({ message: "Signalement soumis avec succès" });
+			}
+	  	});
 });
 
 // AFFICHER LES SIGNALEMENT
 app.get('/recupreport', (req, res) => {
-    const sql ="SELECT report.idReport, report.contentReport, feed.idFeed, feed.contentFeed FROM report INNER JOIN feed ON report.idFeed = feed.idFeed"	
+    const sql ="SELECT report.idReport, report.contentReport, feed.idFeed, feed.contentFeed FROM report INNER JOIN feed ON report.idFeed = feed.idFeed"
 	db.query(sql, (err, feed) => {
 	  if (err) {
 		console.error(err);
@@ -783,11 +783,16 @@ app.post('/', (req, res) => {
 						console.log('login success')
 						res.status(200).json(data[0].idUser)
 					}else{
-						console.log('login failed')
+						console.log('login failed');
+						res.status(500).send('Erreur de login')
 					}
-					if(err) return console.log('probleme de mot de passe');
+					if(err){
+						res.status(500).send('Encore Erreur de login')
+						return console.log('probleme de mot de passe');
+					}
 				});
 			}else {
+				res.status(500).send('Encore Erreur de login');
 				return console.log('utilisateur non trouvé');
 			}
 		}

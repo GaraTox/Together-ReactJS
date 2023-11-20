@@ -12,6 +12,8 @@ function Parameter(props) {
     //     localStorage.clear();
     // })
 
+    const [message, setMessage] = useState('');
+
     // AFFICHER LES DONNEES DE L'UTILISATEUR
     const [user, setUser] = useState('');
 
@@ -55,9 +57,11 @@ function Parameter(props) {
         axios.post(`http://localhost:3001/upload/${user}`, formdata)
         .then(res => 
             {if(res.data.Status === "Success"){
-                console.log('Success for avatar')
+                console.log('Success for avatar');
+                setMessage('Avatar ajouté')
             }else{
-                console.log('Failed for avatar')
+                console.log('Failed for avatar');
+                setMessage('Avatar non ajouté')
             }})
         .catch(err => console.log(err))
     }

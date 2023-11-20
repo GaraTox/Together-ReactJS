@@ -15,13 +15,13 @@
         }
         
         .searchName{
-            width: 20%;
             margin-top: 10px;
         }
         .searchButton{
             width: max-content;
             height: fit-content;
             margin-top: 5px;
+            margin-left: 10px;
         }
     }
 }
@@ -44,7 +44,6 @@
             }
             
             .searchName{
-                width: 20%;
                 margin-top: 10px;
             }
             .searchButton{
@@ -81,7 +80,8 @@
                     .searchAvatar{
                         width: 100%;
                         .avatar{
-                            width: 3em;
+                            width: 40px;
+                            height: 40px;
                         }
                     }
                     .searchFirstname{
