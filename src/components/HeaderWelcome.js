@@ -129,14 +129,15 @@ const handleUnfollow = (id_Friend) => {
                 <form className="formSearch" method='GET' action='#'>
                   <input className='inputSearch border-light' type='search' placeholder="Rechercher un ami..."
                     onChange={(e) => {handleChangeInp(e)}} autoComplete="off"/>
-                  <button type="submit" className="btnSearch">
+                  {/* <button type="submit" className="btnSearch">
                     <img className="imgLoupe mb-1" src={searchimg} alt="loupe"/>
-                  </button>
+                  </button> */}
                   <div className="results">
                     <ul>
                     {tab.map((user) => {
                         return(
                           <li className="lisearch" key={user.idUser}>
+                            ID: {user.idUser}
                             <img className="imgPhoto rounded-circle" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : profil} alt=""/>
                             {user.pseudoUser}
                             {followed ? (
@@ -168,14 +169,15 @@ const handleUnfollow = (id_Friend) => {
                 <form className="formBurger" method='GET' action='#'>
                   <input className='inputSearch border-light' type='search' placeholder="Rechercher un ami..."
                     onChange={(e) => {handleChangeInp(e)}} autoComplete="off"/>
-                  <button type="submit" className="btnSearch">
+                  {/* <button type="submit" className="btnSearch">
                     <img className="imgLoupe mb-1" src={searchimg} alt="loupe"/>
-                  </button>
+                  </button> */}
                   <div className="results">
                     <ul className="ulsearch">
                     {tab.map((user) => {
                         return(
                           <li className="lisearch" key={user.idUser}>
+                            ID: {user.idUser}
                            <img className="imgPhoto rounded-circle" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : profil} alt=""/>
                             {user.pseudoUser}
                             {followed ? (

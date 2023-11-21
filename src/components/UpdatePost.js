@@ -68,7 +68,7 @@ function UpdatePost() {
                 return(
                 <div key={key} className="text-center search">
                     <p className="searchFirstname">{feed.pseudoUser}</p>
-                    <p className="searchName">{feed.contentFeed}</p>
+                    <p className="searchName border border-dark rounded p-1">{feed.contentFeed}</p>
                     <div className="searchButton">
                         <Btnsm onClick={() => handleSelectUser(feed)} type="submit" className="btn" caracteristique="sm" text="Modifier"/>
                     </div>

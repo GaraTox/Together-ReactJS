@@ -59,8 +59,8 @@ function ModaleFeed({post, closeModal, idFeed}){
                 </div>
                 <div className='blocFormComm'>
                     <form onSubmit={handleSubmit} className='formModale' method="#" action="#">
-                        <input type="text" placeholder="Ecrire un commentaire..."
-                        value={commentary} onChange={(e) => setCommentary(e.target.value)}/>
+                        <textarea type="text" placeholder="Ecrire un commentaire..."
+                        value={commentary} onChange={(e) => setCommentary(e.target.value)}></textarea>
                         <button type="submit"><img className="btnSend" src={send} alt="bouton de validation"/></button>
                     </form>
                 </div>

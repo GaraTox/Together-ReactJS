@@ -131,7 +131,7 @@ function Parameter(props) {
                     <Btnlg onClick={() => {setOpenModalDel(true)}} className="btn" caracteristique="lg mt-3" text="Supprimer ce compte"/>
                 </div>
                 <div className="weather">
-                    <label>Entrez le nom de la ville :
+                    <label>Météo de votre ville :
                         <input className="inputWeather" type="text" value={city} onChange={(e) => setCity(e.target.value)}/>
                     </label>
                     <p>{city && `A ${city}, il fait :`}

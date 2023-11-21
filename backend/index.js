@@ -199,9 +199,17 @@ app.post('/addfeed', (req, res) => {
 app.get('/readfeed/:idUser', (req, res) => {
 	const idUser = req.params.idUser;
 	const query = `
-	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed, feed.create FROM user INNER JOIN feed ON user.idUser = feed.idUser WHERE user.idUser = ?
-	  UNION 
-	  SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed, feed.create FROM user INNER JOIN feed ON user.idUser = feed.idUser INNER JOIN friend ON user.idUser = friend.id_Friend WHERE friend.id_User = ? `;
+	SELECT user.avatarUser, user.pseudoUser, feed.idFeed, feed.contentFeed, feed.create AS feed_create
+	FROM user 
+	INNER JOIN feed ON user.idUser = feed.idUser 
+	WHERE user.idUser = ?
+	UNION 
+	SELECT user.avatarUser, user.pseudoUser, friendFeed.idFeed, friendFeed.contentFeed, friendFeed.create AS friend_create
+	FROM user 
+	INNER JOIN feed AS friendFeed ON user.idUser = friendFeed.idUser 
+	INNER JOIN friend ON user.idUser = friend.id_Friend 
+	WHERE friend.id_User = ? 
+	ORDER BY feed_create DESC`;
 	db.query(query, [idUser, idUser], (err, results) => {
 	  if (err) {
 		console.error('Erreur lors de la récupération des publications : ' + err);
@@ -514,7 +522,7 @@ io.on('connection', socket => {
 	// RECUPERER LES MESSAGES ENTRE AMIS
 	socket.on('getConversation', ({ idUser, id_Friend }) => {
 		db.query(
-			'SELECT message.idMessage, message.idUser, message.idSender, message.contentMessage, message.timeMessage, user.idUser, user.avatarUser, user.pseudoUser FROM message JOIN user ON message.idUser = user.idUser WHERE (message.idUser = ? AND message.idSender = ?) OR (message.idUser = ? AND message.idSender = ?)',
+			'SELECT message.idMessage, message.idUser, message.idSender, message.contentMessage, message.timeMessage, user.idUser, user.avatarUser, user.pseudoUser FROM message JOIN user ON message.idUser = user.idUser WHERE (message.idUser = ? AND message.idSender = ?) OR (message.idUser = ? AND message.idSender = ?) ORDER BY message.timeMessage ASC',
 			[idUser, id_Friend, id_Friend, idUser],
 			(err, results) => {
 				if (err) {

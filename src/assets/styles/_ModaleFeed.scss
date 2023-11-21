@@ -56,13 +56,17 @@
         .formModale{
         background-color: rgb(255, 255, 255);
         border: none;
-        input{
+        width: 100%;
+        display: inline-flex;
+        textarea{
+            resize: none;
             width: 90%;
             height: 35px;
             border: solid 1px rgb(221, 221, 221);
             background-color: rgb(255, 255, 255);
             border-radius: 10px;
             padding-left: 5px;
+            padding-top: 4px;
         }
         button{
             padding: 0;
@@ -178,13 +182,17 @@
             .formModale{
             background-color: rgb(255, 255, 255);
             border: none;
-            input{
+            display: inline-flex;
+            width: 100%;
+            textarea{
+                resize: none;
                 width: 80%;
                 height: 35px;
                 border: solid 1px rgb(221, 221, 221);
                 background-color: rgb(255, 255, 255);
                 border-radius: 10px;
                 padding-left: 5px;
+                padding-top: 4px;
             }
             button{
                 padding: 0;
@@ -293,13 +301,17 @@
             .formModale{
             background-color: rgb(255, 255, 255);
             border: none;
-            input{
+            display: inline-flex;
+            width: 100%;
+            textarea{
+                resize: none;
                 width: 80%;
                 height: 35px;
                 border: solid 1px rgb(221, 221, 221);
                 background-color: rgb(255, 255, 255);
                 border-radius: 10px;
                 padding-left: 5px;
+                padding-top: 4px;
             }
             button{
                 padding: 0;

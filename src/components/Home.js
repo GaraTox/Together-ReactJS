@@ -321,8 +321,8 @@ const closeModaleReport = () => {
                     <div>
                         <img className="imgProfil" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : profil} alt="photo de profil"/>
                         <form className="formPubli" method="#" action="#">
-                            <input type="text" placeholder="Publier une publication ..." value={contentFeed}
-                            onChange={(e) => setContentFeed(e.target.value)}/>
+                            <textarea type="text" placeholder="Publier une publication ..." value={contentFeed}
+                            onChange={(e) => setContentFeed(e.target.value)}></textarea>
                             <button onClick={handlePost} type="submit"><img className="btnSend" src={send} alt="bouton de validation"/></button>
                         </form>
                     </div>

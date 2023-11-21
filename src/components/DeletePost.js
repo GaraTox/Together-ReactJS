@@ -33,7 +33,7 @@ function DeletePost() {
             return(
         <div key={index} className="text-center search">
             <p className="searchFirstname">{feed.pseudoUser}</p>
-            <p className="searchName">{feed.contentFeed}</p>
+            <p className="searchName border border-dark rounded p-1">{feed.contentFeed}</p>
             <div className="searchButton">
                 <Btnsm onClick={() => deleteNews(feed.idFeed)} type="submit" className="btn" caracteristique="sm" text="Supprimer"/>
             </div> 

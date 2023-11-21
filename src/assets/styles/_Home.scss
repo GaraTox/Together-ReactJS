@@ -38,13 +38,15 @@
             border-radius: 10px;
             border: none;
             margin-left: 10px;
-            input{
+            textarea{
+                resize: none;
                 background-color: #ffffff;
                 border: solid 1px rgb(145, 145, 145);
                 border-radius: 10px;
                 width: 100%;
                 outline: none;
                 padding-left: 5px;
+                padding-top: 7px;
             }
             button{
                 background-color: transparent;
@@ -90,7 +92,7 @@
             }
             .modifierSupprimer{
                 display: inline-flex;
-                width: 30%;
+                width: 35%;
                 align-items: center;
                 justify-content: flex-end;
                 .imgModifier{
@@ -211,13 +213,15 @@
                 border-radius: 10px;
                 border: none;
                 margin-left: 10px;
-                input{
+                textarea{
+                    resize: none;
                     background-color: #ffff;
                     border: solid 1px rgb(145, 145, 145);
                     border-radius: 10px;
                     width: 100%;
                     outline: none;
                     padding-left: 5px;
+                    padding-top: 7px;
                 }
                 button{
                     background-color: transparent;
@@ -374,13 +378,15 @@
                 border-radius: 10px;
                 border: none;
                 margin-left: 10px;
-                input{
+                textarea{
+                    resize: none;
                     background-color: #ffff;
                     border: solid 1px rgb(145, 145, 145);
                     border-radius: 10px;
                     width: 100%;
                     outline: none;
                     padding-left: 5px;
+                    padding-top: 7px;
                 }
                 button{
                     background-color: transparent;
@@ -445,6 +451,7 @@
                 border: solid 1px rgb(197, 197, 197);
                 border-radius: 10px;
                 padding: 10px;
+                word-break: break-all;
             }
             .blocAimer{
                 display: flex;

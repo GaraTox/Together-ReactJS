@@ -17,7 +17,7 @@ function ReadPost() {
             return(
             <div key={key} className="text-center search">
                 <p className="searchFirstname">{post.pseudoUser}</p>
-                <p className="searchName">{post.contentFeed}</p>
+                <p className="searchName border border-dark rounded p-1">{post.contentFeed}</p>
                 <div className="searchButton">
                     <Btnsm type="submit" className="btn" caracteristique="sm" text="POST"/>
                 </div> 
