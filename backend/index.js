@@ -538,28 +538,51 @@ io.on('connection', socket => {
 
 //////////////////////////////////////////ADMIN/////////////////////////////////////////////////////////////
 // CREER UN COMPTE POUR UTILISATEUR
-app.post('/register', (req, res) => {
-	const pseudoUser = req.body.pseudoUser;
-	const mailUser = req.body.mailUser;
-	const passwordUser = req.body.passwordUser;
-	const birthdayUser = req.body.birthdayUser;
-	const roleUser = req.body.roleUser;
-	// HASH LE MOT DE PASSE
-	bcrypt.hash(passwordUser, saltRounds, (err, hash) => {
-		if(err){
-			return res.json({Error: "Erreur de hash"});
-		}
-	// REQUETE
-	db.query(
-		"INSERT INTO user (pseudoUser,mailUser,passwordUser,birthdayUser, roleUser) VALUES (?,?,?,?,'user')",
-		[pseudoUser, mailUser, hash, birthdayUser, roleUser],
-		(err, result) => {
-			if(err) return res.json({Error: "Problème de requête"});
-			return res.status(200).send(true)
-		}
-		);
-	});
-});
+// app.post('/register', (req, res) => {
+// 	const pseudoUser = req.body.pseudoUser;
+// 	const mailUser = req.body.mailUser;
+// 	const passwordUser = req.body.passwordUser;
+// 	const birthdayUser = req.body.birthdayUser;
+// 	const roleUser = req.body.roleUser;
+// 	// HASH LE MOT DE PASSE
+// 	bcrypt.hash(passwordUser, saltRounds, (err, hash) => {
+// 		if(err){
+// 			return res.json({Error: "Erreur de hash"});
+// 		}
+// 	// REQUETE
+// 	db.query(
+// 		"INSERT INTO user (pseudoUser,mailUser,passwordUser,birthdayUser, roleUser) VALUES (?,?,?,?,'user')",
+// 		[pseudoUser, mailUser, hash, birthdayUser, roleUser],
+// 		(err, result) => {
+// 			if(err) return res.json({Error: "Problème de requête"});
+// 			return res.status(200).send(true)
+// 		}
+// 		);
+// 	});
+// });
+const dayjs = require('dayjs')
+const isUnderage = (birthdate) => {
+	const thirteenYearsAgo = dayjs().subtract(13, 'years');
+	return dayjs(birthdate, 'DD/MM/YYYY').isAfter(thirteenYearsAgo);
+};
+app.post('/register', async (req, res) => {
+	const { pseudoUser, mailUser, passwordUser, birthdayUser, roleUser } = req.body;
+	try {
+	  if (isUnderage(birthdayUser)) {
+		return res.status(400).json({ error: 'Vous devez avoir 13 ans pour vous inscrire.' });
+	  }
+	  // HASH DU MOT DE PASSE
+	  const hash = await bcrypt.hash(passwordUser, saltRounds);
+  	  const query = `
+		INSERT INTO user (pseudoUser, mailUser, passwordUser, birthdayUser, roleUser)
+		VALUES (?, ?, ?, ?, 'user')`;
+		db.query(query, [pseudoUser, mailUser, hash, birthdayUser, roleUser]);
+		res.status(200).send('inscription réussie');
+	} catch (error) {
+	  console.error(error);
+	  res.status(500).json({ error: "Une erreur s'est produite lors de l'inscription." });
+	}
+  });
 
 // MOT DE PASSE OUBLIE
 app.post('/sendMail', (req, res) => {

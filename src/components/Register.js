@@ -32,6 +32,8 @@ const navigate = useNavigate();
     const [birthdayUser, setBirthdayUser] = useState('');
     const [passwordUser, setPasswordUser] = useState('');
 
+    const [message, setMessage] = useState('');
+
   // EVENEMENT DE CLIQUE
     const register = (event) => {
       event.preventDefault();
@@ -39,11 +41,11 @@ const navigate = useNavigate();
       {pseudoUser: pseudoUser, mailUser: mailUser, birthdayUser: birthdayUser, passwordUser: passwordUser})
       .then(res => {
         console.log(res.data)
-        if(res.data === true){
           navigate('/')
-        }
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        setMessage("Vous devez avoir 13 ans minimum");
+      })
     }
 
     return (
@@ -87,6 +89,7 @@ const navigate = useNavigate();
               <label className="form-check-label accepterConditions" htmlFor="gridCheck">Accepter les <Link className="conditionsUtili" to="/conditions">conditions d'utilisation</Link></label>
             </div>
           </div>
+          {message && <p className="text-center text-danger">{message}</p>}
           <Btnlg onClick={register} type="submit" className="btn" caracteristique="lg" text="Confirmer l'inscription"/>
           </form>
           </Formik>
