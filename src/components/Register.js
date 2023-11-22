@@ -10,7 +10,8 @@ import axios from 'axios';
     pseudoUser: '',
     mailUser: '',
     birthdayUser: '',
-    passwordUser: ''
+    passwordUser: '',
+    conditions: '',
 }
 
 
@@ -64,7 +65,7 @@ const navigate = useNavigate();
           </div>
           <div className="mb-1">
             <label htmlFor="exampleInput" className="form-label">Adresse mail</label>
-            <input onChange={(e) => {setMailUser(e.target.value);}} type="mail" 
+            <input onChange={(e) => {setMailUser(e.target.value);}} type="email" 
             value={mailUser} onBlur={handleBlur}
             className="form-control" id="mail" name="mailUser" autoComplete="off" required/>
             {errors.mailUser && <small>{errors.mailUser}</small>}
@@ -85,8 +86,10 @@ const navigate = useNavigate();
           </div>
           <div className="mb-1">
             <div className="form-check">
-              <input className="form-check-input" type="checkbox" id="gridCheck" required/>
+              <input className="form-check-input" type="checkbox" id="gridCheck" name="conditions"
+              onBlur={handleBlur} required/>
               <label className="form-check-label accepterConditions" htmlFor="gridCheck">Accepter les <Link className="conditionsUtili" to="/conditions">conditions d'utilisation</Link></label>
+              {errors.conditions && <small className="d-flex">{errors.conditions}</small>}
             </div>
           </div>
           {message && <p className="text-center text-danger">{message}</p>}

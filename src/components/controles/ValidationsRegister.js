@@ -10,16 +10,18 @@ const isUnderage = (birthdate) => {
 
 export const Validation = Yup.object().shape({
   pseudoUser: Yup.string()
-    .min(4, "Le pseudo doit comporter au moins 4 caractères")
-    .required("Le pseudo est requis"),
+    .min(4, "Le pseudo doit comporter au moins 4 caractères.")
+    .required("Le pseudo est requis."),
   mailUser: Yup.string()
-    .email("L'email n'est pas valide")
-    .required("L'email est requis"),
-    birthdayUser: Yup.string()
+    .email("L'email n'est pas valide.")
+    .required("L'email est requis."),
+  birthdayUser: Yup.string()
     .transform((originalValue) => dayjs(originalValue, 'DD/MM/YYYY').format('YYYY-MM-DD'))
     .max(limit, 'Vous devez avoir 13 ans pour vous inscrire.')
-    .required('La date de naissance est requise'),
+    .required('La date de naissance est requise.'),
   passwordUser: Yup.string()
-    .min(5, "Le mot de passe doit comporter au moins 5 caractères")
-    .required("Le mot de passe est requis"),
+    .min(5, "Le mot de passe doit comporter au moins 5 caractères.")
+    .required("Le mot de passe est requis."),
+  conditions: Yup.string()
+    .required("Acceptez les conditions d'utilisation."),
 });

@@ -106,6 +106,7 @@ function Message() {
             {!selectedFriend ? (
                 <div className="choiceFriend">
                     <p>Choisissez un ami pour discuter</p>
+                    <small className="text-secondary">Vous devez vous suivre mutuellement.</small>
                 </div>
             ) : (
             <section>

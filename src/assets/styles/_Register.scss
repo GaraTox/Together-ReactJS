@@ -80,6 +80,10 @@
 
 
 @media screen and (max-width: 567px) {
+.registerPage{
+    overflow-y: scroll;
+    height: 100vh;
+    padding-bottom: 100px;
     .createNewAccount{
         font-size: 20px;
     }
@@ -100,15 +104,25 @@
             }
         }
     }
-.border-dark{
-    height: max-content;
-}
-.accountExist{
-    text-align: center;
-    .connectVous{
-        text-decoration: none;
-        color: #88A9FF;
+    .border-dark{
+        height: max-content;
+    }
+    .accountExist{
+        text-align: center;
+        .connectVous{
+            text-decoration: none;
+            color: #88A9FF;
+        }
     }
 }
+    .registerPage::-webkit-scrollbar{
+        background-color: rgb(248, 249, 250);
+        width: 10px;
+    }
+    .registerPage::-webkit-scrollbar-thumb{
+        background-color: rgb(33, 37, 41);
+        border-radius: 50px;
+    }
+
 
 }
