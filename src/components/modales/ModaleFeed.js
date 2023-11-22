@@ -20,6 +20,7 @@ function ModaleFeed({post, closeModal, idFeed}){
         console.log('Commentaire ajouté');
         console.log(post.idFeed)
         setCommentary('');
+        fetchRead();
       })
       .catch((err) => {
         console.log(err);
@@ -29,6 +30,7 @@ function ModaleFeed({post, closeModal, idFeed}){
 
     // AFFICHER LES COMMENTAIRES DE FEED
     useEffect(() => {
+      const fetchRead = async () =>{
         if (idFeed) {
           // Appeler la route pour récupérer les commentaires associés
           axios.get(`/modale/getComment/${idFeed}`)
@@ -39,7 +41,22 @@ function ModaleFeed({post, closeModal, idFeed}){
               console.error(error);
             });
         }
+      }
+      fetchRead();
       }, [idFeed]);
+
+      const fetchRead = async () =>{
+        if (idFeed) {
+          // Appeler la route pour récupérer les commentaires associés
+          axios.get(`/modale/getComment/${idFeed}`)
+            .then((response) => {
+              setComments(response.data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }
+      };
 
     return(
         <section className='bg_modal_feed'>
