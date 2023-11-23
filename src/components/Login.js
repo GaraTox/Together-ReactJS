@@ -1,4 +1,4 @@
-import React, { useState }  from "react";
+import React, { useState, useEffect }  from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik, Formik} from 'formik';
 import { Validation } from "./controles/ValidationsLogin";
@@ -33,13 +33,25 @@ function Connect() {
 
   const [message, setMessage] = useState('');
 
-// axios.defaults.withCredentials = true;
+  const user = localStorage.getItem('idUser');
 
-// console.log("L38 => ", localStorage.getItem('idUser'))
+axios.defaults.withCredentials = true;
+
+// GESTION DE SESSION
+  useEffect(() => {
+  axios.get('http://localhost:3001/session')
+    .then(res => {
+        if(res.data.valid){
+          navigate(`/myprofile/${user}`);
+        }else{
+          navigate('/');
+        }
+    })
+    .catch(err => console.log(err))
+  },[])
 
 // ACTION DU CLIQUE SUR LE BOUTON SE CONNECTER
 const handleSubmit = async (e) => {
-  const user = localStorage.getItem('idUser');
   e.preventDefault()
   try {
     const response = await axios.post('http://localhost:3001/', { mailUser, passwordUser });

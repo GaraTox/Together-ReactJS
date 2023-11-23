@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import profil from '../assets/icons/person-fill.svg';
 import ModaleUpdateFeed from "./modales/ModaleUpdateFeed";
 import ModaleReport from "./modales/ModaleReport";
@@ -23,6 +23,8 @@ function Home() {
     const [selectedPost, setSelectedPost] = useState(null);
     const [idFeedRecup, setIdFeedRecup] = useState();
 
+    axios.defaults.withCredentials = true;
+
     const openPostModal = (post) => {
       setSelectedPost(post);
       setIsModaleFeedOpen(true);
@@ -34,6 +36,21 @@ function Home() {
     const closeModaleFeed = () => {
       setIsModaleFeedOpen(false);
     };
+
+    // GESTION DE SESSION
+    const [id, setId] = useState('');
+    const navigate = useNavigate();
+    useEffect(() => {
+      axios.get('http://localhost:3001/session')
+      .then(res => {
+        if(res.data.valid){
+          setId(res.data.idUser);
+        }else{
+          navigate('/');
+        }
+      })
+      .catch(err => console.log(err))
+    },[])
 
     // AFFICHER LES DONNEES DE L'UTILISATEUR
     const [user, setUser] = useState('');

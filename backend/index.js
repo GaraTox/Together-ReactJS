@@ -39,7 +39,11 @@ const server = http.createServer(app);
 dotenv.config({path: './.env'})
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+	origin: ["http://localhost:3000"],
+	methods: ["GET", "POST", "PUT", "DELETE"],
+	credentials: true,
+}));
 const io = new Server(server, {
 	cors: {
 		origin: ["http://localhost:3000"],
@@ -71,6 +75,15 @@ const db = mysql.createConnection({
 });
 
 //////////////////////////////////////PAGE HOME/////////////////////////////////////////////////////
+// GESTION DE SESSION
+app.get('/session', (req, res) => {
+	if(req.session.idUser){
+		return res.json({valid: true, idUser : req.session.idUser})
+	}else{
+		return res.json({valid: false})
+	}
+})
+
 app.get('/myprofile/:user', (req, res) => {
 	const idUser = req.params.user;
 	db.query('SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user WHERE idUser = ' + idUser, (err, results) => {
@@ -810,7 +823,9 @@ app.post('/', (req, res) => {
 			if(data.length > 0) {
 				bcrypt.compare(passwordUser,data[0].passwordUser, (err, response) => {
 					if(response){
-						res.cookie('CookieTogether', data[0].idUser)
+						// res.cookie('CookieTogether', data[0].idUser);
+						req.session.idUser = data[0].idUser;
+						console.log(req.session.idUser)
 						console.log('login success')
 						res.status(200).json(data[0].idUser)
 					}else{
