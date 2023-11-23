@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Btnlg from './btn/Btnlg';
 import profil from '../assets/icons/person-fill.svg';
@@ -14,12 +15,29 @@ function Parameter(props) {
 
     const [message, setMessage] = useState('');
 
+    axios.defaults.withCredentials = true;
+
     // AFFICHER LES DONNEES DE L'UTILISATEUR
     const [user, setUser] = useState('');
 
      // MODALES
      const [openModalModi, setOpenModalModi] = useState(false);
      const [openModalDel, setOpenModalDel] = useState(false);
+
+    // GESTION DE SESSION
+    const [id, setId] = useState('');
+    const navigate = useNavigate();
+    useEffect(() => {
+      axios.get('http://localhost:3001/session')
+      .then(res => {
+        if(res.data.valid){
+          setId(res.data.idUser);
+        }else{
+          navigate('/');
+        }
+      })
+      .catch(err => console.log(err))
+    },[])
 
     // RECUPERATION DES DONNEES GRACE A ID
     useEffect(() => {

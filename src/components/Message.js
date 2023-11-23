@@ -1,4 +1,6 @@
 import React, {useState, useEffect, useRef} from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import profil from '../assets/icons/person-fill.svg';
 import friend from '../assets/icons/people.svg';
 import message from '../assets/icons/envelope.svg';
@@ -8,6 +10,9 @@ const socket = io('http://localhost:3001');
 
 function Message() {
     const idUser = localStorage.getItem('idUser');
+
+    axios.defaults.withCredentials = true;
+
     // RECUPERER LES AMIS AVEC UN SUIVI MUTUEL
     const [friends, setFriends] = useState([]);
     const [selectedFriend, setSelectedFriend] = useState(false);
@@ -23,6 +28,21 @@ function Message() {
     //         messagesContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     //     }
     // }, [messages]);
+
+    // GESTION DE SESSION
+    const [id, setId] = useState('');
+    const navigate = useNavigate();
+    useEffect(() => {
+        axios.get('http://localhost:3001/session')
+        .then(res => {
+            if(res.data.valid){
+              setId(res.data.idUser);
+            }else{
+              navigate('/');
+            }
+        })
+        .catch(err => console.log(err))
+    },[])
 
     useEffect(() => {
         // RECUPERE LES AMIS AVEC UN SUIVI MUTUEL
