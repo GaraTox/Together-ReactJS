@@ -17,8 +17,6 @@ function ModaleFeed({post, closeModal, idFeed}){
         idUser: idUser
         })
       .then((res) => {
-        console.log('Commentaire ajouté');
-        console.log(post.idFeed)
         setCommentary('');
         fetchRead();
       })

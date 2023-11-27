@@ -19,16 +19,6 @@ function Message() {
     // RECUPERER LES MESSAGES
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
-    // // CONVERSATION COMMENCE PAR LE BAS
-    // const messagesContainerRef = useRef();
-
-    // useEffect(() => {
-    //     // Faire défiler vers le bas lorsque les messages changent
-    //     if (messagesContainerRef.current) {
-    //         messagesContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    //     }
-    // }, [messages]);
-
     // GESTION DE SESSION
     const [id, setId] = useState('');
     const navigate = useNavigate();
@@ -48,7 +38,6 @@ function Message() {
         // RECUPERE LES AMIS AVEC UN SUIVI MUTUEL
         socket.emit('join', idUser);
         socket.on('friends', ({ friends }) => {
-          console.log('Friends with mutual follow:', friends);
           setFriends(friends);
         });
         return () => {

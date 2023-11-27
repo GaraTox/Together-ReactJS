@@ -8,11 +8,6 @@ import ModaleUserDelete from "./modales/ModaleUserDelete";
 import Btnmd from "./btn/Btnmd";
 
 function Parameter(props) {
-    // NETTOYER REACT DEVTOOL
-    // useEffect(() => {
-    //     localStorage.clear();
-    // })
-
     const [message, setMessage] = useState('');
 
     axios.defaults.withCredentials = true;
@@ -42,7 +37,6 @@ function Parameter(props) {
     // RECUPERATION DES DONNEES GRACE A ID
     useEffect(() => {
         const user = localStorage.getItem('idUser');
-        // console.log("user =>" + user);
         axios.get(`http://localhost:3001/myprofile/parameter/${user}`)
         .then((response) => {
             setUser(response.data);
@@ -75,10 +69,8 @@ function Parameter(props) {
         axios.post(`http://localhost:3001/upload/${user}`, formdata)
         .then(res => 
             {if(res.data.Status === "Success"){
-                console.log('Success for avatar');
                 setMessage('Avatar ajouté')
             }else{
-                console.log('Failed for avatar');
                 setMessage('Avatar non ajouté')
             }})
         .catch(err => console.log(err))
@@ -97,7 +89,7 @@ function Parameter(props) {
     }, [city]);
   
     const updateWeather = () => {
-      const APIKEY = "19efad4825a8fc6b7271f1f4c07ede57";
+      const APIKEY = "f2e16f391985b2d89b99f3a007a3c3fd";
   
       setLoading(true);
       setError(null);

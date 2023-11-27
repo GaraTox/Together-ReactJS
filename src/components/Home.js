@@ -28,9 +28,7 @@ function Home() {
     const openPostModal = (post) => {
       setSelectedPost(post);
       setIsModaleFeedOpen(true);
-      console.log(post);
       setIdFeedRecup(post.idFeed);
-      console.log(post.idFeed);
     };
     
     const closeModaleFeed = () => {
@@ -173,9 +171,7 @@ function Home() {
 const openReportModal = (post) => {
   setSelectedPost(post);
   setIsModaleReportOpen(true);
-  console.log(post);
   setIdFeedRecup(post.idFeed);
-  console.log(post.idFeed);
 };
 
 const closeModaleReport = () => {
@@ -249,7 +245,6 @@ const closeModaleReport = () => {
   const handleSavePublication = (updatedPublication) => {
     axios.put(`http://localhost:3001/feedupdate/${updatedPublication.idFeed}`, updatedPublication)
       .then((response) => {
-        console.log('Publication updated: ' + response.data);
         const updatedPublications = posts.map((post) =>
           post.idFeed === updatedPublication.idFeed ? updatedPublication : post
         );

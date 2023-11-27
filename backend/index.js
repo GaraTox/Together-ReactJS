@@ -551,28 +551,6 @@ io.on('connection', socket => {
 
 //////////////////////////////////////////ADMIN/////////////////////////////////////////////////////////////
 // CREER UN COMPTE POUR UTILISATEUR
-// app.post('/register', (req, res) => {
-// 	const pseudoUser = req.body.pseudoUser;
-// 	const mailUser = req.body.mailUser;
-// 	const passwordUser = req.body.passwordUser;
-// 	const birthdayUser = req.body.birthdayUser;
-// 	const roleUser = req.body.roleUser;
-// 	// HASH LE MOT DE PASSE
-// 	bcrypt.hash(passwordUser, saltRounds, (err, hash) => {
-// 		if(err){
-// 			return res.json({Error: "Erreur de hash"});
-// 		}
-// 	// REQUETE
-// 	db.query(
-// 		"INSERT INTO user (pseudoUser,mailUser,passwordUser,birthdayUser, roleUser) VALUES (?,?,?,?,'user')",
-// 		[pseudoUser, mailUser, hash, birthdayUser, roleUser],
-// 		(err, result) => {
-// 			if(err) return res.json({Error: "Problème de requête"});
-// 			return res.status(200).send(true)
-// 		}
-// 		);
-// 	});
-// });
 const dayjs = require('dayjs')
 const isUnderage = (birthdate) => {
 	const thirteenYearsAgo = dayjs().subtract(13, 'years');

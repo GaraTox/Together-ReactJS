@@ -10,7 +10,6 @@ function ModalModifyUser({closeModal}){
 
   useEffect(() => {
     const user = localStorage.getItem('idUser');
-    // Récupérez les informations de l'utilisateur au chargement de la page
     axios.get(`/utilisateur/${user}`)
       .then(response => {
         setUser(response.data);

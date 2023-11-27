@@ -42,8 +42,6 @@ const handleSubmit = async (e) => {
       const saltRounds = 10;
       try {
           const hashed = await bcrypt.hash(mdp, saltRounds);
-          //console.log(hashed);
-
           // Effectuez la requête Axios pour mettre à jour le mot de passe
           const response = await axios.post(`http://localhost:3001/reset`, { idUser, hashed });
           console.log(response.data);

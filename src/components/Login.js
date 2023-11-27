@@ -55,13 +55,11 @@ const handleSubmit = async (e) => {
   e.preventDefault()
   try {
     const response = await axios.post('http://localhost:3001/', { mailUser, passwordUser });
-    console.log("response data", response.data);
     localStorage.setItem('idUser', response.data);
     navigate(`/myprofile/${response.data}`)
   } 
   catch (error) {
     setMessage('Identifiants incorrects');
-    console.error(error);
   }
 }
 
