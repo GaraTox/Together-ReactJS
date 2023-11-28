@@ -85,6 +85,14 @@ app.get('/session', (req, res) => {
 	}
 })
 
+const isAuthenticated = (req, res, next) => {
+	if (req.session.idUser || req.cookies.CookieTogether) {
+	  next();
+	} else {
+	  res.status(401).send('Non autorisé');
+	}
+  };
+
 app.get('/weather/:city', async (req, res) => {
 	try {
 	  const city = req.params.city;
@@ -103,7 +111,7 @@ app.get('/weather/:city', async (req, res) => {
 	}
   });
 
-app.get('/myprofile/:user', (req, res) => {
+app.get('/myprofile/:user', isAuthenticated, (req, res) => {
 	const idUser = req.params.user;
 	db.query('SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user WHERE idUser = ' + idUser, (err, results) => {
 	  if (err) {
@@ -119,7 +127,7 @@ app.get('/myprofile/:user', (req, res) => {
 	});
   });
 
-  app.get('/myprofile/message/:user', (req, res) => {
+  app.get('/myprofile/message/:user', isAuthenticated, (req, res) => {
 	const idUser = req.params.user;
 	db.query('SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user WHERE idUser = ' + idUser, (err, results) => {
 	  if (err) {
@@ -575,7 +583,7 @@ const isUnderage = (birthdate) => {
 	const thirteenYearsAgo = dayjs().subtract(13, 'years');
 	return dayjs(birthdate, 'DD/MM/YYYY').isAfter(thirteenYearsAgo);
 };
-app.post('/register', async (req, res) => {
+app.post('/register', isAuthenticated, async (req, res) => {
 	const { pseudoUser, mailUser, passwordUser, birthdayUser, roleUser } = req.body;
 	try {
 	  if (isUnderage(birthdayUser)) {
@@ -662,7 +670,7 @@ app.post('/reset', (req, res) => {
 })
 
 // CREER UN COMPTE POUR ADMIN
-app.post('/connect-admin/home/user/create', (req, res) => {
+app.post('/connect-admin/home/user/create', isAuthenticated, (req, res) => {
 	const pseudoUser = req.body.pseudoUser;
 	const mailUser = req.body.mailUser;
 	const passwordUser = req.body.passwordUser;
@@ -691,7 +699,7 @@ app.post('/connect-admin/home/user/create', (req, res) => {
 
 // MODIFIER UN COMPTE UTILISATEUR POUR ADMIN
 //LISTE DE TOUS LES UTILISATEURS
-app.get('/connect-admin/home/user/choiceUpdate/read', (req, res) => {
+app.get('/connect-admin/home/user/choiceUpdate/read', isAuthenticated, (req, res) => {
 	db.query('SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user', (err, results) => {
 	  if (err) {
 		console.error("Erreur lors de la récupération des utilisateurs : " + err);
@@ -718,7 +726,7 @@ app.put('/connect-admin/home/user/choiceUpdate/:idUser', (req, res) => {
   });
 
 // SUPPRIMER UN COMPTE UTILISATEUR POUR ADMIN
-app.delete('/connect-admin/home/user/delete/:idUser', (req, res) => {
+app.delete('/connect-admin/home/user/delete/:idUser', isAuthenticated, (req, res) => {
 	const idUser = req.params.idUser;
 	db.query('DELETE FROM user WHERE idUser =?', [idUser], (err, results) => {
 	  if (err) throw err;
@@ -727,7 +735,7 @@ app.delete('/connect-admin/home/user/delete/:idUser', (req, res) => {
   });
 
 // LIRE LES COMPTES UTILISATEUR POUR ADMIN
-app.get('/connect-admin/home/user/read', (req, res) => {
+app.get('/connect-admin/home/user/read', isAuthenticated, (req, res) => {
 	const idUser = req.params.idUser;
 	const sql = "SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user";
 	db.query(sql,(err , result)=>{
@@ -737,7 +745,7 @@ app.get('/connect-admin/home/user/read', (req, res) => {
 })
 
 // CREER UN POST POUR ADMIN
-app.get('/users', (req, res) => {
+app.get('/users', isAuthenticated, (req, res) => {
 	const query = 'SELECT idUser, pseudoUser FROM user';
 	db.query(query, (err, results) => {
 	  if (err) {
@@ -748,7 +756,7 @@ app.get('/users', (req, res) => {
 	  }
 	});
   });
-app.post('/connect-admin/home/user/createPost', (req, res) => {
+app.post('/connect-admin/home/user/createPost', isAuthenticated, (req, res) => {
 	const { idUser, contentFeed } = req.body;
 	const query = 'INSERT INTO feed (idUser, contentFeed) VALUES (?, ?)';
 	db.query(query, [idUser, contentFeed], (err, results) => {
@@ -763,7 +771,7 @@ app.post('/connect-admin/home/user/createPost', (req, res) => {
 
 // MODIFIER UN POST UTILISATEUR POUR ADMIN
 //LISTE DE TOUS LES POST
-app.get('/connect-admin/home/user/choiceUpdate/readPost', (req, res) => {
+app.get('/connect-admin/home/user/choiceUpdate/readPost', isAuthenticated, (req, res) => {
 	db.query("SELECT feed.idFeed, user.pseudoUser, feed.contentFeed FROM feed INNER JOIN user ON feed.idUser = user.idUser", (err, results) => {
 	  if (err) {
 		console.error("Erreur lors de la récupération des utilisateurs : " + err);
@@ -774,7 +782,7 @@ app.get('/connect-admin/home/user/choiceUpdate/readPost', (req, res) => {
 	});
   });
 // CLIQUE SUR LE BOUTON MODIFIER
-app.put('/connect-admin/home/user/readPost/:idUser', (req, res) => {
+app.put('/connect-admin/home/user/readPost/:idUser', isAuthenticated, (req, res) => {
 	const idUser = req.params.idUser;
 	const { contentFeed } = req.body;
 	const sql = 'UPDATE feed SET contentFeed = ? WHERE idFeed = ?';
@@ -790,7 +798,7 @@ app.put('/connect-admin/home/user/readPost/:idUser', (req, res) => {
   });
 
 // SUPPRIMER UN COMPTE UTILISATEUR POUR ADMIN
-app.delete('/connect-admin/home/user/deletePost/:idFeed', (req, res) => {
+app.delete('/connect-admin/home/user/deletePost/:idFeed', isAuthenticated, (req, res) => {
 	const idFeed = req.params.idFeed;
 	db.query('DELETE FROM feed WHERE idFeed =?', [idFeed], (err, results) => {
 	  if (err) throw err;
@@ -799,7 +807,7 @@ app.delete('/connect-admin/home/user/deletePost/:idFeed', (req, res) => {
   });
 
 // LIRE LES PUBLICATIONS
-app.get('/connect-admin/home/user/readPost', (req, res) => {
+app.get('/connect-admin/home/user/readPost', isAuthenticated, (req, res) => {
 	const sql = "SELECT feed.idFeed, user.pseudoUser, feed.contentFeed FROM feed INNER JOIN user ON feed.idUser = user.idUser";
 	db.query(sql,(err , result)=>{
 		if(err) return res.json({Message: "Erreur"});
@@ -808,7 +816,7 @@ app.get('/connect-admin/home/user/readPost', (req, res) => {
 })
 
 // SE CONNECTER EN TANT UTILISATEUR
-app.post('/', (req, res) => {
+app.post('/', isAuthenticated, (req, res) => {
 	const mailUser = req.body.mailUser;
 	const passwordUser = req.body.passwordUser;
 	// REQUETE
@@ -820,7 +828,6 @@ app.post('/', (req, res) => {
 			if(data.length > 0) {
 				bcrypt.compare(passwordUser,data[0].passwordUser, (err, response) => {
 					if(response){
-						// res.cookie('CookieTogether', data[0].idUser);
 						req.session.idUser = data[0].idUser;
 						console.log(req.session.idUser)
 						console.log('login success')
@@ -865,7 +872,7 @@ app.get('/avatar/:idUser', (req, res) => {
 })
 
 // RECUPERATION DES DONNEES DE PROFIL
-app.get('/myprofile/parameter/:user', (req, res) => {
+app.get('/myprofile/parameter/:user', isAuthenticated, (req, res) => {
 	const idUser = req.params.user;
 	db.query('SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user WHERE idUser = ' + idUser, (err, results) => {
 	  if (err) {
@@ -883,7 +890,7 @@ app.get('/myprofile/parameter/:user', (req, res) => {
 
 // L'UTILISATEUR MODIFIE SON PROFIL
 //LISTE DES INFORMATIONS DE UTILISATEUR
-app.get('/utilisateur/:idUser', (req, res) => {
+app.get('/utilisateur/:idUser', isAuthenticated, (req, res) => {
 	const idUser = req.params.idUser
 	const sql = "SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user WHERE idUser = ?";
 	db.query(sql, idUser, (err , result)=>{
@@ -904,7 +911,7 @@ app.put('/utilisateur/:idUser', (req, res) => {
 })
 
 // L'UTILISATEUR SUPPRIME SON COMPTE
-app.delete('/deleteAccount/:idUser', (req, res) => {
+app.delete('/deleteAccount/:idUser', isAuthenticated, (req, res) => {
 	const idUser = req.params.idUser;
 	db.query('DELETE FROM friend WHERE id_Friend = ?', [idUser], (err, result) => {
 	  if (err) {

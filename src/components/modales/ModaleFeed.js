@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import moment from "moment";
+import 'moment/locale/fr';
 import send from '../../assets/icons/send.png';
 import profil from '../../assets/icons/person-fill.svg';
 
@@ -56,6 +58,10 @@ function ModaleFeed({post, closeModal, idFeed}){
         }
       };
 
+      useEffect(() => {
+        moment.locale('fr');
+      }, []);
+
     return(
         <section className='bg_modal_feed'>
             <div className='content_modal_feed'>
@@ -85,7 +91,7 @@ function ModaleFeed({post, closeModal, idFeed}){
                         <div className='blocCommModale'>
                             <img className="imgProfilModale" src={comment.avatarUser ? `http://localhost:3001/images/${comment.avatarUser}` : profil} alt="photo de profil"/>
                             <p className='pseudoComm'>{comment.pseudoUser}</p>
-                            <p className='createComm'>{comment.create}</p>
+                            <p className='createComm'>{moment(comment.create).format('LLLL')}</p>
                         </div>
                         <div className='blocContentModal'>
                             <p>{comment.commentary}</p>

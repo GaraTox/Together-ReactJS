@@ -1,10 +1,12 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import profil from '../assets/icons/person-fill.svg';
 import friend from '../assets/icons/people.svg';
 import message from '../assets/icons/envelope.svg';
 import send from '../assets/icons/send.png';
+import moment from "moment";
+import 'moment/locale/fr';
 import io from 'socket.io-client';
 const socket = io('http://localhost:3001');
 
@@ -88,6 +90,10 @@ function Message() {
             }
           };
 
+          useEffect(() => {
+            moment.locale('fr');
+          }, []);
+
     return (
     <section>
     <div className="contenuPrincipal">
@@ -127,7 +133,7 @@ function Message() {
                         <div className='message-meta'>
                             <img className="imgProfilConv" src={message.avatarUser ? `http://localhost:3001/images/${message.avatarUser}` : profil} alt="photo de profil"/>
                             <p id="author">{message.pseudoUser}</p>
-                            <p id="time">{message.timeMessage}</p>
+                            <p id="time">{moment(message.timeMessage).format('LLLL')}</p>
                         </div>
                         <div className='message-content'>
                             <p>{message.contentMessage}</p>

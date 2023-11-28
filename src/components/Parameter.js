@@ -20,19 +20,19 @@ function Parameter(props) {
      const [openModalDel, setOpenModalDel] = useState(false);
 
     // GESTION DE SESSION
-    // const [id, setId] = useState('');
-    // const navigate = useNavigate();
-    // useEffect(() => {
-    //   axios.get('http://localhost:3001/session')
-    //   .then(res => {
-    //     if(res.data.valid){
-    //       setId(res.data.idUser);
-    //     }else{
-    //       navigate('/');
-    //     }
-    //   })
-    //   .catch(err => console.log(err))
-    // },[])
+    const [id, setId] = useState('');
+    const navigate = useNavigate();
+    useEffect(() => {
+      axios.get('http://localhost:3001/session')
+      .then(res => {
+        if(res.data.valid){
+          setId(res.data.idUser);
+        }else{
+          navigate('/');
+        }
+      })
+      .catch(err => console.log(err))
+    },[])
 
     // RECUPERATION DES DONNEES GRACE A ID
     useEffect(() => {
