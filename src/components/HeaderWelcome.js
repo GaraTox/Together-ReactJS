@@ -103,9 +103,7 @@ const handleUnfollow = (id_Friend) => {
           setUser(response.data);
       })
       .catch((error) => {
-          console.log("========L22 mon gars===========");
-          console.log("error : ", error);
-          console.log("Error user : " + user);
+          console.log(error);
       })
   }, [])
   useEffect(() => {

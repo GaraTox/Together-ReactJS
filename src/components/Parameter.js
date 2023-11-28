@@ -10,7 +10,7 @@ import Btnmd from "./btn/Btnmd";
 function Parameter(props) {
     const [message, setMessage] = useState('');
 
-    axios.defaults.withCredentials = true;
+    // axios.defaults.withCredentials = true;
 
     // AFFICHER LES DONNEES DE L'UTILISATEUR
     const [user, setUser] = useState('');
@@ -20,19 +20,19 @@ function Parameter(props) {
      const [openModalDel, setOpenModalDel] = useState(false);
 
     // GESTION DE SESSION
-    const [id, setId] = useState('');
-    const navigate = useNavigate();
-    useEffect(() => {
-      axios.get('http://localhost:3001/session')
-      .then(res => {
-        if(res.data.valid){
-          setId(res.data.idUser);
-        }else{
-          navigate('/');
-        }
-      })
-      .catch(err => console.log(err))
-    },[])
+    // const [id, setId] = useState('');
+    // const navigate = useNavigate();
+    // useEffect(() => {
+    //   axios.get('http://localhost:3001/session')
+    //   .then(res => {
+    //     if(res.data.valid){
+    //       setId(res.data.idUser);
+    //     }else{
+    //       navigate('/');
+    //     }
+    //   })
+    //   .catch(err => console.log(err))
+    // },[])
 
     // RECUPERATION DES DONNEES GRACE A ID
     useEffect(() => {
@@ -42,9 +42,7 @@ function Parameter(props) {
             setUser(response.data);
         })
         .catch((error) => {
-            console.log("========L24===========");
             console.log("error : ", error);
-            console.log("Error user : " + user);
         })
     }, [])
 
@@ -76,40 +74,47 @@ function Parameter(props) {
         .catch(err => console.log(err))
     }
 
-    // WEATHER
+    //WEATHER
     const [state, setState] = useState({ icon: null });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [city, setCity] = useState('');
-  
+    
     useEffect(() => {
       if (city) {
         updateWeather();
       }
     }, [city]);
-  
+    
     const updateWeather = () => {
-      const APIKEY = "f2e16f391985b2d89b99f3a007a3c3fd";
-  
       setLoading(true);
       setError(null);
-  
-      axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKEY}`)
+    
+      if (!city) {
+        setError("Veuillez entrer un nom de ville.");
+        setLoading(false);
+        return;
+      }
+    
+      axios.get(`http://localhost:3001/weather/${city}`)
         .then((response) => {
-          setState({
-            icon: response.data.weather[0].icon
-          });
-        })
-        .catch((err) => {
-          if (err.response && err.response.status === 404) {
-            setError("Ville non trouvée. Veuillez vérifier le nom de la ville.");
-          } else {
-            setError("Erreur lors de la récupération des données météorologiques.");
-          }
-          console.error("Erreur", err);
-        })
-        .finally(() => {
+          const weatherIcon = response.data.weather[0].icon;
+          setState({ icon: weatherIcon });
           setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Axios Error:", error);
+          if (error.response) {
+            console.error("Response Data:", error.response.data);
+            console.error("Response Status:", error.response.status);
+          } else if (error.request) {
+            console.error("No response received. Request made but no response.");
+          } else {
+            console.error("Error setting up the request.");
+          }
+    
+          setError("Erreur lors de la récupération des données météorologiques.");
+          setLoading(false); // Make sure to set loading to false on error
         });
     };
     return (
@@ -142,7 +147,7 @@ function Parameter(props) {
                 </div>
                 <div className="weather">
                     <label>Météo de votre ville :
-                        <input className="inputWeather" type="text" value={city} onChange={(e) => setCity(e.target.value)}/>
+                      <input className="inputWeather" type="text" value={city} onChange={(e) => setCity(e.target.value)}/>
                     </label>
                     <p>{city && `A ${city}, il fait :`}
                     {loading ? (
@@ -150,7 +155,7 @@ function Parameter(props) {
                     ) : (
                     <>
                     {state.icon && (
-                        <img src={`https://openweathermap.org/img/w/${state.icon}.png`} alt="weather" />
+                      <img src={`https://openweathermap.org/img/w/${state.icon}.png`} alt="weather" />
                     )}
                     <button onClick={updateWeather}>Mettre à jour</button>
                     {error && city && <div style={{ color: 'red' }}>{error}</div>}
