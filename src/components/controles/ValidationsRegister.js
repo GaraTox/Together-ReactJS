@@ -17,11 +17,10 @@ export const Validation = Yup.object().shape({
     .required("L'email est requis."),
   birthdayUser: Yup.string()
     .transform((originalValue) => dayjs(originalValue, 'DD/MM/YYYY').format('YYYY-MM-DD'))
-    .max(limit, 'Vous devez avoir 13 ans pour vous inscrire.')
+    .max(limit, 'Vous devez avoir 15 ans pour vous inscrire.')
     .required('La date de naissance est requise.'),
   passwordUser: Yup.string()
     .min(5, "Le mot de passe doit comporter au moins 5 caractères.")
     .required("Le mot de passe est requis."),
-  conditions: Yup.string()
-    .required("Acceptez les conditions d'utilisation."),
+  conditions: Yup.boolean().oneOf([true], 'Vous devez accepter les termes et conditions'),
 });

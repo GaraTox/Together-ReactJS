@@ -45,7 +45,7 @@ const navigate = useNavigate();
           navigate('/')
       })
       .catch(err => {
-        setMessage("Vous devez avoir 13 ans minimum");
+        setMessage("Vous devez avoir 15 ans minimum");
       })
     }
 
@@ -74,7 +74,7 @@ const navigate = useNavigate();
             <label htmlFor="exampleInput" className="form-label">Date de naissance</label>
             <input onChange={(e) => {setBirthdayUser(e.target.value);}} type="date" 
             value={birthdayUser} onBlur={handleBlur}
-            className="form-control" id="birthday" name="birthdayUser" autoComplete="off" title="âge requis : 13 ans minimum" max="2010-12-01" required/>
+            className="form-control" id="birthday" name="birthdayUser" autoComplete="off" title="âge requis : 15 ans minimum" max="2010-12-01" required/>
             {errors.birthdayUser && <small>{errors.birthdayUser}</small>}
           </div>
           <div className="mb-1">
