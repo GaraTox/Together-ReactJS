@@ -2,11 +2,13 @@ footer{
     position: fixed;
     bottom: 0;
     width: 100%;   
+    background-color: #5d502d;
     .admin{
         border-top: solid 1px rgb(33, 37, 41);
         .adminLink{
             text-decoration: none;
             list-style-type: none;
+            color: #f8f6f1;
         }
     }
 }

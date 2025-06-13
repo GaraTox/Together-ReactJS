@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `together`;
-USE `together`;
+CREATE DATABASE IF NOT EXISTS `togetherJS`;
+USE `togetherJS`;
 
 DROP TABLE IF EXISTS  `user`;
 CREATE TABLE `user` (

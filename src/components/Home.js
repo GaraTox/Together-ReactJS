@@ -97,6 +97,10 @@ function Home() {
     const [contentFeed, setContentFeed] = useState('');
     const handlePost = async () => {
         const idUser = localStorage.getItem('idUser');
+        if(!contentFeed){
+          console.log('Publication vide')
+          return;
+        }
         try {
           await axios.post('/addfeed', { idUser: idUser, contentFeed });
           console.log('le post a été envoyer')
@@ -309,8 +313,8 @@ const closeModaleReport = () => {
         <div className="blocAmis">
             <button className="btn_friend" type="submit">
                 <div className="titreAmis">
-                    <p className="text-center text-light bg bg-dark">
-                        <img src={friend} className="me-1 mb-1 bg bg-light rounded p-1 m-1" alt="message"/>
+                    <p className="text-center">
+                        <img src={friend} className="me-1 mb-1 rounded p-1 m-1 bg bg-white" alt="message"/>
                         <strong>Amis</strong>
                     </p>
                 </div>

@@ -1,10 +1,22 @@
 /* COMPUTER */
 @media screen and (min-width: 781px) {
+.blocAmis{
+    background-color: #f8f6f1;
+    .btn_friend{
+        .titreAmis{
+            background-color: #5d502d;
+            p{
+                color: #f8f6f1;
+            }
+        }
+    }
+}
 .blocPublication{
     overflow-y: scroll;
     width: 80%;
     height: 100vh;
     padding-bottom: 150px;
+    background-color: #f8f6f1;
     .blocInputComm{
         width: 50%;
         height: max-content;
@@ -166,7 +178,7 @@
     width: 10px;
 }
 .blocPublication::-webkit-scrollbar-thumb{
-    background-color: rgb(33, 37, 41);
+    background-color: #5d502d;
     border-radius: 50px;
 }
 }
@@ -174,6 +186,17 @@
 
 /*TABLETTE*/
 @media screen and (min-width: 568px) and (max-width: 780px) {
+    .blocAmis{
+        background-color: #f8f6f1;
+    .btn_friend{
+        .titreAmis{
+            background-color: #5d502d;
+            p{
+                color: #f8f6f1;
+            }
+        }
+    }
+    }
     .blocPublication{
         width: 80%;
         height: 100vh;
@@ -339,6 +362,17 @@
 
 /* SMARTPHONE */
 @media screen and (max-width: 567px) {
+    .blocAmis{
+        background-color: #f8f6f1;
+    .btn_friend{
+        .titreAmis{
+            background-color: #5d502d;
+            p{
+                color: #f8f6f1;
+            }
+        }
+    }
+    }
     .blocPublication{
         width: 100%;
         height: 100vh;

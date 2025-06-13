@@ -1,11 +1,14 @@
-$global-bgcolor-nav: rgb(33, 37, 41);
-$global-color-text: rgb(248, 249, 250);
+$global-bgcolor-nav: #5d502d;
+$global-color-text: #f8f6f1;
 
 body{
     overflow-y: hidden;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: $global-color-text;
+    bg-user{
+        background-color: $global-color-text;
+    }
     nav{
         padding: 0;
         margin: 0;
@@ -75,7 +78,7 @@ body{
     }
     
     button.lg{
-        background: linear-gradient(#ffffff, #c7c7c7);
+        background-color: #f8f6f1;
         width: 210px;
         height: 40px;
         gap: 10px;
@@ -94,7 +97,7 @@ body{
     }
     
     button.md{
-        background: linear-gradient(#ffffff, #c7c7c7);
+        background-color: #f8f6f1;
         width: 130px;
         height: 41px;
         padding: 10px;
@@ -111,7 +114,7 @@ body{
     }
     
     button.sm{
-        background: linear-gradient(#ffffff, #c7c7c7);
+        background-color: #f8f6f1;
         width: 111px;
         height: 41px;
         gap: 10px;

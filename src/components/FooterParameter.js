@@ -19,16 +19,16 @@ function FooterParameter() {
     return (
         <footer>
             {roleUser === 'admin' && (
-            <div className="footerParameter bg bg-dark">
-                <p><Link to="/myprofile/parameter/mentions" className="text-secondary">Mentions légales</Link></p>
-                <p><Link to="/conditions" className="text-secondary">Conditions d'utilisation</Link></p>
+            <div className="footerParameter">
+                <p><Link to="/myprofile/parameter/mentions">Mentions légales</Link></p>
+                <p><Link to="/conditions">Conditions d'utilisation</Link></p>
                 <p><Link to="/connect-admin/home" className="textAdmin">Admin</Link></p>
             </div> 
             )}
             {roleUser === 'user' && (
-            <div className="footerParameter bg bg-dark">
-                <p><Link to="/myprofile/parameter/mentions" className="text-secondary">Mentions légales</Link></p>
-                <p><Link to="/conditions" className="text-secondary">Conditions d'utilisation</Link></p>
+            <div className="footerParameter">
+                <p><Link to="/myprofile/parameter/mentions">Mentions légales</Link></p>
+                <p><Link to="/conditions">Conditions d'utilisation</Link></p>
             </div>
             )}
         </footer>

@@ -1,9 +1,11 @@
 @media screen and (min-width: 781px) {
-    .bg-user{
-        background-color: rgb(248, 249, 250);
+.loginPage{
+    background-color: #f8f6f1;
+    height: 100vh;
     .titrePresentation{
         font-size: 24px;
         padding-top: 10px;
+        color: #5d502d;
     }
     .blocForm{
         width: max-content;
@@ -12,6 +14,7 @@
         display: flex;
         margin: 0 auto;
         justify-content: center;
+        color: #5d502d;
         .formConnect{
             width: 300px;
             text-align: center;
@@ -24,6 +27,7 @@
         cursor: pointer;
     }
 }
+}
 .noAccount{
     text-align: center;
     .inscrivezVous{
@@ -32,14 +36,15 @@
     }
 }
 }
-}
 
 
 @media screen and (min-width: 568px) and (max-width: 780px) {
-    .bg-user{
-        background-color: rgb(248, 249, 250);
+.loginPage{
+    background-color: #f8f6f1;
+    height: 100vh;
     .titrePresentation{
         font-size: 20px;
+        color: #5d502d;
     }
     .blocForm{
     display: flex;
@@ -48,6 +53,7 @@
     width: max-content;
     border-radius: 10px;
     justify-content: center;
+    color: #5d502d;
     .formConnect{
         text-align: center;
         width: 300px;
@@ -60,6 +66,7 @@
     }
     }
 }
+}
     .noAccount{
         text-align: center;
         .inscrivezVous{
@@ -68,13 +75,14 @@
         }
     }
 }
-}
 
 @media screen and (max-width: 567px) {
-    .bg-user{
-        background-color: rgb(248, 249, 250);
+.loginPage{
+    background-color: #f8f6f1;
+    height: 100vh;
     .titrePresentation{
         font-size: 20px;
+        color: #5d502d;
     }
     .blocForm{
         display: flex;
@@ -83,6 +91,8 @@
         width: max-content;
         border-radius: 10px;
         border: solid 1px black;
+        color: #5d502d;
+
         .formConnect{
             width: 300px;
             text-align: center;
@@ -95,6 +105,7 @@
             }
         }           
     } 
+}
     .noAccount{
         text-align: center;
         .inscrivezVous{
@@ -102,5 +113,4 @@
             color: #88A9FF;
         }
     }
-}
 }

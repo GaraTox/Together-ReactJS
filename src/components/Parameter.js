@@ -68,57 +68,15 @@ function Parameter(props) {
         .then(res => 
             {if(res.data.Status === "Success"){
                 setMessage('Avatar ajouté')
+                navigate(`/myprofile/${user}`)
             }else{
                 setMessage('Avatar non ajouté')
             }})
         .catch(err => console.log(err))
     }
 
-    //WEATHER
-    const [state, setState] = useState({ icon: null });
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [city, setCity] = useState('');
-    
-    useEffect(() => {
-      if (city) {
-        updateWeather();
-      }
-    }, [city]);
-    
-    const updateWeather = () => {
-      setLoading(true);
-      setError(null);
-    
-      if (!city) {
-        setError("Veuillez entrer un nom de ville.");
-        setLoading(false);
-        return;
-      }
-    
-      axios.get(`http://localhost:3001/weather/${city}`)
-        .then((response) => {
-          const weatherIcon = response.data.weather[0].icon;
-          setState({ icon: weatherIcon });
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Axios Error:", error);
-          if (error.response) {
-            console.error("Response Data:", error.response.data);
-            console.error("Response Status:", error.response.status);
-          } else if (error.request) {
-            console.error("No response received. Request made but no response.");
-          } else {
-            console.error("Error setting up the request.");
-          }
-    
-          setError("Erreur lors de la récupération des données météorologiques.");
-          setLoading(false); // Make sure to set loading to false on error
-        });
-    };
     return (
-        <section className="bg-user">
+        <section>
             {openModalModi && <ModalModifyUser closeModal={setOpenModalModi}/>}
             {openModalDel && <ModaleUserDelete closeModal={setOpenModalDel}/>}
             <div className="blocParametre">
@@ -132,7 +90,7 @@ function Parameter(props) {
                     </div>
                     {user ? (
                     <div className="infoPerso">
-                        <p>ID: {user.idUser}</p>
+                        <p>#{user.idUser}</p>
                         <p>{user.pseudoUser}</p>
                         <p>{user.mailUser}</p>
                     </div>
@@ -144,24 +102,6 @@ function Parameter(props) {
                 <div className="btnDelete">
                     <Btnlg onClick={() => {setOpenModalModi(true)}}  className="btn" caracteristique="lg" text="Modifier votre profil"/>
                     <Btnlg onClick={() => {setOpenModalDel(true)}} className="btn" caracteristique="lg mt-3" text="Supprimer ce compte"/>
-                </div>
-                <div className="weather">
-                    <label>Météo de votre ville :
-                      <input className="inputWeather" type="text" value={city} onChange={(e) => setCity(e.target.value)}/>
-                    </label>
-                    <p>{city && `A ${city}, il fait :`}
-                    {loading ? (
-                        <span>Loading...</span>
-                    ) : (
-                    <>
-                    {state.icon && (
-                      <img src={`https://openweathermap.org/img/w/${state.icon}.png`} alt="weather" />
-                    )}
-                    <button onClick={updateWeather}>Mettre à jour</button>
-                    {error && city && <div style={{ color: 'red' }}>{error}</div>}
-                    </>
-                    )}
-                    </p>
                 </div>
             </div>
             </div>

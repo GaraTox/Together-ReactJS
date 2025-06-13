@@ -93,24 +93,6 @@ const isAuthenticated = (req, res, next) => {
 	}
   };
 
-app.get('/weather/:city', async (req, res) => {
-	try {
-	  const city = req.params.city;
-	  console.log(`Fetching weather data for ${city}`);
-  
-	  const apiKey = "6e835e4013dbfb3d136a0142e99e6f7a";
-	  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-  
-	  const response = await axios.get(apiUrl);
-	  console.log(`Weather data received for ${city}`);
-  
-	  res.json(response.data);
-	} catch (error) {
-	  console.error("Error:", error);
-	  res.status(500).json({ error: 'Internal Server Error' });
-	}
-  });
-
 app.get('/myprofile/:user', isAuthenticated, (req, res) => {
 	const idUser = req.params.user;
 	db.query('SELECT idUser, avatarUser, pseudoUser, mailUser, passwordUser, birthdayUser, roleUser FROM user WHERE idUser = ' + idUser, (err, results) => {

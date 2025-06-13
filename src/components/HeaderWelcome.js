@@ -3,7 +3,7 @@ import axios from "axios";
 import { useDispatch } from 'react-redux';
 import profil from '../assets/icons/person-fill.svg';
 import searchimg from '../assets/icons/search.svg';
-import logo from '../assets/icons/logo.png';
+import logo from '../assets/icons/logo2.png';
 import { Link, useNavigate } from "react-router-dom";
 import Btnsm from "./btn/Btnsm";
 
@@ -32,9 +32,13 @@ useEffect(() => {
 const [followed, setFollowed] = useState(false);
 
 // FOLLOW
-const idUser = localStorage.getItem('idUser');
+const idUser = Number(localStorage.getItem('idUser'));
 const suivreUtilisateur = (id_Friend) => {
   // Envoyez une requête au serveur Node.js pour suivre un utilisateur
+  if(idUser === id_Friend){
+    console.log('Vous ne pouvez pas vous suivre')
+    return;
+  }
   fetch('/friendship', {
     method: 'POST',
     headers: {
@@ -42,12 +46,12 @@ const suivreUtilisateur = (id_Friend) => {
     },
     body: JSON.stringify({ id_User: idUser, id_Friend}),
   })
-    .then(() => {
-      console.log('Vous suivez cet utilisateur.');
-      setFollowed(true);
-      // navigate('/')
-    })
-    .catch((error) => console.error(error));
+  .then(() => {
+    console.log('Vous suivez cet utilisateur.');
+    setFollowed(true);
+    // navigate('/')
+  })
+  .catch((error) => console.error(error));
 };
 
 // UNFOLLOW
@@ -135,7 +139,7 @@ const handleUnfollow = (id_Friend) => {
                     {tab.map((user) => {
                         return(
                           <li className="lisearch" key={user.idUser}>
-                            ID: {user.idUser}
+                            #{user.idUser}
                             <img className="imgPhoto rounded-circle" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : profil} alt=""/>
                             {user.pseudoUser}
                             {followed ? (
@@ -175,7 +179,7 @@ const handleUnfollow = (id_Friend) => {
                     {tab.map((user) => {
                         return(
                           <li className="lisearch" key={user.idUser}>
-                            ID: {user.idUser}
+                            #{user.idUser}
                            <img className="imgPhoto rounded-circle" src={user.avatarUser ? `http://localhost:3001/images/${user.avatarUser}` : profil} alt=""/>
                             {user.pseudoUser}
                             {followed ? (
